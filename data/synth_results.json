@@ -1,0 +1,950 @@
+{
+ "Login & Akun | Kasus Lainnya": {
+  "domain": "Login & Akun",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 311,
+  "ringkasan": "Kasus lain pada Login & Akun meliputi permintaan persetujuan surat kuasa, akses aplikasi terblokir jaringan, data dokumen tidak muncul, menu tidak tersedia, serta kegagalan login akibat MFA looping. Kondisi ini umumnya terjadi setelah perubahan role, reset password, pembaruan sistem, atau kebijakan firewall.",
+  "langkah": [
+   "Verifikasi identitas pengguna dan cek status akun serta role di menu User Management Portal CEISA 4.0.",
+   "Cek status surat kuasa di menu Persetujuan Surat Kuasa dan lakukan Approve/Reject sesuai kewenangan.",
+   "Koordinasikan dengan pengelola jaringan untuk whitelist alamat IP/port tujuan pada Palo Alto jika aplikasi terblokir.",
+   "Arahkan pengguna clear cache/cookies, gunakan mode Incognito, dan reset authenticator MFA jika login berulang.",
+   "Pastikan filter periode dan role sesuai, lalu lakukan Muat Ulang Referensi di Portal PJ 4.0 untuk data/menu tidak tampil.",
+   "Eskalasi ke IKC Service Desk dengan melampirkan kronologi dan tangkapan layar jika kendala tidak teratasi."
+  ],
+  "catatan": "Perhatikan variasi kasus seperti user tambahan yang harus memiliki role sama dengan induk untuk fungsi validasi, atau blokir jaringan di luar kewenangan PDAD. Eskalasi dilakukan jika penanganan lokal tidak berhasil dalam 1x24 jam atau memerlukan perubahan konfigurasi sistem pusat."
+ },
+ "Login & Akun | Login - Kembali ke Halaman Login": {
+  "domain": "Login & Akun",
+  "masalah": "Login - Kembali ke Halaman Login",
+  "jumlah": 13,
+  "ringkasan": "Kendala login CEISA 4.0 atau Portal Pengguna Jasa yang kembali ke halaman login umumnya terjadi karena cache browser, pengaturan waktu tidak sinkron, atau proses pendaftaran akses yang belum selesai.",
+  "langkah": [
+   "Periksa pengaturan tanggal dan waktu pada komputer, pastikan sudah sesuai dan tersinkron otomatis.",
+   "Bersihkan cache dan cookies browser, lalu coba login kembali menggunakan mode private atau incognito.",
+   "Buka portal CEISA 4.0, isi username dan password, kemudian klik SIGN IN.",
+   "Jika muncul notifikasi bahwa username atau password tidak sesuai, abaikan notifikasi tersebut dan klik menu 'Pendaftaran User Baru'.",
+   "Jika diarahkan ke form pengajuan akses cukai online, isi form secara lengkap; untuk menghindari time out, tulis isian pada notepad terlebih dahulu lalu salin ke form.",
+   "Setelah berhasil, layar akan menampilkan menu milik pengguna jasa seperti biasa."
+  ],
+  "catatan": "Jika semua langkah sudah dilakukan tetapi masih gagal, minta pengguna melengkapi data (nama, email, username, NPWP) disertai screenshot untuk eskalasi ke IKC Service Desk. Perhatikan pengisian form agar tidak time out dengan menyalin dari notepad."
+ },
+ "Login & Akun | Login - MFA Reset": {
+  "domain": "Login & Akun",
+  "masalah": "Login - MFA Reset",
+  "jumlah": 74,
+  "ringkasan": "Permintaan reset MFA untuk login CEISA 4.0 atau VPN F5, biasanya terjadi saat pengguna ganti perangkat atau kode autentikator tidak berfungsi.",
+  "langkah": [
+   "Verifikasi identitas pengguna dengan meminta konfirmasi email Kemenkeu, nama pegawai, dan lampiran tangkapan layar kendala.",
+   "Sampaikan panduan sinkronisasi waktu: periksa pengaturan tanggal dan waktu perangkat agar diperbarui otomatis dengan timezone yang benar.",
+   "Imbau pengguna memperbarui aplikasi autentikator ke versi terbaru dan memeriksa koneksi internet perangkat.",
+   "Minta pengguna menonaktifkan pengoptimalan baterai untuk aplikasi autentikator dan memastikan izin notifikasi aktif.",
+   "Sarankan pengguna me-restart perangkat, lalu minta pengguna menghasilkan kode baru dan memasukkan kode MFA dengan teliti.",
+   "Jika belum berhasil, minta pengguna melampirkan bukti kendala tambahan dan teruskan tiket ke IKC Service Desk untuk reset MFA resmi."
+  ],
+  "catatan": "Pola permintaan bervariasi antara reset MFA CEISA 4.0 dan VPN F5; pastikan identitas pengguna tervalidasi sebelum memberikan solusi. Jika seluruh langkah troubleshooting gagal, eskalasi ke IKC Service Desk dengan menyertakan tangkapan layar."
+ },
+ "Login & Akun | Login - User dan Password Salah": {
+  "domain": "Login & Akun",
+  "masalah": "Login - User dan Password Salah",
+  "jumlah": 147,
+  "ringkasan": "Pengguna tidak dapat login ke CEISA 4.0 karena kombinasi username/password salah atau akun tidak cocok, sering terjadi setelah pembuatan akun baru, reset password, atau input MFA yang sudah benar tetapi kembali ke halaman login.",
+  "langkah": [
+   "Verifikasi status akun di menu User Management; pastikan username, email, dan NPWP terdaftar dengan data yang sesuai.",
+   "Jika data akun tidak sesuai atau NPWP sudah terdaftar dengan nama perusahaan lain, ajukan surat permohonan perubahan data secara tertulis ke KPPBC TMP A Pasuruan.",
+   "Lakukan reset password mandiri melalui menu Lupa Password atau panduan reset CEISA 4.0; gunakan hanya karakter spesial ( ! , @ , # ) pada password baru.",
+   "Tunggu proses sinkronisasi 15-30 menit setelah reset password, lalu coba login kembali.",
+   "Jika kendala terkait MFA, lakukan reset MFA mandiri melalui tautan resmi CEISA 4.0."
+  ],
+  "catatan": "Jika password tidak merespons atau akun baru tetap gagal login setelah reset, pastikan hanya karakter spesial ! , @ , # yang digunakan dan tunggu sinkronisasi. Jika masih gagal, buka kembali tiket atau eskalasi ke IKC Service Desk."
+ },
+ "Login & Akun | Login - Reset Password": {
+  "domain": "Login & Akun",
+  "masalah": "Login - Reset Password",
+  "jumlah": 32,
+  "ringkasan": "Masalah lupa password atau gagal reset password pada akun CEISA 4.0. Umumnya terjadi ketika pengguna mencoba reset password mandiri dan mengalami error atau lupa password, terutama pada pengguna baru atau yang sudah lama tidak login.",
+  "langkah": [
+   "Verifikasi identitas pengguna dengan menanyakan username, NITKU, atau email terdaftar.",
+   "Arahkan pengguna untuk reset password mandiri melalui halaman https://portal.beacukai.go.id/portal/lupa dengan memasukkan email pengguna.",
+   "Jika reset password gagal, berikan panduan visual (video tutorial) yang tersedia di akun Instagram resmi @tasyaceicare.",
+   "Jika MFA terkendala, arahkan pengguna untuk mereset MFA dengan mengikuti panduan video terpisah.",
+   "Jika masih gagal, minta pengguna mengirimkan tangkapan layar error untuk identifikasi lebih lanjut.",
+   "Bila diperlukan, berikan kredensial sementara dan instruksikan pengguna untuk segera mengubah password setelah login."
+  ],
+  "catatan": "Pastikan pengguna menggunakan email yang terdaftar saat reset password. Jika kendala berulang atau tidak dapat diselesaikan, eskalasi ke IKC Service Desk dengan melampirkan bukti error."
+ },
+ "Login & Akun | Login - Akun Terblokir": {
+  "domain": "Login & Akun",
+  "masalah": "Login - Akun Terblokir",
+  "jumlah": 6,
+  "ringkasan": "Masalah login akun terblokir umumnya terjadi karena akun belum diaktivasi, password salah, atau akun diblokir sementara. Pengguna biasanya melaporkan tidak bisa mengakses portal CEISA 4.0 atau aplikasi terkait.",
+  "langkah": [
+   "Minta pengguna menjelaskan kendala spesifik: apakah akun terblokir, lupa password, tidak menerima OTP, atau tidak menerima email aktivasi.",
+   "Jika akun terblokir karena salah password, arahkan pengguna untuk melakukan reset password mandiri melalui fitur lupa password di CEISA 4.0 atau Portal PJ 4.0.",
+   "Jika pengguna tidak menerima email reset password atau aktivasi, periksa email terdaftar dan kirim ulang link aktivasi/reset ke email tersebut.",
+   "Jika link reset password atau aktivasi tidak berfungsi, minta pengguna mendokumentasikan pesan error/halaman dan kirimkan untuk pengecekan.",
+   "Jika hasil pengecekan menunjukkan akun tidak bermasalah, minta pengguna mencoba login kembali atau periksa kembali password yang dimasukkan."
+  ],
+  "catatan": "Perhatikan bahwa tidak semua laporan 'akun terblokir' benar-benar diblokir; bisa jadi karena password salah atau link aktivasi belum diklik. Jika setelah reset password dan kirim ulang link aktivasi masih gagal, eskalasi ke IKC Service Desk dengan menyertakan dokumentasi kesalahan."
+ },
+ "Login & Akun | Login - Gagal Request (401)": {
+  "domain": "Login & Akun",
+  "masalah": "Login - Gagal Request (401)",
+  "jumlah": 7,
+  "ringkasan": "Gagal login ke CEISA 4.0/CEHRIS G2 dengan notifikasi username/password salah atau error 401, biasanya terjadi setelah perubahan password atau ketidaksinkronan akun Kemenkeu/VPN. Akun VPN bisa berhasil login tetapi aplikasi CEISA menolak kredensial yang sama.",
+  "langkah": [
+   "Pastikan pengguna telah berhasil login ke VPN/SSL VPN menggunakan akun Kemenkeu yang aktif.",
+   "Untuk CEISA 4.0, arahkan pengguna melakukan reset password mandiri melalui Collaboration Tools sesuai panduan video yang tersedia.",
+   "Untuk CEHRIS G2, minta pengguna login terlebih dahulu ke CEHRIS G1 menggunakan password yang diberikan, klik nama profil, pilih Update Password, lalu gunakan password baru tersebut untuk login ke CEHRIS G2.",
+   "Jika muncul error SSL VPN permission denied atau kendala MFA, gunakan link reset MFA-VPN yang tersedia pada referensi Dukungan Teknis.",
+   "Minta pengguna mencoba login kembali. Jika masih gagal, minta tangkapan layar error/blank beserta status dokumen bila relevan.",
+   "Bila seluruh langkah tidak berhasil, eskalasi ke IKC Service Desk dengan melampirkan kronologi dan tangkapan layar."
+  ],
+  "catatan": "Perhatikan perbedaan mekanisme reset: CEISA 4.0 melalui Collaboration Tools, sedangkan CEHRIS G2 melalui update password di CEHRIS G1. Jika kendala yang dilaporkan adalah halaman blank/loading, minta bukti tangkapan layar sebelum melanjutkan penanganan."
+ },
+ "Login & Akun | Login - Authentikasi Bermasalah": {
+  "domain": "Login & Akun",
+  "masalah": "Login - Authentikasi Bermasalah",
+  "jumlah": 27,
+  "ringkasan": "Kendala login CEISA 4.0 akibat kegagalan autentikasi MFA atau password kadaluarsa. Biasanya terjadi saat pengguna mencoba masuk atau setelah perubahan password.",
+  "langkah": [
+   "Identifikasi jenis kendala autentikasi yang dilaporkan: token/MFA error, password salah/kadaluarsa, atau akun terblokir.",
+   "Jika kendala MFA, minta pengguna memeriksa waktu perangkat (atur pembaruan otomatis dengan timezone benar), perbarui aplikasi authenticator, pastikan koneksi internet stabil, restart perangkat, dan periksa kembali input kode.",
+   "Bila MFA tetap bermasalah, arahkan pengguna untuk login ke CEISA 4.0, klik menu Reset MFA, konfirmasi, lalu buka email terdaftar dan klik link reset untuk mengatur ulang MFA.",
+   "Untuk kendala password, arahkan pengguna menggunakan fitur reset password mandiri di CEISA 4.0 (lihat video tutorial) atau melalui menu lupa password.",
+   "Jika pengguna berhasil login tetapi masih melihat notifikasi CeisaCare, sampaikan bahwa notifikasi tersebut hanya informasi dan tidak mengganggu proses.",
+   "Jika seluruh langkah tidak berhasil, eskalasi ke IKC Service Desk dengan melampirkan tangkapan layar dan nomor aju dokumen (bila ada)."
+  ],
+  "catatan": "Beberapa kasus hanya perlu penyesuaian sinkronisasi waktu perangkat. Eskalasi jika pengguna tidak menerima email reset MFA atau akun terblokir."
+ },
+ "Login & Akun | Gagal aktivasi": {
+  "domain": "Login & Akun",
+  "masalah": "Gagal aktivasi",
+  "jumlah": 8,
+  "ringkasan": "Pengguna tidak dapat masuk ke Portal CEISA 4.0 dengan notifikasi 'Gagal mengambil token' atau 'Request failed with status code 500'. Masalah ini biasanya terjadi saat akun pengguna jasa belum aktif atau proses aktivasi belum selesai.",
+  "langkah": [
+   "Minta pengguna menyampaikan detail kendala sesuai format: nama, perusahaan, jenis dokumen, nomor aju, uraian masalah disertai screenshot, status dokumen, dan waktu submit.",
+   "Periksa status aktivasi akun pengguna pada menu Manajemen User di Portal CEISA 4.0.",
+   "Lakukan aktivasi ulang akun atau reset status akun jika ditemukan status belum aktif atau terkunci.",
+   "Minta pengguna mencoba login kembali menggunakan username dan password yang sama.",
+   "Jika masih gagal, sarankan pengguna membuka tiket baru dengan mencantumkan nomor rujukan tiket lama untuk penelusuran lanjutan oleh IKC Service Desk."
+  ],
+  "catatan": "Pastikan pengguna melampirkan screenshot error untuk mempercepat verifikasi dan tidak menyertakan password dalam tiket. Jika akun sudah aktif namun masih gagal mengambil token, eskalasi ke IKC Service Desk dengan menyertakan NPWP dan username."
+ },
+ "PIB (Impor) | Kasus Lainnya": {
+  "domain": "PIB (Impor)",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 1491,
+  "ringkasan": "Menangani berbagai kendala dokumen PIB di CEISA 4.0 seperti gagal cetak PDF, status dokumen tidak sesuai, permintaan rollback/pembatalan, dan error integrasi e-Faktur. Biasanya terjadi saat proses penerbitan atau pasca penerbitan dokumen.",
+  "langkah": [
+   "Periksa detail dokumen di CEISA 4.0 berdasarkan nomor aju dan jenis dokumen; catat status terakhir, waktu submit, dan kendala yang dilaporkan.",
+   "Untuk masalah yang memerlukan perubahan status dokumen (cetak PDF gagal, status tidak sesuai, permintaan rollback/pembatalan, upload ulang dokumen), verifikasi kelengkapan surat permohonan dan kronologi, lalu ajukan pemunduran status/rollback ke tim teknis CEISA atau IKC Service Desk.",
+   "Untuk error integrasi e-Faktur (misal ETAX-API-10025), konfirmasi nomor SPPB dan status dokumen; minta pengguna jasa klik 'Kirim Ulang Faktur Pajak' pada dokumen CEISA, pastikan format nomor SPPB benar tanpa spasi, dan gunakan CSV Prepop jika diperlukan.",
+   "Untuk pembetulan data massal atau dokumen outstanding, siapkan data aju dan persetujuan Kepala Kantor, koordinasikan dengan petugas hanggar, dan ajukan ke IKC Service Desk."
+  ],
+  "catatan": "Selalu periksa riwayat status dokumen dan pastikan dokumen pendukung lengkap sebelum mengajukan perubahan. Jika kendala berlanjut atau butuh intervensi sistem, eskalasi ke IKC Service Desk dengan melampirkan kronologi."
+ },
+ "PIB (Impor) | PIB - Status Stuck": {
+  "domain": "PIB (Impor)",
+  "masalah": "PIB - Status Stuck",
+  "jumlah": 291,
+  "ringkasan": "Dokumen BC 2.5/PIB berstatus Stuck Analyzing Point saat proses analisis impor, biasanya terjadi setelah pengajuan dan perlu diputus oleh PFPD.",
+  "langkah": [
+   "Cek status dokumen BC 2.5 pada menu Task To Do untuk memastikan status Stuck Analyzing Point.",
+   "Pastikan nomor aju dan tanggal Nopen sesuai dengan data dokumen.",
+   "Koordinasikan dengan PFPD yang bertugas untuk melakukan pemutusan dokumen.",
+   "Arahkan PFPD menggunakan menu Pemutusan Dokumen dan memfilter tanggal dokumen sesuai tanggal Nopen.",
+   "Ubah pengaturan halaman/jumlah halaman menjadi 100 sebelum melakukan pemutusan.",
+   "Jika PFPD mengalami kendala saat pemutusan, hubungi WA Ceisa Care untuk bantuan lanjutan."
+  ],
+  "catatan": "Kendala umumnya bukan dari sistem CEISA, melainkan proses pemutusan dokumen oleh PFPD; jika pemutusan tetap gagal, segera hubungi WA Ceisa Care."
+ },
+ "PIB (Impor) | PIB - Respon Tidak Sesuai": {
+  "domain": "PIB (Impor)",
+  "masalah": "PIB - Respon Tidak Sesuai",
+  "jumlah": 10,
+  "ringkasan": "Masalah PIB dengan respon tidak sesuai biasanya terjadi saat status dokumen masih Gate Out TPS, data kontainer tidak sinkron/duplikat, atau dokumen belum mendapat SPPB, sehingga cetak PDF/CEIR gagal atau nomor aju tidak ditemukan saat gate in. Laporan sering muncul setelah submit PIB atau saat proses gate in/keluar TPS.",
+  "langkah": [
+   "Cek status dokumen di menu Task To Do atau Monitoring pada CEISA 4.0.",
+   "Jika status masih Gate Out TPS, minta petugas TPS melakukan 'get data on demand' atau gate out agar status berubah menjadi Gate In TPB/KEK.",
+   "Untuk kendala cetak PDF/CEIR karena container tidak tercantum, periksa file excel PIB apakah ada duplikasi nomor kontainer; jika duplikat, ajukan surat perbaikan data ke Kepala Kantor.",
+   "Jika tidak ditemukan duplikasi, re-submit tiket dengan melampirkan screenshot excel data kontainer.",
+   "Untuk dokumen dengan status Hold SPPB/Penomoran, cek kembali status dokumen dan tunggu progres penyelesaian tim terkait; jika diminta, lakukan submit ulang dokumen.",
+   "Jika perubahan data dasar diperlukan, pastikan sudah terbit surat persetujuan pembetulan data dari Kepala Kantor sebelum mengajukan perbaikan."
+  ],
+  "catatan": "Perhatikan perbedaan penanganan: masalah gate out TPS diselesaikan oleh petugas TPS, sedangkan perbaikan data kontainer memerlukan surat resmi. Jika setelah langkah ini status masih tidak sesuai atau kendala berlanjut, eskalasi ke IKC Service Desk dengan menyertakan bukti pendukung."
+ },
+ "PIB (Impor) | Registrasi - NPWP/NIB Belum Terdaftar": {
+  "domain": "PIB (Impor)",
+  "masalah": "Registrasi - NPWP/NIB Belum Terdaftar",
+  "jumlah": 25,
+  "ringkasan": "Pengguna gagal mendaftar atau login di Portal CEISA 4.0 karena sistem menyatakan NPWP/NIB belum terdaftar. Masalah ini umumnya terjadi pada perusahaan yang baru terbit NIB-nya atau belum mengaktifkan Angka Pengenal Impor (API) di OSS.",
+  "langkah": [
+   "Minta pengguna membuka akun OSS dan pastikan NIB berstatus aktif serta NPWP sudah terdaftar di data pelaku usaha.",
+   "Arahkan pengguna ke menu Perizinan Berusaha > Perubahan > Perubahan Data Usaha, lalu pada bagian Aktivitas Impor pilih jenis API sesuai kegiatan (API-U untuk badan usaha, API-P untuk perorangan), centang disclaimer, dan simpan.",
+   "Setelah API terpilih, instruksikan pengguna untuk meminta OSS mengirim ulang data NIB ke CEISA/INSW jika data masih belum terbaca.",
+   "Minta pengguna kembali ke Portal CEISA 4.0, lakukan Muat Ulang Referensi di menu utama, kemudian coba daftar atau login kembali.",
+   "Jika masih muncul NPWP tidak terdaftar, periksa kembali format input NPWP, NIB, dan NPPBKC (untuk pabrik cukai) apakah sudah sesuai dan tidak ada kesalahan ketik.",
+   "Bila kendala berlanjut, eskalasi ke IKC Service Desk dengan melampirkan NIB, NPWP, tangkapan layar error, dan riwayat koordinasi OSS."
+  ],
+  "catatan": "Untuk pabrik rokok atau pengusaha cukai yang bukan importir, tetap harus memilih API-P atau API-U di OSS agar NIB terintegrasi dengan CEISA. Eskalasi ke IKC Service Desk dilakukan jika API sudah aktif dan OSS sudah kirim ulang data, tetapi NPWP masih belum terdaftar."
+ },
+ "PIB (Impor) | PIB - Reject": {
+  "domain": "PIB (Impor)",
+  "masalah": "PIB - Reject",
+  "jumlah": 28,
+  "ringkasan": "PIB Reject terjadi ketika dokumen PIB ditolak sistem karena validasi data tidak sesuai, gangguan layanan eksternal (DJA/Coretax), blokir hardcopy, atau kegagalan simpan data barang.",
+  "langkah": [
+   "Cek uraian reject pada dokumen di CEISA untuk identifikasi penyebab (mis. ketidakcocokan nama/identitas, NPWP tidak ditemukan, KSWP gagal, blokir hardcopy).",
+   "Jika reject karena data identitas/nama tidak sesuai, perbaiki data pada dokumen sesuai data wajib pajak lalu submit ulang dokumen.",
+   "Jika reject karena gangguan layanan KSWP/Coretax, tunggu beberapa saat, cek kembali status KSWP, dan submit ulang.",
+   "Jika reject karena blokir hardcopy, lakukan perekaman hardcopy atas nomor aju yang dimaksud dengan kode kantor sesuai.",
+   "Jika reject karena data barang tidak tersimpan atau pungutan gagal, hapus isian tab barang, input ulang data barang, simpan, dan generate ulang pungutan.",
+   "Jika penyebab belum jelas, minta pengguna melengkapi keterangan dan tangkapan layar, atau cek status dokumen secara berkala untuk respon lanjutan."
+  ],
+  "catatan": "Pola reject dapat bervariasi; pastikan hardcopy sudah diserahkan dan data identitas sesuai master DJA. Jika reject akibat gangguan sistem eksternal berlanjut atau tidak dapat diatasi, eskalasi ke IKC Service Desk."
+ },
+ "PIB (Impor) | PIB - Billing VP Tidak Bisa di Download": {
+  "domain": "PIB (Impor)",
+  "masalah": "PIB - Billing VP Tidak Bisa di Download",
+  "jumlah": 6,
+  "ringkasan": "Billing PIB dengan status Payment Verification tidak muncul atau tidak dapat diunduh di menu Browse Billing, biasanya terjadi setelah CK-1 terbit atau saat akan mencetak billing pembayaran.",
+  "langkah": [
+   "Buka menu Perbendaharaan Online > Browse Billing di aplikasi CEISA 4.0.",
+   "Aktifkan atau centang filter NPWP 15 digit pada kolom pencarian.",
+   "Cari berdasarkan nomor CK-1 atau nomor aju PIB, pastikan status dokumen sudah Payment Verification.",
+   "Klik tombol cetak/unduh pada billing yang tampil.",
+   "Jika billing tidak muncul, lakukan muat ulang referensi atau keluar lalu masuk kembali ke aplikasi.",
+   "Bila tetap gagal, catat nomor aju/CK-1 dan lampirkan tangkapan layar untuk eskalasi ke IKC Service Desk."
+  ],
+  "catatan": "Billing hanya muncul jika filter NPWP 15 digit dicentang dan status dokumen sudah Payment Verification. Jika filter sudah benar namun billing tidak ditemukan, segera eskalasi ke IKC Service Desk dengan bukti screenshot."
+ },
+ "PIB (Impor) | PIB - Tidak Muncul": {
+  "domain": "PIB (Impor)",
+  "masalah": "PIB - Tidak Muncul",
+  "jumlah": 10,
+  "ringkasan": "Kendala penarikan Faktur Pajak pada dokumen PIB/SPPB di CEISA 4.0 dengan pesan error 'Form Data is null at assign' atau ETAX-API-10025 (Dokumen SPPB Tidak Ditemukan). Umumnya terjadi setelah dokumen berstatus selesai proses dan pengguna jasa mencoba mengunggah Faktur Pajak.",
+  "langkah": [
+   "Konfirmasi nomor SPPB dan status dokumen (harus 'Selesai Proses') pada hanggar atau modul CEISA 4.0 terkait.",
+   "Pada dokumen terkait di CEISA 4.0, klik tombol aksi lalu pilih 'Kirim Ulang Faktur Pajak'.",
+   "Periksa versi e-Faktur desktop, pastikan sudah terbaru, dan cek penulisan nomor SPPB pada kolom dokumen pendukung tanpa spasi ekstra (format contoh: 000001/WBC.11/KPP.MP.02/2023).",
+   "Jika tetap gagal, gunakan menu Download CSV Prepop di web-efaktur.pajak.go.id untuk jenis dokumen BC 4.0, isi NSFP, simpan, lalu impor file CSV ke e-Faktur desktop.",
+   "Ulangi proses kirim ulang dari CEISA dan upload ulang Faktur Pajak hingga berhasil.",
+   "Jika masih terkendala, laporkan ke KPP terkait untuk layanan sistem atau eskalasi ke IKC Service Desk."
+  ],
+  "catatan": "Error dapat muncul berulang; coba langkah kirim ulang beberapa kali. Jika tidak ada perubahan, segera eskalasi ke IKC Service Desk atau KPP untuk penanganan lebih lanjut."
+ },
+ "PIB (Impor) | Inhouse - Data PIB - Tidak Ditemukan di Menu PKB": {
+  "domain": "PIB (Impor)",
+  "masalah": "Inhouse - Data PIB - Tidak Ditemukan di Menu PKB",
+  "jumlah": 5,
+  "ringkasan": "Masalah data PIB tidak ditemukan di menu PKB umumnya terjadi saat status dokumen reject, data barang belum muncul karena penetapan, atau ada perbedaan data BL pada manifes. Biasanya dilaporkan pengguna jasa setelah submit dokumen di CEISA 4.0.",
+  "langkah": [
+   "Cek status dokumen di menu CEISA 4.0 atau Portal Pengguna Jasa untuk memastikan apakah dokumen reject, selesai proses, atau masih berjalan.",
+   "Gunakan filter 'Sudah Diperiksa' atau 'Penetapan O' pada menu data barang untuk menampilkan data yang tidak muncul.",
+   "Periksa nomor BL pada manifes; jika terdapat spasi atau karakter tidak sesuai, arahkan pengguna untuk melakukan redress dan submit ulang dokumen.",
+   "Jika BL terpakai karena aju sebelumnya terhapus atau tidak muncul respon, teruskan permintaan penyesuaian data ke IKC Service Desk dengan menyertakan nomor aju.",
+   "Untuk kendala massal yang sudah dilaporkan banyak kantor, arahkan pengguna menunggu update resmi dari pusat atau follow up tiket induk di Portal Pengguna Jasa."
+  ],
+  "catatan": "Perhatikan variasi penyebab seperti spasi pada nomor BL, status penetapan O, atau data yang belum disesuaikan. Jika langkah di atas tidak menyelesaikan, eskalasi ke IKC Service Desk dengan data aju dan detail kendala."
+ },
+ "PIB (Impor) | PIB - Gagal Muat": {
+  "domain": "PIB (Impor)",
+  "masalah": "PIB - Gagal Muat",
+  "jumlah": 10,
+  "ringkasan": "PIB gagal dimuat karena data entitas seperti izin TPB atau SKEP tidak muncul/tidak tersimpan, atau dokumen tidak tampil di daftar. Kendala ini umumnya terjadi saat perekaman PIB di Portal CEISA 4.0, terutama pada dokumen BC 2.3 atau BC 4.0.",
+  "langkah": [
+   "Cek status dokumen di menu Daftar Dokumen, gunakan Filter dan centang checkbox NPWP15 jika menggunakan NPWP 15 digit agar dokumen tampil.",
+   "Pada tab Header, hapus data Pelabuhan Bongkar dan Kantor Pengawas, lalu buka tab Entitas untuk mengisi nomor izin TPB atau SKEP.",
+   "Isi kembali data Pelabuhan Bongkar dan Kantor Pengawas pada tab Header, pastikan seluruh field wajib terisi lengkap.",
+   "Setelah izin TPB/SKEP muncul, langsung lakukan validasi dan kirim dokumen tanpa kembali ke menu browse untuk menghindari hilangnya data.",
+   "Jika muncul error ETAX-API-10025 (SPPB tidak ditemukan) saat upload faktur pajak, pastikan nomor SPPB sesuai dan status dokumen selesai, lalu klik kirim ulang faktur pajak pada dokumen terkait di CEISA 4.0.",
+   "Gunakan e-Faktur versi terbaru dan pastikan penulisan nomor SPPB tanpa spasi, atau impor CSV Prepop dari web-efaktur.pajak.go.id jika diperlukan."
+  ],
+  "catatan": "Perhatikan bahwa setelah data entitas muncul, jangan kembali ke menu browse untuk mencegah hilangnya data. Jika kendala berlanjut atau dokumen tidak juga muncul, eskalasi ke IKC Service Desk dengan menyertakan tangkapan layar dan detail error."
+ },
+ "PEB (Ekspor) | PEB - Data Tidak Sesuai": {
+  "domain": "PEB (Ekspor)",
+  "masalah": "PEB - Data Tidak Sesuai",
+  "jumlah": 8,
+  "ringkasan": "Masalah ini terjadi saat dokumen PEB/BC 2.5/BC 4.0 ditolak sistem karena data dokumen asal, kode fasilitas, atau jenis kemasan dianggap tidak valid meskipun sudah diisi. Biasanya muncul setelah submit atau saat pembetulan data.",
+  "langkah": [
+   "Periksa data dokumen asal pada setiap barang: pastikan kode dok asal, nomor daftar, kode kantor asal, tanggal daftar, dan nomor aju dok asal terisi lengkap.",
+   "Cek kode fasilitas dokumen (misal COO kode 6-0303) dan nomor dokumen pada seri barang yang reject; samakan dengan dokumen seri lain yang berhasil lolos.",
+   "Pastikan jenis kemasan tidak bernilai 0; jika kosong atau 0, ganti dengan kode kemasan umum seperti CT (carton).",
+   "Jika data sudah benar tetapi masih reject, lakukan submit ulang atau unggah kembali dokumen dalam waktu 1 jam setelah konfirmasi bahwa kendala sistem sudah ditangani.",
+   "Untuk pembetulan data BC 4.0, cek kembali daftar dokumen pada barang; jika dokumen Lainnya hilang, tambahkan ulang dan pastikan tersimpan sebelum submit."
+  ],
+  "catatan": "Reject serupa bisa terjadi karena bug sistem, sehingga submit ulang sering menjadi solusi sementara. Pastikan data identitas lengkap pada tiket; jika solusi tidak menyelesaikan, reopen tiket CEISACare atau eskalasi ke IKC Service Desk."
+ },
+ "PEB (Ekspor) | PEB - Status Stuck": {
+  "domain": "PEB (Ekspor)",
+  "masalah": "PEB - Status Stuck",
+  "jumlah": 92,
+  "ringkasan": "PEB sering mengalami status stuck seperti gagal kirim ke INSW, status tidak berubah dari gate in/perbaikan, atau berubah menjadi Penelitian Perbaikan/Unit Pengawas. Masalah ini biasanya terjadi setelah pengiriman dokumen, perbaikan data, atau proses rekon.",
+  "langkah": [
+   "Cek status dokumen PEB di menu Task To Do atau Monitoring CEISA 4.0 untuk memastikan status terkini dan respon sistem.",
+   "Jika status stuck di 'gate in' atau 'perbaikan', verifikasi data manifest dan bukti gate in TPS; bila sudah sesuai, lakukan penyelesaian status melalui EXIM TDS dengan menyertakan nomor AJU, Nopen, dan tanggal pendaftaran.",
+   "Jika respon 'gagal kirim INSW', periksa kelengkapan data PEB, pastikan tidak ada field kosong atau format salah, lalu kirim ulang.",
+   "Jika status berubah menjadi 'Penelitian Perbaikan' atau 'Penelitian Unit Pengawas' sehingga dokumen tidak bisa close, arahkan pengguna untuk mengajukan surat permohonan pembetulan ke kantor pabean setempat.",
+   "Jika penolakan perbaikan karena data perubahan tidak tersimpan, instruksikan pengguna untuk melakukan perbaikan ulang dan pastikan data tersimpan sebelum dikirim, atau gunakan fasilitas perbaikan inhouse oleh petugas.",
+   "Untuk pembetulan data yang memerlukan persetujuan, pastikan ada surat persetujuan kepala kantor dan lakukan pembetulan melalui petugas Bea Cukai berwenang atau Tim IKC."
+  ],
+  "catatan": "Beberapa kasus memerlukan surat resmi ke kantor pabean. Hindari re-submit tiket untuk dokumen yang sama; jika ada kendala reject baru, rekam tiket terpisah. Eskalasi ke IKC Service Desk jika langkah di atas tidak menyelesaikan atau memerlukan pembetulan data oleh Tim IKC."
+ },
+ "PEB (Ekspor) | Kasus Lainnya": {
+  "domain": "PEB (Ekspor)",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 13,
+  "ringkasan": "Kasus PEB lainnya meliputi perubahan data merek/KEP, penambahan kolom tabel, kendala rekam pita cukai, pembatalan input, dan sinkronisasi data CEISA 4.0 dengan ExSIS. Biasanya terjadi saat ada perubahan data atau kebutuhan penyesuaian pada modul PEB.",
+  "langkah": [
+   "Identifikasi jenis kendala PEB berdasarkan uraian pengguna (mis. perubahan data merek, permintaan tambah kolom, kendala rekam pita, pembatalan input, update konsolidator).",
+   "Verifikasi data terkait pada aplikasi CEISA 4.0 atau ExSIS sesuai modul (mis. cek menu Merek, CK-5, Konsolidator, atau Pita Cukai).",
+   "Minta pengguna melengkapi data pendukung seperti nomor aju, screenshot kendala, nomor KEP/SKEP, atau file excel hasil unduhan.",
+   "Lakukan perubahan/perbaikan data jika merupakan kewenangan (mis. update data CK-5 sesuai surat persetujuan, ubah status merek, atau sinkronkan CEISA-ExSIS).",
+   "Jika kendala terkait pelabuhan muat, arahkan pengguna agar tiket CEISACare ditujukan ke kantor pelabuhan muat yang bersangkutan.",
+   "Konfirmasi penyelesaian kepada pengguna dan sarankan untuk reopen tiket jika kendala belum teratasi."
+  ],
+  "catatan": "Pastikan data pendukung dari pengguna lengkap sebelum diproses. Untuk perubahan data yang memerlukan kewenangan pusat atau di luar KPPBC Pasuruan, eskalasi ke IKC Service Desk atau kantor terkait."
+ },
+ "PEB (Ekspor) | PEB - Reject": {
+  "domain": "PEB (Ekspor)",
+  "masalah": "PEB - Reject",
+  "jumlah": 13,
+  "ringkasan": "Kendala reject PEB/BC 4.1/BC 27 umumnya terjadi karena SKEP TPB tidak ditemukan, NPWP/NITKU dianggap tidak valid, atau tanggal dokumen tidak sesuai tanggal berlaku SKEP. Biasanya terjadi saat submit dokumen di CEISA 4.0.",
+  "langkah": [
+   "Buka dokumen reject pada menu PEB/BC 4.1/BC 27 dan periksa alasan penolakan.",
+   "Lakukan muat ulang referensi melalui menu Dokumen Pabean > ikon garis tiga > Muat Ulang Referensi sebelum perekaman.",
+   "Pastikan SKEP TPB yang dipilih adalah SKEP terbaru dan tanggal berlakunya sesuai; jika tidak ditemukan, gunakan nomor SKEP terbaru yang berlaku.",
+   "Periksa pengisian NITKU 22 digit (16 digit NPWP pusat + 6 digit urut cabang); jika kolom NPWP tidak aktif, NPWP akan terisi otomatis dari NITKU.",
+   "Perbaiki tanggal dokumen agar sesuai dengan tanggal SKEP yang berlaku, lalu submit ulang.",
+   "Jika kendala berlanjut, eskalasi ke IKC Service Desk dengan menyertakan detail dokumen tanpa data sensitif."
+  ],
+  "catatan": "Selalu muat ulang referensi sebelum perekaman dokumen. Jika masalah terkait validitas NITKU/NPWP dari sisi sistem pajak, arahkan pengguna untuk berkonsultasi ke kantor pajak; eskalasi ke IKC Service Desk jika solusi tidak menyelesaikan."
+ },
+ "PEB (Ekspor) | PEB - Tidak Muncul": {
+  "domain": "PEB (Ekspor)",
+  "masalah": "PEB - Tidak Muncul",
+  "jumlah": 10,
+  "ringkasan": "Masalah PEB tidak muncul saat penerbitan faktur pajak keluaran atau input dokumen pendukung di e-Faktur/Coretax. Biasanya terjadi setelah dokumen PEB selesai proses atau setelah perbaikan data, namun data belum terkirim ulang ke DJP.",
+  "langkah": [
+   "Cek status dokumen PEB/BC 4.0 di CEISA 4.0; pastikan status sudah selesai proses.",
+   "Login ke Portal 4.0 (https://portal.beacukai.go.id), pilih menu Single Core System > Dokumen Pabean, cari nomor aju PEB, klik tombol AKSI, lalu klik 'Kirim Faktur Pajak'.",
+   "Pastikan aplikasi e-Faktur yang digunakan versi terbaru dan nomor dokumen pendukung diisi sesuai format tanpa spasi.",
+   "Jika menggunakan impor CSV, buka web-efaktur.pajak.go.id, pilih menu Download CSV Prepop, pilih jenis dokumen BC 4.0, ekstrak file, isi NSFP, lalu impor ke e-Faktur desktop.",
+   "Ulangi pengiriman ulang faktur pajak dari CEISA 4.0 dan unggah ulang faktur pajak hingga berhasil."
+  ],
+  "catatan": "Kendala dapat berulang setelah perbaikan data atau saat menggunakan Coretax; jika status dokumen belum selesai, koordinasikan dengan hanggar terkait. Jika tetap gagal setelah langkah di atas, arahkan pengguna jasa ke KPP terdekat atau buat tiket ke IKC Service Desk untuk penyesuaian database DJBC."
+ },
+ "Cukai | Cukai - Lainnya": {
+  "domain": "Cukai",
+  "masalah": "Cukai - Lainnya",
+  "jumlah": 113,
+  "ringkasan": "Kendala cukai lain-lain umumnya berupa permintaan perbaikan data tarif/merek pada KEP, penyesuaian kuota P3C, rekon billing CK-1/SPPR, dan kendala pelaporan LACK-1 di CEISA 4.0. Biasanya terjadi setelah perekaman KEP baru, pembayaran billing, atau pelaporan periodik.",
+  "langkah": [
+   "Periksa jenis permintaan dan kelengkapan dokumen pendukung (KEP tarif, bukti bayar, CK-1/SPPR, screenshot error) dari pengguna.",
+   "Cek data di CEISA 4.0 pada menu Referensi/Tarif untuk permintaan perubahan merek, HJE, isi kemasan, atau tanggal berlaku; bandingkan dengan KEP.",
+   "Untuk kendala rekon billing CK-1/SPPR, cek status di menu Perbendaharaan dan lakukan rekon manual melalui menu Billing, pastikan NTPN dan masa pajak sesuai.",
+   "Untuk penyesuaian Sisa Maksimal Pesan P3C, hitung ulang rata-rata CK-1 6 bulan terakhir dan bandingkan dengan nilai di CEISA 4.0; jika berbeda, ajukan penyesuaian dengan lampiran data CK-1.",
+   "Untuk kendala LACK-1, pastikan saldo periode sebelumnya sudah benar; jika data tidak muncul saat tambah, coba rekam ulang dan cek tabel uraian, lalu kirim dan cetak bukti terima.",
+   "Jika perubahan tidak dapat dilakukan atau terdapat indikasi error sistem, teruskan ke IKC Service Desk dengan melampirkan data dan kronologi."
+  ],
+  "catatan": "Perbaikan data yang menyangkut KEP tarif dan merek sering memerlukan penyesuaian oleh pusat; pastikan dokumen KEP asli dan bukti bayar valid. Eskalasi ke IKC Service Desk jika kendala berulang atau tidak dapat diatasi melalui menu yang tersedia."
+ },
+ "Cukai | Cukai - CK-5 PMBKC": {
+  "domain": "Cukai",
+  "masalah": "Cukai - CK-5 PMBKC",
+  "jumlah": 66,
+  "ringkasan": "Kendala pada dokumen CK-5 PMBKC di CEISA 4.0 meliputi status dokumen tidak sesuai (tetap muncul di Task To Do setelah batal atau tidak muncul), data tidak lengkap/salah, satuan tidak tampil saat input, dan tanggal pengeluaran tidak sesuai. Biasanya dilaporkan saat pengguna mengajukan pembatalan, perbaikan, atau pembuatan CK-5.",
+  "langkah": [
+   "Kumpulkan data awal: nama perusahaan, NPPBKC, nomor CK-5 dan tanggal, screenshot error, serta data CK-1 terakhir dan KEP tarif jika terkait kendala satuan.",
+   "Cek status dokumen di menu CK-5 dan Task To Do. Jika status sudah batal tetapi masih muncul di Task To Do, lakukan Muat Ulang Referensi di Portal PJ 4.0 lalu perbarui Task To Do.",
+   "Jika status CK-5 tidak muncul atau tidak bisa cetak, verifikasi pengisian data dan lakukan sinkronisasi referensi; minta screenshot error untuk penelitian.",
+   "Untuk perbaikan dokumen CK-5 yang sudah terbit (contoh: tempat penimbunan, kantor asal, nomor surat jalan, tanggal) yang tidak dapat diubah melalui aplikasi, buat Nota Dinas persetujuan perbaikan/pembatalan sesuai SE-16/BC/2019 huruf E angka 6 dan ajukan melalui Direktorat Teknis dan Fasilitas Cukai ke Direktorat Informasi Kepabeanan dan Cukai.",
+   "Jika satuan tidak tampil saat input CK-5, pastikan data CK-1 terakhir dan KEP tarif untuk merek terkait valid dan sudah masuk referensi; lakukan Muat Ulang Referensi, jika belum muncul minta data CK-1 dan KEP untuk pengecekan lebih lanjut.",
+   "Konfirmasi hasil perbaikan/pembatalan kepada pengguna dan pastikan dokumen sudah sesuai; jika kendala berlanjut, eskalasi ke IKC Service Desk."
+  ],
+  "catatan": "Perhatikan perbedaan kasus: kesalahan data setelah dokumen terbit memerlukan Nota Dinas jika tidak dapat diubah via aplikasi. Selalu minta screenshot error dan data pendukung; eskalasi ke IKC Service Desk jika solusi lokal tidak menyelesaikan dalam 1x24 jam atau masalah sistem berulang."
+ },
+ "Cukai | Cukai - CK-4C": {
+  "domain": "Cukai",
+  "masalah": "Cukai - CK-4C",
+  "jumlah": 25,
+  "ringkasan": "Kendala pelaporan CK-4C umumnya terjadi saat upload excel atau input rincian, misalnya daftar merk kosong, muncul notifikasi format tanggal harus text, atau error 'For input string' akibat merk tidak aktif/template berubah.",
+  "langkah": [
+   "Unduh ulang template CK-4C terbaru dari Portal CEISA 4.0 dan pastikan kolom tgl dok produksi, no dok produksi, s.d. keterangan terisi lengkap.",
+   "Periksa kolom JUMLAH KEMASAN BERPITA pada template; jangan mengubah format atau menghapus kolom bawaan.",
+   "Untuk kolom tanggal, beri tanda petik tunggal di depan tanggal dengan format 'dd/mm/yyyy (contoh: '08/07/2026) agar terbaca sebagai teks.",
+   "Hapus baris yang nilai jumlah kemasan dan jumlah kemasan berpita sama dengan nol sebelum upload.",
+   "Pastikan minimal satu merk terisi pada rincian CK-4C; jika daftar merk kosong atau merk aktif tidak muncul, lakukan Muat Ulang Referensi di Portal PJ 4.0 dan cek status merk aktif.",
+   "Jika error tetap muncul, minta pengguna lampirkan file excel melalui Google Drive dengan akses terbuka untuk ditelusuri."
+  ],
+  "catatan": "Error sering disebabkan format tanggal/teks tidak sesuai, template diubah, atau merk belum aktif. Jika merk tidak aktif berulang dan menghambat pelaporan, eskalasi ke IKC Service Desk untuk pemutakhiran referensi."
+ },
+ "Cukai | Cukai - P3C": {
+  "domain": "Cukai",
+  "masalah": "Cukai - P3C",
+  "jumlah": 13,
+  "ringkasan": "Kendala pada modul P3C CEISA 4.0 seperti input tidak tersimpan, saldo pita cukai tidak bertambah setelah penerimaan DPPC, menu intersep/evaluasi nonaktif, atau jumlah pengajuan tidak sesuai perhitungan. Biasanya terjadi saat perekaman P3C awal, penambahan pita cukai, evaluasi intersep, atau proses terima DPPC.",
+  "langkah": [
+   "Cek status perekaman di menu Cukai > P3C dan pastikan seluruh kolom jumlah serta data pengajuan sudah terisi benar, lalu lakukan Submit ulang.",
+   "Lakukan Muat Ulang Referensi di Portal CEISA 4.0, kemudian log out dan log in kembali untuk menyegarkan data.",
+   "Verifikasi saldo pita cukai pada menu Persediaan/Stock Pita Cukai dan cocokkan dengan DPPC yang telah diterima; jika saldo tidak bertambah atau tertimpa, catat selisihnya.",
+   "Periksa menu Intersep P3C atau Kelola Intersep: sesuai PER-5/BC/2022 dan SE-13/BC/2024, menu tersebut hanya aktif setelah 6 bulan sejak penetapan daftar pembatasan atau minimal 3 bulan jika ada permohonan evaluasi.",
+   "Pastikan profil NPPBKC di Portal CEISA 4.0 memuat lokasi pengambilan pita cukai yang sesuai dengan KPPBC pengawasan; jika tidak sesuai, ajukan perubahan data profil.",
+   "Bila kendala teknis atau selisih saldo tetap berlanjut, buat tiket CEISA Care/eskalasi ke IKC Service Desk dengan melampirkan tangkapan layar error, DPPC, dan data pendukung lainnya."
+  ],
+  "catatan": "Beberapa kendala P3C terkait erat dengan aturan evaluasi intersep dan sinkronisasi DPPC; pastikan pengguna tidak mengubah data sebelum proses simpan selesai dan selalu muat ulang referensi setelah perbaikan. Segera eskalasi ke IKC Service Desk jika menu evaluasi seharusnya aktif tetapi tidak muncul, atau saldo pita cukai tetap tidak sesuai setelah penyesuaian."
+ },
+ "Cukai | Cukai - LACK": {
+  "domain": "Cukai",
+  "masalah": "Cukai - LACK",
+  "jumlah": 44,
+  "ringkasan": "Masalah LACK umumnya berupa permintaan perbaikan data LACK-1 (kesalahan unit, nomor PBCK, data pemasok) atau KEP Pengguna lama saat lapor LACK-4. Biasanya muncul setelah perusahaan mengajukan perbaikan data atau saat periode pelaporan berjalan.",
+  "langkah": [
+   "Verifikasi jenis dokumen LACK yang dilaporkan (LACK-1 atau LACK-4) dan kelengkapan lampiran berupa surat persetujuan perbaikan dari KPPBC serta LACK-1 manual.",
+   "Untuk permintaan perbaikan data LACK-1, sampaikan kepada pengguna bahwa perubahan data tidak dapat langsung diakomodir oleh Direktorat IKC; pengguna wajib mengirim nota dinas permohonan perubahan data ke Direktorat Teknis dan Fasilitas Cukai.",
+   "Pantau tiket hingga ada tindak lanjut dari Direktorat IKC setelah nota dinas disetujui; jika belum ada respons, eskalasi tiket ke IKC Service Desk dengan melampirkan bukti persetujuan.",
+   "Untuk kendala KEP Pengguna lama saat lapor LACK-4, minta pengguna memperbarui data profil KEP Pengguna di Portal CEISA 4.0 dan lakukan Muat Ulang Referensi.",
+   "Jika koreksi sebelumnya oleh IKC menyebabkan data hilang atau tidak sesuai, buat tiket ulang dengan melampirkan surat permohonan, LACK-1 hasil download dari CEISA 4.0, dan LACK-1 manual sebagai pembanding."
+  ],
+  "catatan": "Hanya CK-5 dan CK-6 yang dapat diakomodir langsung oleh Direktorat IKC sesuai PMK 89/2025; dokumen cukai lain termasuk LACK-1 masih menunggu mapping dan memerlukan nota dinas ke Direktorat Teknis dan Fasilitas Cukai. Eskalasi ke IKC Service Desk jika persyaratan sudah lengkap atau koreksi IKC menimbulkan anomali data baru."
+ },
+ "Cukai | Cukai - CK-3": {
+  "domain": "Cukai",
+  "masalah": "Cukai - CK-3",
+  "jumlah": 9,
+  "ringkasan": "Kendala dokumen CK-3 (kompensasi/pengurang cukai) belum muncul atau tidak dapat digunakan di CEISA 4.0; umumnya terjadi saat data masih di aplikasi ExSIS, status CK-3 belum lunas, atau jenis penggunaan belum ditentukan.",
+  "langkah": [
+   "Cek status CK-3 pada menu CK-3 di CEISA 4.0: pastikan nomor CK-3 dan tanggal sesuai, serta status pembayaran lunas.",
+   "Jika CK-3 belum lunas, buat billing biaya pengganti melalui CEISA 4.0 Perbend sesuai nomor CK-3, tunggu rekon dengan data ExSIS.",
+   "Jika CK-3 lunas tetapi belum muncul di menu CK-3, buat tiket CEISACare untuk migrasi data CK-3 dari ExSIS ke CEISA 4.0 Cukai.",
+   "Arahkan Pejabat Fungsional (PJ) untuk menentukan jenis penggunaan CK-3 melalui menu CK4 pada portal: buka kolom aksi, klik ikon pesawat, pilih 'kompensasi' agar dapat dipakai sebagai kompensasi.",
+   "Setelah CK-3 muncul atau jenis penggunaan tersimpan, lanjutkan pembuatan CK-1 dengan memilih opsi Pengurang/Kompensasi."
+  ],
+  "catatan": "Perhatikan kesesuaian nomor dan tanggal CK-3 dengan PBCK-4. Jika setelah langkah di atas dokumen tetap tidak muncul, eskalasi ke IKC Service Desk dengan menyertakan bukti bayar dan data CK-3."
+ },
+ "Cukai | Cukai - CK-1 Pita Cukai": {
+  "domain": "Cukai",
+  "masalah": "Cukai - CK-1 Pita Cukai",
+  "jumlah": 59,
+  "ringkasan": "Kendala CK-1 pita cukai biasanya terjadi saat pengguna mengakses pemesanan pita cukai, persetujuan CK-1, pengecekan saldo penundaan, atau perubahan NPWP. Masalah umum meliputi merk tidak muncul, saldo tidak sesuai, status pembayaran belum lunas, billing ganda, dan cetakan PDF terpotong.",
+  "langkah": [
+   "Identifikasi jenis kendala CK-1 dari tiket (merk tidak muncul, saldo penundaan, status pembayaran, perubahan NPWP, atau billing ganda) dan mintakan tangkapan layar untuk verifikasi.",
+   "Untuk merk pita cukai tidak muncul saat pemesanan CK-1, periksa perekaman Surat Kuasa di Portal CEISA 4.0: buka menu Cukai > Kuasa, klik Tambah, isi Nama Pengaju Kuasa, Status Kuasa, Nomor/Tanggal Surat Kuasa, unggah dokumen, lalu klik Submit.",
+   "Jika saldo pada Buku Rekening Penundaan tidak sesuai, cek riwayat transaksi di menu tersebut dan bandingkan dengan Surat Keputusan pemberian penundaan; lakukan sinkronisasi data atau cek masa berlaku SK bila tersedia.",
+   "Jika muncul status 'CK-1 ini Belum Dibayar/Belum Lunas!' atau billing ganda, periksa status billing di menu Browse Billing pada submenu pemesanan pita cukai; pastikan rekon sudah benar dan jika terjadi pembayaran ganda, arahkan pengguna mengajukan permohonan pengembalian kelebihan pembayaran ke KPPBC.",
+   "Untuk perubahan NPWP, minta pengguna daftar akun baru dengan NPWP baru atau ajukan perubahan NPWP pada akun lama dengan melampirkan Surat Permohonan Perubahan Data ke DJBC; jelaskan bahwa billing dengan NPWP lama tidak dapat dilihat kembali."
+  ],
+  "catatan": "Beberapa kendala memerlukan dokumen pendukung seperti Surat Kuasa, SK penundaan, atau Surat Permohonan Perubahan Data bermaterai. Jika kendala cetakan PDF terpotong, sarankan pengguna menggunakan browser terbaru atau membersihkan cache; jika tetap berlanjut, eskalasi ke IKC Service Desk dengan lampiran tangkapan layar."
+ },
+ "Cukai | Kasus Lainnya": {
+  "domain": "Cukai",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 133,
+  "ringkasan": "Kasus-kasus non-rutin pada modul Cukai seperti dokumen CK-1 yang macet, saldo pita cukai ganda, perbedaan tanggal berlaku tarif cukai, dan kendala pendaftaran PJ. Biasanya terjadi saat submit dokumen, penomoran, atau perubahan referensi tarif.",
+  "langkah": [
+   "Verifikasi laporan dengan meminta nomor dokumen, NPWP, NPPBKC, kode personalisasi, dan screenshot error dari pengguna.",
+   "Cek status dokumen pada menu \"Monitoring Dokumen CK-1\" di CEISA 4.0 untuk mengidentifikasi dokumen yang macet pada status Validasi, Penomoran, atau Create Billing.",
+   "Bandingkan data saldo pita cukai di ExSIS Online dengan riwayat transaksi CK-1 di CEISA 4.0 untuk mendeteksi duplikasi atau selisih saldo.",
+   "Periksa referensi tarif cukai pada menu \"Referensi Tarif Cukai\" di Portal PJ 4.0; pastikan tanggal berlaku sesuai dengan tanggal KEP penetapan, bukan tanggal input.",
+   "Lakukan perbaikan data yang menjadi kewenangan lokal (mis. pembatalan dokumen di SAPP, penyesuaian saldo, perubahan tanggal berlaku). Jika tidak dapat dilakukan, eskalasi ke IKC Service Desk dengan melampirkan kronologi, data pendukung, dan ID Proses."
+  ],
+  "catatan": "Selalu minta data pendukung lengkap sebelum eskalasi. Untuk permintaan dokumentasi API, arahkan pengguna untuk menyampaikan usulan melalui kanal resmi; penyesuaian data yang kompleks dilakukan oleh IKC Service Desk."
+ },
+ "Cukai | Cukai - STCK - 1 Surat Tagihan": {
+  "domain": "Cukai",
+  "masalah": "Cukai - STCK - 1 Surat Tagihan",
+  "jumlah": 6,
+  "ringkasan": "Kendala umum pada dokumen STCK-1 Surat Tagihan di CEISA 4.0 SAPP, biasanya terjadi saat perekaman/pembatalan, penyesuaian tanggal terima, atau rekon billing setelah pembayaran angsuran.",
+  "langkah": [
+   "Cek status dokumen STCK-1 dan billing terkait di menu SAPP atau Browse Billing CEISA 4.0.",
+   "Jika STCK-1 gagal dibatalkan karena nomor sudah tersimpan atau error saat submit, minta pengguna melampirkan surat persetujuan pembatalan dan lakukan pembatalan melalui inhouse petugas.",
+   "Untuk dokumen angsuran ex STCK-1 yang sudah dibayar tetapi status stuck 'Tunggu Rekon CEISA', lakukan pengecekan dan dorong rekon billing hingga status berubah menjadi lunas.",
+   "Jika jatuh tempo tagihan perlu disesuaikan karena perbedaan tanggal terima, ubah Tanggal Terima di menu Edit Tanggal Terima pada CEISA 4.0 SAPP agar billing baru terbit dengan jatuh tempo sesuai PMK 115/2024 pasal 11.",
+   "Setelah penyesuaian atau rekon, verifikasi kembali status STCK-1 dan billing di SAPP untuk memastikan pembayaran sudah terkoneksi."
+  ],
+  "catatan": "Perhatikan jatuh tempo tagihan adalah 30 hari sejak surat tagihan diterima; jika setelah rekon status masih tidak berubah, eskalasi ke IKC Service Desk."
+ },
+ "TPB / BC 2.x | TPB - Lainnya": {
+  "domain": "TPB / BC 2.x",
+  "masalah": "TPB - Lainnya",
+  "jumlah": 13,
+  "ringkasan": "Masalah TPB umumnya terjadi saat dokumen BC 2.x/4.x tidak muncul pada menu PFPD atau pemeriksaan fisik, perubahan data pasca-persetujuan, serta pembaruan SKEP TPB di SILFIANA/CEISA 4.0. Biasanya timbul setelah submit/re-submit dokumen atau saat referensi SKEP belum diperbarui.",
+  "langkah": [
+   "Cek status dokumen di menu Monitoring Dokumen atau Task To Do CEISA 4.0 menggunakan nomor AJU.",
+   "Lakukan Muat Ulang Referensi di Portal PJ 4.0 untuk memastikan parameter SKEP dan TPB terbaru.",
+   "Pastikan SKEP terbaru telah direkam di aplikasi SILFIANA; jika belum, minta petugas Kanwil merekam tanpa menonaktifkan SKEP lama yang masih digunakan.",
+   "Untuk dokumen BC 40/41 yang tidak muncul di menu Pemeriksaan Fisik, verifikasi kembali antrian/pelimpahan dokumen pada menu Pemeriksaan Fisik atau PFPD; apabila tetap tidak tersedia, laporkan ke IKC Service Desk.",
+   "Untuk perubahan data pasca-persetujuan seperti nomor segel, periksa menu Perbaikan Data pada dokumen terkait; jika opsi tidak tersedia, eskalasi ke IKC Service Desk karena perubahan harus dilakukan melalui sistem.",
+   "Jelaskan kepada pengguna bahwa data BC 2.5 tidak dipertukarkan ke DJP; arahkan konsultasi ke Kantor Pelayanan Pajak terdaftar untuk pembuatan faktur pajak."
+  ],
+  "catatan": "Jangan nonaktifkan SKEP lama selama masih digunakan pada dokumen berjalan; jika dokumen telah terlanjur mendapat jalur merah, proses sesuai ketentuan jalur merah. Eskalasi ke IKC Service Desk bila dokumen tetap tidak muncul setelah Muat Ulang Referensi atau memerlukan perubahan data yang tidak dapat dilakukan manual."
+ },
+ "TPB / BC 2.x | BC 2.3 - Segel tidak muncul": {
+  "domain": "TPB / BC 2.x",
+  "masalah": "BC 2.3 - Segel tidak muncul",
+  "jumlah": 12,
+  "ringkasan": "Nomor tanda pengaman (segel) tidak muncul pada cetakan SPPB BC 2.3, umumnya terjadi setelah penambahan kontainer melalui Notul atau saat sinkronisasi data kontainer ke TPS.",
+  "langkah": [
+   "Cek riwayat respon SPPB di menu CEISA 4.0 untuk memastikan data segel terbaru sudah terekam.",
+   "Periksa lembar SPPB yang tercetak; jika segel masih kosong, lakukan Muat Ulang Referensi di Portal PJ 4.0.",
+   "Jika segel ditambahkan melalui Notul, pastikan status notul di menu Task To Do sudah disetujui.",
+   "Cetak ulang SPPB setelah sinkronisasi data dan verifikasi nomor segel pada semua kontainer.",
+   "Bila segel tetap tidak muncul, ajukan tiket CEISA Care dengan mencantumkan nomor aju dan detail kontainer yang bermasalah."
+  ],
+  "catatan": "Pastikan seluruh data kontainer dan segel telah lengkap sebelum pengajuan awal. Eskalasi ke IKC Service Desk jika segel tetap kosong setelah notul disetujui dan data sudah tersinkron."
+ },
+ "TPB / BC 2.x | Kasus Lainnya": {
+  "domain": "TPB / BC 2.x",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 41,
+  "ringkasan": "Masalah pada modul TPB/BC 2.x umumnya berupa validasi data master tidak terbaca (SKEP/izin TPB, kurs, referensi kantor pabean), permohonan transaksional TPB gagal submit/approve, atau perubahan dokumen BC 4.0 tidak sesuai ketentuan. Kondisi ini sering terjadi saat pembekuan izin, perubahan referensi, atau penomoran belum diseting.",
+  "langkah": [
+   "Cek status SKEP/izin TPB pada menu Profil/Entitas TPB di Portal CEISA 4.0 dan verifikasi data pembekuan izin pada aplikasi Silfiana.",
+   "Lakukan Muat Ulang Referensi pada Portal PJ 4.0 untuk memuat ulang daftar kantor pabean, nomor izin TPB, dan kurs terkini.",
+   "Periksa pengaturan penomoran izin melalui menu Setting Izin > Setting Penomoran; pastikan nomor untuk persetujuan dan penolakan sudah diatur, termasuk jenis permohonan transaksional.",
+   "Untuk dokumen BC 4.0/BC 2.7 yang reject karena SKEP tidak ditemukan atau perlu konfirmasi, arahkan pengusaha melakukan Konfirmasi Single Document pada akun portal penerima sebelum gate-in atau respon.",
+   "Untuk perubahan dokumen BC 4.0, pastikan perubahan dilakukan sebelum SPPD terbit sesuai PER-30/BC/2024; jika muncul persetujuan manual pada Dashboard Perbaikan, verifikasi apakah seharusnya diproses otomatis oleh sistem.",
+   "Jika error saat penandatanganan persetujuan oleh Kepala Seksi atau menu persetujuan tidak tampil, cek antrian Task To Do dan lakukan refresh/sinkronisasi; eskalasi ke IKC Service Desk jika masih gagal."
+  ],
+  "catatan": "Perhatikan ketentuan PER-30/BC/2024 tentang perubahan dokumen TPB dan pembekuan SKEP. Jika data di Silfiana tidak sesuai pasal yang seharusnya atau sistem tidak berjalan sesuai aturan, eskalasi ke IKC Service Desk dengan kronologi singkat."
+ },
+ "TPB / BC 2.x | BC 2.3 - Data Tidak Muncul di TPS": {
+  "domain": "TPB / BC 2.x",
+  "masalah": "BC 2.3 - Data Tidak Muncul di TPS",
+  "jumlah": 8,
+  "ringkasan": "BC 2.3 tidak muncul di TPS sehingga pengangkut tidak dapat mencetak EIR atau melakukan gate out, biasanya terjadi setelah submit/persetujuan atau karena perubahan kode tempat penimbunan.",
+  "langkah": [
+   "Cek status dokumen BC 2.3 dan riwayat pengirimannya di CEISA 4.0 melalui menu Monitoring atau Task To Do.",
+   "Jika dokumen sudah terkirim tetapi belum muncul, lakukan kirim ulang data ke TPS melalui menu Kirim Ulang/Resend Data TPS di CEISA 4.0.",
+   "Minta petugas TPS untuk melakukan get data on demand dan tarik ulang data BC 2.3 di sistem TPS.",
+   "Verifikasi status Gate In TPB dan Gate Out TPS pada monitoring; pastikan kode tempat penimbunan yang digunakan sudah benar.",
+   "Jika terdapat perubahan nama atau kode tempat penimbunan, ajukan permohonan pembetulan dokumen ke KPPBC TMP A Pasuruan.",
+   "Jika semua langkah di atas tidak berhasil, eskalasi ke IKC Service Desk dengan melampirkan tangkapan layar kendala dan nomor Aju."
+  ],
+  "catatan": "Gunakan nomor Aju sebagai referensi pelaporan. Perubahan kode TPS setelah submit melalui SSM memerlukan pembetulan dokumen ke KPPBC; eskalasi ke IKC Service Desk jika TPS tetap tidak menerima data setelah resend ulang."
+ },
+ "Inhouse / PFPD | Inhouse - PFPB Tidak Bisa Rekam LHP": {
+  "domain": "Inhouse / PFPD",
+  "masalah": "Inhouse - PFPB Tidak Bisa Rekam LHP",
+  "jumlah": 16,
+  "ringkasan": "Masalah terjadi saat pengguna mencoba merekam LHP dokumen BC 3.0/4.0/40 yang berstatus pemeriksaan fisik, namun dokumen tidak muncul di menu LHP atau proses kirim LHP gagal. Umumnya disebabkan status dokumen sudah berubah, SKEP TPB/PLB tidak aktif, atau kendala teknis browser/ukuran file.",
+  "langkah": [
+   "Cek status dokumen di CEISA menggunakan nomor aju/nopen; pastikan status masih 'Pemeriksaan Fisik' dan belum selesai pemeriksaan fisik.",
+   "Buka Silfiana > Browse SKEP TPB/PLB, periksa status SKEP yang digunakan; jika tidak aktif, aktifkan SKEP lama dan lakukan update SKEP (bukan tambah SKEP).",
+   "Minta pengguna menggunakan private browser dan pastikan ukuran file lampiran LHP di bawah 2MB.",
+   "Verifikasi NIP petugas yang login atau minta tangkapan layar penuh untuk memastikan dokumen muncul di menu perekaman LHP.",
+   "Eskalasi ke IKC Service Desk jika semua langkah tidak menyelesaikan, sertakan nomor aju, nopen, dan tangkapan layar."
+  ],
+  "catatan": "Penambahan SKEP baru dapat menyebabkan dokumen dianggap entitas baru dan menjadi jalur merah; selalu lakukan update SKEP, bukan tambah. Jika status dokumen sudah selesai pemeriksaan fisik, informasikan bahwa bukan kendala."
+ },
+ "Inhouse / PFPD | Inhouse - Dokumen Pabean Tidak Ditemukan Di Portal": {
+  "domain": "Inhouse / PFPD",
+  "masalah": "Inhouse - Dokumen Pabean Tidak Ditemukan Di Portal",
+  "jumlah": 15,
+  "ringkasan": "Masalah ini terjadi ketika pengguna tidak dapat menemukan atau mengakses dokumen pabean (NPPBKC, jaminan BPJ, dokumen BC) di Portal CEISA 4.0, umumnya setelah penambahan dokumen, perubahan data master, atau karena cache browser dan hak akses pengguna.",
+  "langkah": [
+   "Clear cache browser dan akses Portal CEISA 4.0 menggunakan mode incognito/private window.",
+   "Periksa status dokumen pada menu Task To Do atau modul terkait; pastikan status sudah minimal Gate In TPB/KEK atau Selesai Proses.",
+   "Jika dokumen reject karena data master tidak ditemukan, lakukan perekaman ulang data induk (NPPBKC, identitas, NPWP) melalui menu Perekaman Portal, lalu ajukan dokumen baru.",
+   "Untuk akses role kosong atau menu tidak muncul, pastikan login menggunakan akun role admin portal dan kelola akses melalui menu Apps Manager > User Admin Management.",
+   "Gunakan filter tanggal atau perluas rentang pencarian pada modul jaminan jika nomor BPJ/jaminan hanya muncul 3 bulan terakhir.",
+   "Acu panduan setting role di manual CEISA 4.0 bila diperlukan."
+  ],
+  "catatan": "Perhatikan variasi penyebab: status dokumen belum Gate In, data induk belum sinkron, atau role pengguna tidak cukup. Jika setelah langkah di atas dokumen tetap tidak ditemukan, eskalasi ke IKC Service Desk dengan menyertakan detail dokumen dan username admin portal (tanpa password)."
+ },
+ "Inhouse / PFPD | Kasus Lainnya": {
+  "domain": "Inhouse / PFPD",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 21,
+  "ringkasan": "Kendala umum pada modul Inhouse/PFPD seperti validasi lama/gagal, error validasi Excel, perbaikan data entitas, atau masalah lain yang tidak terdefinisi. Biasanya terjadi saat perekaman atau validasi dokumen BC 4.0.",
+  "langkah": [
+   "Identifikasi jenis kendala dan nomor aju/dokumen; pastikan data isian lengkap dan sesuai format.",
+   "Lakukan clear cache browser atau gunakan private window, lalu muat ulang halaman CEISA 4.0 untuk menghindari cache bermasalah.",
+   "Untuk error validasi Excel, periksa sheet Pungutan kolom NILAI PUNGUTAN: pastikan berupa angka bulat tanpa desimal; sesuaikan dengan ketentuan pembulatan.",
+   "Untuk validasi lama atau gagal cek NPWP ke DJA, cek status layanan DJA, tunggu beberapa saat, lalu ulangi validasi; jika tetap gagal, rekam layar.",
+   "Untuk permintaan perbaikan data entitas, pastikan tersedia surat persetujuan perbaikan dokumen dari Kepala Kantor; gunakan menu perbaikan yang tersedia atau ajukan ke admin PFPD.",
+   "Jika kendala berulang atau tidak dapat diselesaikan, lampirkan video tangkapan layar di Google Drive/SharePoint Kemenkeu dan eskalasi ke pengembang melalui tiket CEISA Care."
+  ],
+  "catatan": "Jika menu perbaikan tidak mendukung perubahan entitas, jangan memaksa input manual. Eskalasi ke IKC Service Desk bila kendala berulang atau berpotensi dampak keuangan."
+ },
+ "Inhouse / PFPD | Inhouse - Pegawai Gagal Login": {
+  "domain": "Inhouse / PFPD",
+  "masalah": "Inhouse - Pegawai Gagal Login",
+  "jumlah": 15,
+  "ringkasan": "Pegawai internal tidak dapat login ke CEISA 4.0 atau VPN BIG-IP F5 karena lupa/kadaluarsa password SSO Kemenkeu atau MFA bermasalah setelah ganti perangkat. Kondisi ini biasanya muncul saat password SSO kedaluwarsa atau perangkat autentikasi baru digunakan.",
+  "langkah": [
+   "Arahkan pengguna untuk reset password mandiri melalui https://sso.kemenkeu.go.id/NewAccount/ForgotPassword menggunakan email yang terdaftar di HRIS.",
+   "Pastikan password baru tidak mengandung karakter spesial dan tidak sama dengan password sebelumnya.",
+   "Minta pengguna menunggu 15–30 menit setelah reset agar proses sinkronisasi selesai, lalu coba login kembali ke CEISA 4.0 atau VPN.",
+   "Jika kendala terkait MFA karena ganti perangkat, arahkan reset MFA melalui Service Desk TIK Kemenkeu atau panduan video reset mandiri Collaboration Tools.",
+   "Jika masih gagal login, minta pengguna menyampaikan screenshot error dan detail akun tanpa password untuk eskalasi ke IKC Service Desk."
+  ],
+  "catatan": "Reset password SSO Kemenkeu akan mengubah password untuk aplikasi lain seperti KLC dan SIMAN. Jika kendala berulang atau reset mandiri tidak berhasil, eskalasi ke IKC Service Desk dengan melampirkan screenshot error."
+ },
+ "Inhouse / PFPD | Inhouse - PFPD Menu Error": {
+  "domain": "Inhouse / PFPD",
+  "masalah": "Inhouse - PFPD Menu Error",
+  "jumlah": 6,
+  "ringkasan": "Masalah PFPD Menu Error umumnya terjadi saat pengguna tidak dapat masuk, dokumen tidak muncul untuk redistribusi, atau gagal generate pungutan. Penyebab sering terkait setting pejabat PFPD yang belum diperbarui atau cache browser.",
+  "langkah": [
+   "Periksa dan perbarui pejabat PFPD aktif di menu Referensi/Administrasi Pengguna, pastikan NIP terpasang sesuai pejabat saat ini.",
+   "Untuk kendala login, arahkan pengguna menghapus cache dan data aplikasi browser atau gunakan browser lain sebelum login ulang.",
+   "Jika dokumen tidak muncul di menu Redistribusi Dokumen PFPD/PPDE, cek status dokumen di menu Monitoring Dokumen dan pastikan pejabat pemeriksa masih aktif; jika tidak, ajukan redistribusi melalui CEISA Care.",
+   "Untuk kegagalan generate/tarik pungutan, minta pengguna menghapus cache, menggunakan browser lain, lalu ulangi generate dokumen pungutan.",
+   "Verifikasi status dokumen di menu Task To Do; jika pemeriksaan sudah selesai, sampaikan bahwa tidak perlu tindakan lanjut."
+  ],
+  "catatan": "Selalu pastikan pejabat PFPD terbaru sudah di-setting setelah ada mutasi atau pergantian. Jika langkah di atas tidak menyelesaikan atau membutuhkan redistribusi, eskalasi ke IKC Service Desk."
+ },
+ "Inhouse / PFPD | Inhouse - PFPD Tidak Dapat Rekam Keputusan": {
+  "domain": "Inhouse / PFPD",
+  "masalah": "Inhouse - PFPD Tidak Dapat Rekam Keputusan",
+  "jumlah": 10,
+  "ringkasan": "Dokumen BC 2.5 atau dokumen lainnya yang berstatus Pemeriksaan Dokumen tidak muncul di menu PFPD/Kepala Seksi saat akan merekam keputusan. Hal ini biasanya terjadi karena filter tanggal atau jumlah halaman pada menu tersebut tidak sesuai.",
+  "langkah": [
+   "Buka menu PFPD/Kepala Seksi pada aplikasi CEISA 4.0.",
+   "Setel filter Tanggal Daftar sesuai tanggal Nopen dokumen, bukan tanggal dokumen dibuat.",
+   "Ubah pengaturan jumlah halaman/baris menjadi 100 agar seluruh dokumen pada rentang tanggal tersebut tampil.",
+   "Cari nomor aju pada daftar dokumen yang muncul.",
+   "Jika dokumen ditemukan, lakukan pemutusan dokumen atau keputusan penyesuaian data sesuai kewenangan.",
+   "Jika dokumen tidak ditemukan, koordinasikan dengan petugas PFPD penanggung jawab untuk melakukan pemutusan dokumen."
+  ],
+  "catatan": "Pastikan filter tanggal menggunakan tanggal Nopen. Jika dokumen tetap tidak muncul setelah filter dan pengaturan halaman benar, hubungi WA Ceisa Care untuk eskalasi ke IKC Service Desk."
+ },
+ "Inhouse / PFPD | Inhouse - PFPD resume keputusan muncul selisih": {
+  "domain": "Inhouse / PFPD",
+  "masalah": "Inhouse - PFPD resume keputusan muncul selisih",
+  "jumlah": 12,
+  "ringkasan": "Kendala terjadi saat merekam keputusan PFPD di CEISA 4.0; sistem menampilkan notifikasi 'mohon cek kembali nilai penetapan' karena selisih nilai penetapan atau data yang belum sinkron. Biasanya muncul setelah pembatalan putusan atau perubahan data penetapan.",
+  "langkah": [
+   "Periksa kembali dokumen PFPD di menu Inhouse/PFPD dan pastikan seluruh penetapan barang telah selesai dilakukan.",
+   "Buka menu Resume Keputusan pada dokumen terkait.",
+   "Lakukan rekam keputusan ulang setelah memverifikasi nilai penetapan sudah sesuai.",
+   "Jika masih muncul notifikasi 'mohon cek kembali nilai penetapan', bandingkan nilai penetapan dengan data barang; lakukan koreksi bila terdapat selisih.",
+   "Bila data telah disesuaikan oleh tim CEISA, coba lakukan rekam keputusan kembali."
+  ],
+  "catatan": "Kendala sering disebabkan oleh ketidaksinkronan data antara penetapan dan resume keputusan. Jika dokumen tidak ditemukan atau belum ada penetapan, pastikan nomor aju valid dan lakukan penetapan barang terlebih dahulu; eskalasi ke IKC Service Desk jika langkah di atas tidak menyelesaikan."
+ },
+ "Registrasi & Data User | Registrasi - Entitas Tidak Muncul": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Registrasi - Entitas Tidak Muncul",
+  "jumlah": 15,
+  "ringkasan": "Entitas, modul, atau jenis dokumen tidak muncul di CEISA 4.0 setelah pendaftaran atau saat pembuatan dokumen baru. Kendala ini biasanya terjadi karena perekaman SKEP menggunakan NPWP 16 digit atau data referensi belum sinkron.",
+  "langkah": [
+   "Verifikasi NPWP yang digunakan untuk perekaman SKEP: pastikan memakai NPWP 15 digit, bukan 16 digit, dengan mengecek data referensi DJP.",
+   "Jika entitas tetap tidak muncul, koordinasikan dengan Kanwil terkait untuk melakukan perekaman ulang SKEP menggunakan NPWP 15 digit.",
+   "Cek status akses entitas pada menu Entitas atau Referensi di CEISA 4.0, pastikan SKEP untuk jenis dokumen terkait (mis. BC 3.3, cukai, TPB) sudah terekam.",
+   "Saat membuat dokumen baru dan entitas tidak muncul di header, hapus dulu data Pelabuhan Bongkar dan Kantor Pengawas, isi nomor SKEP pada bagian Entitas, lalu isi kembali data Pelabuhan Bongkar dan Kantor Pengawas.",
+   "Jika kendala terjadi saat pendaftaran user di Portal Pengguna Jasa (ppj.customs.go.id) dan tombol Ambil Data Pajak tidak memunculkan data, gunakan NPWP 15 digit saat proses Ambil Data Pajak.",
+   "Jika semua langkah di atas tidak berhasil, minta pengguna melampirkan screenshot tampilan menu/entitas dan detail kendala, lalu teruskan ke IKC Service Desk untuk pengecekan lebih lanjut."
+  ],
+  "catatan": "Pola paling sering adalah perekaman SKEP memakai NPWP 16 digit sehingga entitas tidak terbaca; selalu pastikan NPWP 15 digit. Untuk modul khusus seperti BC 3.3 atau cukai, cek dulu status referensi entitas sebelum eskalasi."
+ },
+ "Registrasi & Data User | Data User - Daftar dokumen gagal memuat": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Data User - Daftar dokumen gagal memuat",
+  "jumlah": 16,
+  "ringkasan": "Daftar dokumen atau data referensi (NPPBKC, history jaminan, dokumen SKEP TPB) gagal dimuat di CEISA 4.0 ketika basis data referensi diperbarui atau terjadi perubahan izin; biasanya muncul setelah update SKEP/PLB, perubahan referensi bank/HS/TPS, atau karena cache/browser.",
+  "langkah": [
+   "Buka Portal Pengguna Jasa 4.0 di https://portal.beacukai.go.id dan login dengan kredensial Anda.",
+   "Pilih menu Single Core System, klik Utilitas, lalu klik Muat Ulang Referensi untuk menyegarkan data referensi dari database terbaru.",
+   "Cek kembali daftar dokumen atau data yang gagal dimuat di menu terkait.",
+   "Jika dokumen menggunakan SKEP TPB lama tidak muncul, pastikan tidak ada outstanding dokumen dan koordinasikan dengan petugas hanggar untuk melakukan penutupan/update dokumen.",
+   "Bila data masih tidak muncul, lakukan clear cache, gunakan browser lain, atau pastikan koneksi internet stabil."
+  ],
+  "catatan": "Dokumen dengan izin SKEP TPB lama tidak akan tampil sebelum ditutup oleh petugas hanggar; Muat Ulang Referensi hanya membantu untuk referensi baru, bukan dokumen lama. Jika semua langkah sudah dilakukan dan masalah berlanjut, eskalasi ke IKC Service Desk."
+ },
+ "Registrasi & Data User | Kasus Lainnya": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 35,
+  "ringkasan": "Kendala data pengguna atau dokumen pada CEISA 4.0, seperti NITKU/NPPBKC tidak muncul, perbedaan nama Wajib Pajak dengan data DJP, NITKU sudah terdaftar, atau perubahan data dokumen/error penyimpanan; umumnya terjadi saat registrasi, validasi dokumen, atau penyesuaian data.",
+  "langkah": [
+   "Minta pengguna melengkapi data pendukung sesuai kendala: untuk pendaftaran akun minta nama perusahaan, NPWP 16 digit, NITKU/NPPBKC, email, alamat, username, dan password sesuai kebijakan; untuk perubahan data minta nomor aju/dokumen serta data yang benar.",
+   "Cek status dan validitas data NITKU/NPPBKC pada menu Profil Perusahaan/Data User di CEISA 4.0; bandingkan dengan data di Coretax DJP.",
+   "Jika NITKU/NPPBKC tidak muncul atau sudah terdaftar, arahkan pengguna untuk menggunakan fitur lupa akun/reset password atau ajukan permohonan perubahan data melalui CEISA 4.0.",
+   "Untuk perbedaan nama antara CEISA dan Coretax, lakukan Muat Ulang Referensi di Portal PJ 4.0; jika belum sinkron, buat tiket eskalasi ke IKC Service Desk dengan melampirkan nomor aju, tangkapan layar error validasi, dan data pembanding.",
+   "Untuk dokumen yang sudah terekam dengan data salah (misalnya penerima barang atau jaminan), ajukan pembetulan melalui menu yang tersedia di CEISA 4.0 atau teruskan ke IKC Service Desk dengan melampirkan surat persetujuan kepala kantor jika ada.",
+   "Pantau status tiket dan informasikan ke pengguna setelah proses sinkronisasi, pembetulan, atau eskalasi selesai."
+  ],
+  "catatan": "Perhatikan perbedaan data antara CEISA 4.0 dan Coretax DJP; jika kendala terkait perubahan data yang memerlukan otoritas IKC atau tidak dapat diselesaikan di level PDAD, segera eskalasi ke IKC Service Desk dengan kelengkapan data dan bukti dukung."
+ },
+ "Registrasi & Data User | Data User - Gagal tambah role": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Data User - Gagal tambah role",
+  "jumlah": 10,
+  "ringkasan": "Pengguna melaporkan menu/modul CEISA 4.0 tidak muncul, akses ditolak, atau data akun tidak sesuai setelah penambahan role oleh super user perusahaan. Masalah ini biasanya terjadi saat perusahaan menambah role baru, mengganti email, atau mengganti data penanggung jawab akun.",
+  "langkah": [
+   "Verifikasi penambahan role oleh Super User Perusahaan di Portal CEISA 4.0 melalui menu Setting Role Akses Menu. Pastikan role target sudah dicentang dan tersimpan.",
+   "Minta pengguna logout lalu login kembali, kemudian cek kembali menu yang seharusnya muncul.",
+   "Jika menu masih tidak muncul atau muncul keterangan 'Unauthorized', arahkan pengguna untuk membuka panduan resmi Setting Role Akses Menu di Portal CEISA 4.0 dan cocokkan langkah penambahan role.",
+   "Jika kendala terkait perubahan data akun seperti email atau ketidaksesuaian dengan akun induk, sampaikan bahwa perubahan data wajib melalui surat resmi ke dit.ikc@customs.go.id atau tiket CeisaCare dengan melampirkan Surat Permohonan Perubahan Data yang ditandatangani pimpinan dan bermeterai, beserta dokumen pendukung seperti NIB, NPWP, identitas, akta perusahaan, dan tangkapan layar.",
+   "Bila setelah langkah di atas akses masih gagal, minta pengguna melampirkan tangkapan layar kendala, username, dan email, lalu eskalasi ke IKC Service Desk untuk pengecekan lanjutan."
+  ],
+  "catatan": "Variasi laporan meliputi menu tidak muncul setelah role ditambah, akun baru tidak sama dengan induk, atau filter dokumen tidak lengkap. Perubahan data atau email tidak dapat diproses langsung oleh helpdesk dan harus melalui surat resmi; eskalasi hanya jika role sudah benar dan panduan telah diikuti."
+ },
+ "Registrasi & Data User | Data User - Dashboard blank (kosong)": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Data User - Dashboard blank (kosong)",
+  "jumlah": 15,
+  "ringkasan": "Dashboard CEISA blank umumnya terjadi setelah login berhasil namun halaman utama atau menu navigasi tidak menampilkan data, sering dilaporkan pada akun baru atau setelah pembaruan sistem. Masalah ini dapat bersifat sementara akibat cache browser atau kesalahan sinkronisasi data user.",
+  "langkah": [
+   "Minta pengguna membersihkan cache dan cookies browser atau menggunakan mode Private/Incognito, kemudian login ulang ke CEISA.",
+   "Cek data dan role akun di menu Manajemen User pada Portal PJ 4.0, pastikan akun terdaftar dan memiliki kewenangan akses yang sesuai.",
+   "Lakukan Muat Ulang Referensi di Portal PJ 4.0 untuk menyinkronkan ulang data referensi yang mungkin tidak lengkap.",
+   "Jika dashboard masih kosong, isolasi masalah dengan meminta pengguna login menggunakan akun lain pada browser yang sama untuk memastikan bukan kendala perangkat.",
+   "Minta pengguna mengirimkan tangkapan layar halaman blank dan informasi akun (username/email) tanpa password untuk pengecekan lebih lanjut.",
+   "Apabila setelah pengecekan data user dan referensi tidak ditemukan anomali, eskalasikan tiket ke IKC Service Desk dengan melampirkan kronologi dan hasil isolasi."
+  ],
+  "catatan": "Pola blank sering terjadi pada akun baru atau setelah migrasi data; pastikan pengguna login ulang setelah sinkronisasi selesai. Jika menu khusus seperti Single Core System tidak muncul, periksa kembali pengaturan role di Manajemen User sebelum melakukan eskalasi."
+ },
+ "Registrasi & Data User | Registrasi - NITKU": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Registrasi - NITKU",
+  "jumlah": 17,
+  "ringkasan": "Kendala pendaftaran akun CEISA 4.0 karena NITKU tidak dikenal atau tidak cocok dengan NPPBKC, serta perubahan kolom NITKU pada entitas yang tidak bisa disesuaikan; biasanya terjadi saat pengguna jasa mengajukan pendaftaran akun baru atau mengubah NITKU untuk keperluan faktur pajak.",
+  "langkah": [
+   "Cek validitas NITKU dan NPPBKC melalui aplikasi ExSis atau menu Profil Entitas pada Portal Pengguna Jasa CEISA 4.0 untuk memastikan data terdaftar dan sesuai.",
+   "Jika NITKU tidak dikenal saat pendaftaran akun, minta pengguna melengkapi data pendaftaran melalui tiket Ceisa Care: nama lengkap perusahaan, nomor HP, NPWP 16 digit yang terdaftar pada NPPBKC, email, alamat, username (huruf kecil tanpa spasi), password (8 karakter huruf/angka dengan huruf besar dan kecil), dan NPPBKC.",
+   "Daftarkan akun pengguna jasa melalui menu Pendaftaran Pengguna Jasa di Portal CEISA 4.0 dengan data yang telah dilengkapi.",
+   "Minta pengguna melakukan verifikasi akun dengan mengklik tautan 'Verifikasi' pada email yang dikirim ke alamat email terdaftar, kemudian login menggunakan username dan password yang sudah dibuat.",
+   "Jika kendala berupa NITKU sudah terdaftar tetapi perlu perubahan atau penyesuaian (misal NITKU cabang berbeda dengan kantor utama), eskalasi ke IKC Pusat melalui Service Desk IKC karena perubahan elemen data entitas tidak dapat dilakukan di tingkat satker; lampirkan dokumen pendukung seperti surat persetujuan atau dokumen BC 4.0.",
+   "Pantau status perbaikan data entitas/NITKU secara berkala dan informasikan kepada pengguna jika perubahan sudah diterapkan pada sistem."
+  ],
+  "catatan": "Perhatikan perbedaan NITKU untuk kantor utama dan cabang karena dapat menyebabkan penolakan submit dokumen. Jika perubahan entitas/NITKU sudah disetujui tetapi belum berubah pada SPPB atau dokumen lainnya, segera eskalasi ke IKC Service Desk dengan melampirkan nomor aju dan surat persetujuan."
+ },
+ "Registrasi & Data User | Registrasi - Email Aktivasi": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Registrasi - Email Aktivasi",
+  "jumlah": 10,
+  "ringkasan": "Kendala aktivasi akun CEISA 4.0 karena link aktivasi tidak terkirim atau email sudah terdaftar pada akun lain, umumnya terjadi setelah pengguna jasa selesai melakukan registrasi portal.",
+  "langkah": [
+   "Minta data kelengkapan pendaftaran: nama perusahaan, NPPBKC, NPWP 16 digit, alamat email, nomor HP, alamat, username (huruf kecil tanpa spasi), dan password sesuai ketentuan keamanan.",
+   "Cek status email dan username pada modul Registrasi Pengguna Jasa CEISA 4.0; pastikan email belum terdaftar untuk username lain.",
+   "Daftarkan akun secara manual jika email valid, atau gunakan akun yang sudah terdaftar dan lakukan aktivasi ulang.",
+   "Informasikan username dan instruksikan pengguna untuk mengklik link aktivasi pada email terdaftar.",
+   "Minta pengguna login ke Portal Pengguna Jasa; jika muncul pesan username/password salah, lakukan refresh (F5) atau muat ulang halaman login.",
+   "Jika kendala berlanjut seperti email tidak terdaftar, akun ganda, atau aktivasi gagal, lakukan verifikasi lanjutan atau reopen tiket CEISACare."
+  ],
+  "catatan": "Satu email hanya dapat digunakan untuk satu akun; jika email sudah terdaftar, minta email alternatif. Eskalasi ke IKC Service Desk apabila akun tidak dapat diproses atau perlu verifikasi data NPPBKC lebih lanjut."
+ },
+ "Registrasi & Data User | Validasi - Gagal Melakukan Pengecekan NPWP ke DJA": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Validasi - Gagal Melakukan Pengecekan NPWP ke DJA",
+  "jumlah": 12,
+  "ringkasan": "Kendala reject pengajuan dokumen dengan keterangan \"GAGAL MELAKUKAN PENGECEKAN NPWP KE DJA\" saat validasi data NPWP/NITKU, umumnya terjadi pada submit dokumen H2H, BC 2.7, atau BC 25 karena data NPWP/NITKU belum terdaftar atau gangguan sistem DJA.",
+  "langkah": [
+   "Minta pengguna mengulang submit dokumen dengan nomor aju yang sama, lalu cek status reject di menu Monitoring atau Task To Do.",
+   "Periksa data NPWP/NITKU pada dokumen; pastikan format NPWP 22 digit dan NITKU terdaftar di sistem referensi CEISA 4.0.",
+   "Bila data tidak ditemukan, minta pengguna melampirkan NIB dan NPWP untuk verifikasi data NITKU.",
+   "Lakukan pengecekan lanjutan pada nomor aju di sistem CEISA 4.0; pastikan dokumen telah mendapat respon lanjutan setelah submit ulang.",
+   "Jika setelah 1 jam masih reject, eskalasi ke tim teknis IKC Service Desk untuk pengecekan gangguan DJA."
+  ],
+  "catatan": "Kendala sering terselesaikan dengan submit ulang; perhatikan juga NITKU yang belum terdaftar di DJA sehingga perlu verifikasi NIB/NPWP."
+ },
+ "Registrasi & Data User | Registrasi - NPWP Kosong": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Registrasi - NPWP Kosong",
+  "jumlah": 8,
+  "ringkasan": "Kendala pendaftaran akun CEISA 4.0 saat input NPWP/NITKU: nama dan alamat tidak muncul otomatis, kolom kosong, atau muncul error 401. Biasanya terjadi karena data NPWP belum terdaftar di database CEISA atau wajib pajak belum melaporkan SPT tahunan.",
+  "langkah": [
+   "Verifikasi NPWP/NITKU yang dimasukkan sesuai dengan dokumen perpajakan (NPWP 15 digit atau NITKU) dan pastikan tidak ada kesalahan ketik.",
+   "Cek status NPWP/NITKU di fitur Pengecekan NPWP atau Referensi Data pada Portal CEISA 4.0.",
+   "Jika NPWP tidak ditemukan, minta pengguna melampirkan bukti lapor SPT tahunan dan NPPBKC untuk pengecekan lebih lanjut.",
+   "Jika NPWP sudah terdaftar, sarankan pengguna melakukan pendaftaran ulang menggunakan NPWP/NITKU yang valid.",
+   "Bila kendala error 401 atau kolom tetap kosong, minta pengguna melengkapi data pendaftaran manual (nama lengkap, telepon, NPWP, email, alamat, username, password) untuk didaftarkan oleh tim Dukungan Teknis.",
+   "Eskalasikan ke IKC Service Desk jika seluruh langkah di atas tidak menyelesaikan kendala."
+  ],
+  "catatan": "Beberapa kasus NPWP kosong disebabkan oleh data yang belum sinkron dengan database DJP atau perusahaan belum melaporkan SPT tahunan. NPPBKC diperlukan untuk validasi saat NPWP tidak ditemukan di sistem CEISA."
+ },
+ "Registrasi & Data User | Registrasi - Account Belum Aktif": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Registrasi - Account Belum Aktif",
+  "jumlah": 7,
+  "ringkasan": "Kendala login CEISA karena akun pengguna belum aktif atau data registrasi tidak terbaca, umumnya terjadi setelah pendaftaran baru atau perubahan data.",
+  "langkah": [
+   "Cek status akun di menu Task To Do atau modul administrasi user CEISA.",
+   "Minta pengguna konfirmasi NITKU, email terdaftar, NPWP, dan nama perusahaan untuk verifikasi data.",
+   "Jika username terdaftar tetapi belum aktif, kirim ulang link aktivasi ke alamat email terdaftar.",
+   "Jika pengguna salah memasukkan username, beri tahu username yang benar dan minta login ulang.",
+   "Jika akun tidak ditemukan, minta pengguna registrasi ulang menggunakan NITKU yang benar.",
+   "Jika kendala berlanjut, minta screenshot error dan eskalasi ke IKC Service Desk."
+  ],
+  "catatan": "Perhatikan perbedaan antara akun belum diaktivasi, username salah, dan data tidak ditemukan. Segera eskalasi ke IKC Service Desk jika link aktivasi tidak diterima atau data NITKU tidak valid."
+ },
+ "Registrasi & Data User | Registrasi - Data Perusahaan": {
+  "domain": "Registrasi & Data User",
+  "masalah": "Registrasi - Data Perusahaan",
+  "jumlah": 9,
+  "ringkasan": "Masalah registrasi dan data perusahaan terjadi saat profil perusahaan tidak sesuai, belum terdaftar, atau referensi izin/TPB tidak ditemukan pada Portal CEISA 4.0, sering muncul saat perekaman dokumen pabean atau piutang.",
+  "langkah": [
+   "Cek data perusahaan pada menu Profil atau Referensi Perusahaan di Portal CEISA 4.0.",
+   "Jika nama, NPWP, atau NPPBKC tidak sesuai, lakukan koreksi data melalui menu Manajemen User atau Registrasi Perusahaan.",
+   "Jika perusahaan belum terdaftar, arahkan pengguna untuk melakukan pendaftaran portal CEISA 4.0 terlebih dahulu atau input manual NPWP, nama perusahaan, dan alamat pada form perekaman piutang.",
+   "Untuk kendala referensi seperti izin TPB atau SKEP tidak ditemukan, lakukan muat ulang referensi: pilih menu Dokumen Pabean, klik ikon garis tiga, klik Muat Ulang Referensi, lalu coba kembali dengan memilih SKEP terbaru.",
+   "Setelah penyesuaian, minta pengguna melakukan pengecekan ulang pada profil atau saat perekaman dokumen."
+  ],
+  "catatan": "Perhatikan variasi seperti user terdaftar pada perusahaan yang salah, perusahaan TPB baru belum mendapat role, atau dokumen reject karena referensi belum diperbarui. Jika perubahan data tidak dapat dilakukan di level lokal atau masalah berlanjut, eskalasi ke IKC Service Desk."
+ },
+ "Validasi & Billing | Perbendaharaan - Billing": {
+  "domain": "Validasi & Billing",
+  "masalah": "Perbendaharaan - Billing",
+  "jumlah": 5,
+  "ringkasan": "Masalah billing pada modul Perbendaharaan CEISA 4.0 umumnya berupa kode billing CK-1/SPPR yang kedaluwarsa sebelum jatuh tempo, billing tidak terbit, atau menu perbendaharaan tidak muncul. Biasanya terjadi setelah error sistem atau perubahan data piutang.",
+  "langkah": [
+   "Cek status dan tanggal jatuh tempo kode billing pada menu Browse Billing di modul Perbendaharaan.",
+   "Jika billing CK-1 kedaluwarsa, buat billing baru melalui menu Piutang pada modul Perbendaharaan agar terhubung dengan piutangnya.",
+   "Jika billing SPPR tidak tersedia di daftar piutang, rekam billing manual melalui menu Perekaman Billing.",
+   "Saat merekam billing manual, isi ID Wajib Bayar dan NPWP pada detail pembayaran menggunakan NPWP 15 digit.",
+   "Verifikasi data billing yang tersimpan, termasuk NITKU dan nominal, sebelum diserahkan untuk pembayaran.",
+   "Jika menu Perbendaharaan kosong/tidak muncul, lakukan Muat Ulang Referensi atau login ulang; jika tetap kosong, eskalasi ke IKC Service Desk."
+  ],
+  "catatan": "Perubahan 3 digit terakhir NITKU pada billing manual dapat terjadi otomatis; pastikan data piutang sudah benar dan lakukan pengecekan rekon setelah pembayaran. Untuk kendala akses menu perbendaharaan, eskalasi ke IKC Service Desk."
+ },
+ "Validasi & Billing | Kualitas Data": {
+  "domain": "Validasi & Billing",
+  "masalah": "Kualitas Data",
+  "jumlah": 14,
+  "ringkasan": "Masalah kualitas data umumnya berupa permintaan update data pada Tableau Server Bea Cukai Pasuruan atau perbedaan data pada dokumen CEISA 4.0, sering terjadi saat rekonsiliasi atau pelaporan bulanan.",
+  "langkah": [
+   "Identifikasi jenis permintaan: update data Tableau, perbedaan data dokumen, atau kendala sinkronisasi data di CEISA 4.0.",
+   "Untuk permintaan update data Tableau, cek ketersediaan data pada aplikasi sumber (CEISA 4.0, CEISA TPB, atau ExSis) sesuai periode yang diminta.",
+   "Jika data tidak tersedia di CEISA 4.0 namun tersedia di sistem lain, arahkan pengguna untuk menghubungi PIC Tableau DIKC KPPBC Pasuruan atau minta penerbitan ND kepala kantor ke Direktur IKC untuk penambahan dataset.",
+   "Jika data tersedia tetapi belum muncul di Tableau, lakukan sinkronisasi data atau minta bantuan PIC Tableau untuk refresh datasource.",
+   "Untuk perbedaan NIPER, NPWP, NITKU, atau nomor kontainer pada dokumen, pastikan perbaikan dilakukan di CEISA 4.0 dan cek kembali setelah data diperbarui.",
+   "Eskalasi ke IKC Service Desk jika data tidak kunjung sesuai atau memerlukan perubahan struktur dataset."
+  ],
+  "catatan": "Penambahan field atau dataset baru pada Tableau memerlukan proses formal ND kepala kantor ke Direktur IKC. Untuk kendala sinkronisasi data, segera eskalasi ke PIC Tableau DIKC KPPBC Pasuruan."
+ },
+ "Validasi & Billing | Kasus Lainnya": {
+  "domain": "Validasi & Billing",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 17,
+  "ringkasan": "Masalah validasi dan billing yang tidak spesifik, seperti kesalahan jam jatuh tempo billing CK1/SPPR, status dokumen macet di proses validasi, atau status Tunggu Rekon CEISA. Biasanya terjadi saat penerbitan atau pemrosesan dokumen CEISA 4.0.",
+  "langkah": [
+   "Minta pengguna melengkapi format laporan: jenis dokumen, nomor AJU 26 digit tanpa tanda hubung, uraian masalah disertai screenshot, status dokumen, dan waktu submit.",
+   "Verifikasi kelengkapan data dan cek status dokumen pada menu monitoring CEISA 4.0.",
+   "Jika terkait kesalahan jatuh tempo billing, arahkan perbaikan melalui menu Piutang untuk CK1 dan terbitkan billing baru untuk SPPR, koordinasikan dengan petugas perbendaharaan.",
+   "Jika status dokumen macet di 'proses validasi' atau 'Tunggu Rekon CEISA' tanpa perkembangan, cek apakah terjadi trouble CEISA 4.0 dan eskalasi ke tim pusat/IKC Service Desk.",
+   "Sampaikan bahwa tiket dapat dibuka kembali jika solusi belum menyelesaikan masalah."
+  ],
+  "catatan": "Beberapa kasus hanya memerlukan kelengkapan laporan untuk pengecekan; jika kendala bersifat massal atau berulang, segera eskalasi ke IKC Service Desk untuk penanganan pusat."
+ },
+ "Validasi & Billing | Validasi - Validation Error - SequelizeUniqueConstraintError": {
+  "domain": "Validasi & Billing",
+  "masalah": "Validasi - Validation Error - SequelizeUniqueConstraintError",
+  "jumlah": 5,
+  "ringkasan": "Kendala validasi dokumen TPB di CEISA 4.0 yang muncul sebagai error SequelizeUniqueConstraintError, syntax error, atau status validasi yang berjalan lama/stuck. Biasanya terjadi saat ada gangguan nasional atau beban sistem yang tinggi.",
+  "langkah": [
+   "Cek status dokumen pada menu Monitoring CEISA 4.0 menggunakan nomor AJU yang dilaporkan.",
+   "Jika status masih 'Proses Validasi' atau 'Stuck', catat waktu submit dan bandingkan dengan waktu sekarang.",
+   "Informasikan kepada pengguna bahwa sedang terjadi perlambatan/gangguan validasi dokumen TPB dan minta pengecekan berkala.",
+   "Pantau ulang status dokumen setelah 15-30 menit; jika sudah berubah, sampaikan hasilnya kepada pengguna.",
+   "Jika status tidak berubah lebih dari 1 jam atau muncul error teknis lain, teruskan tiket ke Service Desk IKC dengan melampirkan nomor AJU dan tangkapan layar error.",
+   "Sampaikan kepada pengguna untuk melakukan reopen tiket jika solusi belum menyelesaikan kendala."
+  ],
+  "catatan": "Gangguan dapat bersifat nasional dan sementara; pantau pengumuman internal. Jika dokumen sudah mendapat respon lanjutan, cukup informasikan hasil tanpa perlu tindakan teknis."
+ },
+ "Validasi & Billing | Validasi - BL Telah Digunakan": {
+  "domain": "Validasi & Billing",
+  "masalah": "Validasi - BL Telah Digunakan",
+  "jumlah": 7,
+  "ringkasan": "Reject validasi 'No/Tanggal BL Tidak Ditemukan atau Sudah Terpakai' pada dokumen BC 2.3/BC 16 terjadi karena ketidaksesuaian data BL dengan manifes, kesalahan kode kelompok pos, flag tutup T4 pada HBL, atau BL sudah terpakai di aju lain. Biasanya muncul saat submit dokumen kepabeanan.",
+  "langkah": [
+   "Periksa kesesuaian nomor dan tanggal BL pada dokumen dengan data manifes di menu Manifest CEISA 4.0.",
+   "Bandingkan nomor BC11 dan tanggal BC11, pastikan format tanggal MM/DD/YYYY sesuai manifes.",
+   "Jika kode kelompok pos terisi 03 (Barang Impor Angkut Terus) untuk dokumen PIB, ubah menjadi kode 01 (Barang Impor Untuk Diselesaikan).",
+   "Cek status HBL pada manifes; apabila tertutup flag T4, koordinasikan dengan petugas manifes untuk membuka flag.",
+   "Jika BL sudah terpakai pada aju lain, lakukan perbaikan aju lain dengan mengganti nomor BL atau mintalah pelepasan pemakaian BL melalui petugas manifes/IKC.",
+   "Setelah perbaikan, submit ulang dokumen dan pantau status validasi."
+  ],
+  "catatan": "Perbedaan format tanggal dan flag tutup T4 sering menjadi penyebab utama. Jika setelah langkah di atas masih reject, eskalasi ke IKC Service Desk dengan melampirkan nomor aju, nomor BL, dan tangkapan layar error."
+ },
+ "Validasi & Billing | Validasi - Cek Blokir Hutang Hardcopy": {
+  "domain": "Validasi & Billing",
+  "masalah": "Validasi - Cek Blokir Hutang Hardcopy",
+  "jumlah": 9,
+  "ringkasan": "Kendala submit dokumen BC 2.5 karena NPWP terblokir sering muncul saat perekaman dokumen, umumnya akibat belum merekam hardcopy atas aju tertentu atau ada surat pemblokiran resmi. Penanganan berfokus pada pemeriksaan status blokir dan identifikasi aju penyebab.",
+  "langkah": [
+   "Terima laporan dan minta data lengkap sesuai format: nama, perusahaan, jenis dokumen, nomor aju 26 digit, uraian masalah, status dokumen, waktu submit, dan screenshot.",
+   "Cek status blokir NPWP di Portal CEISA 4.0 melalui menu Data Master > Profil Perusahaan atau pencarian NPWP.",
+   "Lihat detail jenis blokir: jika muncul keterangan 'Hard Copy', catat daftar nomor aju yang belum direkam hardcopy beserta kode kantor terkait.",
+   "Arahkan pengguna untuk melakukan perekaman hardcopy atas nomor aju yang teridentifikasi melalui menu yang tersedia di Portal CEISA 4.0.",
+   "Jika blokir berupa surat pemblokiran dengan alasan ketentuan (mis. PMK 219/PMK.04/2019), sampaikan nomor surat blokir dan arahkan pengguna ke Direktorat P2 melalui https://t.kemenkeu.go.id/Infobravo.",
+   "Jika pengecekan menunjukkan blokir sudah tidak ada, minta pengguna mencoba submit ulang dokumen."
+  ],
+  "catatan": "Blokir hardcopy hanya dapat dibuka setelah seluruh aju terkait direkam hardcopy. Untuk blokir selain hardcopy, eskalasi ke unit terkait atau IKC Service Desk jika tidak dapat diselesaikan."
+ },
+ "Validasi & Billing | Validasi - Nilai Pungutan Tidak Sesuai": {
+  "domain": "Validasi & Billing",
+  "masalah": "Validasi - Nilai Pungutan Tidak Sesuai",
+  "jumlah": 10,
+  "ringkasan": "Masalah nilai pungutan tidak sesuai umumnya terjadi saat perekaman SPP/SAPP, STCK-1, atau pengajuan BC 4.0, seringkali karena revisi tarif PPN, salah input nominal, atau perhitungan sistem yang belum diperbarui. Kondisi ini menyebabkan dokumen reject atau tagihan tidak cocok dengan penetapan.",
+  "langkah": [
+   "Cek dokumen sumber untuk memastikan nilai pungutan yang benar, seperti SPP revisi, STCK-1, atau data barang pada BC 4.0.",
+   "Untuk perbaikan nilai pungutan pada SPP/SAPP/STCK-1 yang sudah terekam, gunakan menu Perbaikan Piutang di SAPP Inhouse, input nominal yang benar, dan unggah dokumen pendukung.",
+   "Jika BC 4.0 reject dengan alasan tarif PPN atau nilai fasilitas salah, buat aju baru melalui Perekaman Portal agar sistem menggunakan perhitungan tarif terbaru.",
+   "Pantau status dokumen setelah perbaikan atau pembuatan aju baru di menu Task To Do atau daftar dokumen terkait.",
+   "Jika billing atas dokumen sudah dilunasi namun nilainya berbeda, konfirmasi pelunasan ke unit billing atau ajukan penyesuaian sesuai ketentuan."
+  ],
+  "catatan": "Perubahan tarif PPN sering menjadi penyebab reject; gunakan Perekaman Portal untuk dokumen baru agar tarif otomatis terbarui. Jika menu Perbaikan Piutang tidak mengubah nominal atau terkendala, lampirkan bukti kendala dan eskalasi ke IKC Service Desk."
+ },
+ "Permintaan & Perubahan Data | Kasus Lainnya": {
+  "domain": "Permintaan & Perubahan Data",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 39,
+  "ringkasan": "Menangani permintaan perubahan data atau kendala lain di CEISA 4.0, seperti perbaikan data merek/HJE/nomor KEP atau status NPPBKC diblokir, yang dilaporkan melalui CEISACare.",
+  "langkah": [
+   "Identifikasi jenis permintaan: perbaikan data merek/HJE/KEP, kendala NPPBKC diblokir, atau kendala teknis upload faktur pajak.",
+   "Minta data dukung lengkap dari pengguna jasa: screenshot kendala, nomor CK-1 dan tanggal CK-1 terakhir, nomor KEP tarif, serta data CK-1 terakhir atas merek terkait (No CK1, Tgl CK1, Merek, Isi, HJE, Tarif, Jumlah).",
+   "Cek status NPPBKC atau data perusahaan di CEISA 4.0; jika NPPBKC diblokir, sampaikan surat pemberitahuan dan keputusan pembekuan NPPBKC, lalu arahkan pengguna jasa menghubungi Seksi Cukai KPPBC TMP A Pasuruan.",
+   "Untuk perbaikan data merek/HJE/KEP, verifikasi kesesuaian data dengan dokumen KEP terlampir; lakukan koreksi pada modul terkait setelah data valid.",
+   "Untuk kendala ETAX-API-10025 saat upload faktur pajak, pandu pengguna jasa: pastikan nomor SPPB sesuai dan status dokumen selesai proses, klik kirim ulang faktur pajak di CEISA 4.0, gunakan e-Faktur versi terbaru, pastikan penulisan nomor SPPB tanpa spasi, atau impor CSV prepop dari web-efaktur.pajak.go.id.",
+   "Jika data belum lengkap atau kendala berlanjut, minta pengguna jasa melengkapi data dan eskalasi ke Seksi terkait atau IKC Service Desk."
+  ],
+  "catatan": "Perhatikan variasi kendala: perbaikan data memerlukan verifikasi dokumen KEP, sedangkan NPPBKC diblokir langsung diarahkan ke Seksi Cukai. Jangan memproses perubahan data tanpa dokumen dukung lengkap; eskalasi ke IKC Service Desk jika kendala sistem berulang atau di luar kewenangan."
+ },
+ "Permintaan & Perubahan Data | Konsultasi": {
+  "domain": "Permintaan & Perubahan Data",
+  "masalah": "Konsultasi",
+  "jumlah": 6,
+  "ringkasan": "Masalah konsultasi perubahan data pada dokumen CEISA 4.0, terutama saat status dokumen berhenti di Validasi Perbaikan/Penyesuaian Data atau terjadi penolakan NPP karena NITKU tidak 22 digit.",
+  "langkah": [
+   "Cek status dokumen di menu Browse Dokumen atau Riwayat Status pada CEISA 4.0 untuk memastikan posisi terkini.",
+   "Jika status menunjukkan Penyesuaian Data atau Validasi Perbaikan, sampaikan bahwa dokumen telah diputus oleh PFPD dan pengguna jasa harus mengajukan perbaikan data melalui portal atau inhouse sesuai catatan penyesuaian.",
+   "Untuk penggantian dokumen pelengkap yang sudah mendapat NOPEN, arahkan PFPD untuk klik tombol Penyesuaian Data pada menu PFPD agar menu upload ulang muncul di sisi perusahaan.",
+   "Periksa kelengkapan digit NITKU: pastikan NITKU entitas diinput 22 digit sesuai data master; jika kurang, minta pengguna jasa memperbaiki data identitas tersebut.",
+   "Untuk pertanyaan terkait probis fasilitas atau status akhir dokumen, konsultasikan ke Direktorat Fasilitas selaku pemilik probis."
+  ],
+  "catatan": "Pemunduran status tidak dapat dilakukan; status Penyesuaian Data bisa menjadi status akhir jika proses manual sudah selesai. Jika setelah perbaikan data status tetap tidak berubah atau muncul kendala lain, eskalasi ke IKC Service Desk."
+ },
+ "Permintaan & Perubahan Data | Perubahan data - Lainnya": {
+  "domain": "Permintaan & Perubahan Data",
+  "masalah": "Perubahan data - Lainnya",
+  "jumlah": 8,
+  "ringkasan": "Permintaan perubahan data dokumen CEISA 4.0 (BC 2.3, BC 2.5, BC 27, BC 40, dll.) yang tidak berubah, hilang setelah disimpan, butuh rollback status gate-in, atau opsi perbaikan kategori tidak muncul; biasanya terjadi setelah perekaman perbaikan atau saat pembetulan dokumen.",
+  "langkah": [
+   "Cek status dan detail dokumen pada menu CEISA 4.0, bandingkan dengan surat persetujuan pembetulan atau SKEP terkait.",
+   "Jika perubahan menyangkut pungutan/tarif, pastikan referensi SKEP/STBC aktif telah dimutakhirkan; koordinasikan dengan staf perijinan untuk update SKEP terbaru.",
+   "Untuk perbaikan data yang tidak tersedia di menu atau permintaan rollback, ajukan surat permohonan resmi ke kantor pelayanan dan lampirkan Berita Acara/Nota Dinas.",
+   "Setelah Duktek Satker melakukan penyesuaian, cek kembali data dokumen dan pastikan perubahan tersimpan dengan benar.",
+   "Jika data perbaikan hilang atau tidak tersimpan, lakukan pengecekan ulang di menu Task To Do atau riwayat perubahan, lalu eskalasi ke IKC Service Desk."
+  ],
+  "catatan": "Beberapa perubahan memerlukan dokumen pendukung dan/atau koordinasi dengan staf perijinan. Jika opsi perbaikan tidak muncul atau data tetap tidak sesuai, segera eskalasi ke IKC Service Desk dengan lampiran lengkap."
+ },
+ "Host to Host & Lainnya | Kasus Lainnya": {
+  "domain": "Host to Host & Lainnya",
+  "masalah": "Kasus Lainnya",
+  "jumlah": 150,
+  "ringkasan": "Kendala teknis pada aplikasi CEISA/PDAD seperti gagal unduh dokumen, loading lambat, data tidak ditemukan, atau perlunya perbaikan data (merk, tanggal berlaku) yang biasanya terjadi saat perekaman, pengunggahan, atau pengiriman data.",
+  "langkah": [
+   "Cek status permohonan di menu Task To Do pada aplikasi CEISA/PDAD.",
+   "Lakukan pengecekan koneksi internet dan muat ulang halaman (refresh) atau lakukan Muat Ulang Referensi di Portal PJ 4.0 jika data tidak muncul.",
+   "Jika terdapat notifikasi 'data tidak ditemukan', verifikasi kelengkapan dan kebenaran data serta referensi kepabeanan pada sistem.",
+   "Untuk permintaan perbaikan data, periksa dokumen pendukung lalu lakukan perbaikan data melalui menu yang sesuai (mis. ExSIS untuk penetapan merk, CEISA 4.0 untuk perubahan tanggal berlaku KEP).",
+   "Bila kendala masih berlanjut atau memerlukan perubahan data yang tidak dapat dilakukan, ajukan tiket ke IKC Service Desk dengan melampirkan detail masalah dan tangkapan layar."
+  ],
+  "catatan": "Perhatikan perbedaan modul: perbaikan data merk dilakukan di ExSIS, sedangkan perubahan tanggal berlaku KEP dilakukan di CEISA 4.0. Eskalasi ke IKC Service Desk jika kendala teknis berulang atau memerlukan intervensi pusat."
+ }
+}
