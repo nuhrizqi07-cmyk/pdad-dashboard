@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Dashboard PDAD — BUKU SOP.
-KPPBC Tipe Madya Pabean A Pasuruan · Analitik tiket CEISACare + scan solusi.
-World: official SOP manual (chapter numbering, margin steps, stamp marks).
+"""Dashboard PDAD — SIMPLE CLEAN.
+KPPBC Tipe Madya Pabean A Pasuruan · Analitik tiket CEISACare + cari solusi.
+World: clean minimal work dashboard (canon played straight, user-requested simple).
 Data: data/tickets_clean.json + data/synth_results.json
 """
 import html
@@ -13,21 +13,21 @@ import pandas as pd
 import streamlit as st
 
 # ────────────────────────────────────────────────────────────────
-# KONFIGURASI + KONTRAK ARAH (Buku SOP — user-pinned)
+# KONFIGURASI + KONTRAK ARAH (Simple Clean — user-requested)
 # ────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="BUKU SOP // PDAD",
-    page_icon="📗",
+    page_title="Dashboard PDAD",
+    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 DIRECTION_CONTRACT = """<!--
-THESIS: Dashboard PDAD is the unit's own SOP manual made live — a book of answers the Duktek opens every day, where each kendala has a numbered handling procedure. It refuses the category default of a dark analytics dashboard and of generic cream-and-serif AI pages alike; this is an official document, not a screen.
-OWN-WORLD: Cream paper field (#F5EFE0) with aged panels and hairline rules; chapter numbering (BAB I–IV) as navigation; Source Serif 4 for chapter titles, Source Sans 3 for body with tabular numerals, JetBrains Mono for form values; red ink-stamp marks (cap) as the only saturated accent; dotted leaders and ruled dividers instead of charts-chrome.
-STORY: The Duktek opens the book, reads the instrument entries, writes the kendala into the search form, and turns to the numbered steps — answers in seconds, in the register of the office's own procedures.
-FIRST VIEWPORT: Document header with book title, unit line, edition and a red TERVERIFIKASI stamp. Entry row: four form-field KPI entries with underlined values. Below: the search form as the hero (LANGKAH 0 — ISI LEMBAR PENCARIAN), then solution entries as numbered margin-step cards and signal traces as an appendix table.
-FORM: Buku SOP manual (user-pinned direction; replaces Data Terminal seed 02dade84).
+THESIS: Dashboard PDAD is a calm, legible work surface: the Duktek reads the numbers and finds the answer without fighting the furniture. It refuses heavy metaphors (no stamp, no barcode, no chapter book) — clarity is the whole identity.
+OWN-WORLD: Near-white neutral ground (#FAFAF8) with hairline-bordered white cards; one dignified blue accent (#2563EB) for actions and focus; system-ui type at comfortable sizes with tabular numerals; generous whitespace; simple 8px cards.
+STORY: The Duktek opens the dashboard, sees the four key numbers, types the kendala into the search field, and reads the answer in a clean list — seconds, no noise.
+FIRST VIEWPORT: Slim header with app name and a muted readout line. Four KPI cards. Below: the search field as the hero (large input + button), then clean result rows and a tidy table.
+FORM: Simple Clean work dashboard (user-requested; follows Buku SOP and Data Terminal rounds).
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 -->
 """
@@ -36,227 +36,169 @@ st.markdown(DIRECTION_CONTRACT, unsafe_allow_html=True)
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
 # ────────────────────────────────────────────────────────────────
-# CSS — BUKU SOP WORLD
+# CSS — SIMPLE CLEAN WORLD
 # ────────────────────────────────────────────────────────────────
 CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,900&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap');
-
 :root {
-  --sop-bg: #F5EFE0;
-  --sop-panel: #FBF7EC;
-  --sop-panel2: #EDE4CE;
-  --sop-line: #D8CDB2;
-  --sop-line-strong: #B9AB8A;
-  --sop-ink: #23314F;
-  --sop-ink-dim: #66708A;
-  --sop-red: #B23A2F;
-  --sop-gold: #A87F2D;
-  --sop-green: #2F7D4F;
-  --sop-teal: #1F6F8F;
+  --sc-bg: #FAFAF8;
+  --sc-card: #FFFFFF;
+  --sc-line: #E6E6E1;
+  --sc-line-strong: #D4D4CE;
+  --sc-ink: #1A1D21;
+  --sc-ink-dim: #6B7280;
+  --sc-ink-faint: #9CA3AF;
+  --sc-blue: #2563EB;
+  --sc-blue-soft: #EFF4FF;
+  --sc-green: #16A34A;
+  --sc-amber: #B45309;
+  --sc-red: #DC2626;
 }
 
 html, body, [class*="css"], .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
-  background: var(--sop-bg) !important;
-  color: var(--sop-ink) !important;
-  font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif !important;
+  background: var(--sc-bg) !important;
+  color: var(--sc-ink) !important;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
 }
-[data-testid="stAppViewContainer"] { background: var(--sop-bg) !important; }
+[data-testid="stAppViewContainer"] { background: var(--sc-bg) !important; }
 
-/* tabular numerals for all numbers */
+/* tabular numerals */
 .stApp * { font-feature-settings: "tnum" 1, "zero" 1; }
 
-/* sidebar = aged paper table of contents */
+/* sidebar */
 [data-testid="stSidebar"], [data-testid="stSidebarContent"] {
-  background: var(--sop-panel2) !important;
-  border-right: 1px solid var(--sop-line) !important;
+  background: #FFFFFF !important;
+  border-right: 1px solid var(--sc-line) !important;
 }
-[data-testid="stSidebar"] * { color: var(--sop-ink) !important; }
+[data-testid="stSidebar"] * { color: var(--sc-ink) !important; }
 
-/* inputs = form fields with bottom rule */
+/* inputs */
 [data-testid="stTextInput"] input, [data-testid="stNumberInput"] input, [data-testid="stDateInput"] input {
-  background: transparent !important;
-  color: var(--sop-ink) !important;
-  border: none !important;
-  border-bottom: 2px solid var(--sop-ink) !important;
-  border-radius: 0 !important;
-  font-family: 'JetBrains Mono', 'Source Sans 3', monospace !important;
-  font-weight: 700;
+  background: #FFFFFF !important;
+  color: var(--sc-ink) !important;
+  border: 1px solid var(--sc-line-strong) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 0.95rem !important;
 }
-[data-testid="stTextInput"] input:focus {
-  border-bottom-color: var(--sop-red) !important;
-  box-shadow: none !important;
+[data-testid="stTextInput"] input:focus, [data-testid="stNumberInput"] input:focus, [data-testid="stDateInput"] input:focus {
+  border-color: var(--sc-blue) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
 }
-[data-testid="stTextInput"] input::placeholder { color: #A99E85 !important; font-weight: 400; }
+[data-testid="stTextInput"] input::placeholder { color: var(--sc-ink-faint) !important; }
 
 /* selectbox & multiselect */
 [data-baseweb="select"] > div {
-  background: var(--sop-panel) !important;
-  border: 1px solid var(--sop-line-strong) !important;
-  border-radius: 0 !important;
-  color: var(--sop-ink) !important;
+  background: #FFFFFF !important;
+  border: 1px solid var(--sc-line-strong) !important;
+  border-radius: 8px !important;
+  color: var(--sc-ink) !important;
 }
-[data-baseweb="popover"] { background: var(--sop-panel) !important; }
+[data-baseweb="popover"] { background: #FFFFFF !important; border-radius: 8px !important; }
 
-/* buttons = document actions */
+/* buttons */
 [data-testid="stButton"] button, [data-testid="stDownloadButton"] button {
-  background: transparent !important;
-  color: var(--sop-ink) !important;
-  border: 1.5px solid var(--sop-ink) !important;
-  border-radius: 0 !important;
-  font-family: 'Source Sans 3', sans-serif !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  background: var(--sc-blue) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 10px 18px !important;
 }
 [data-testid="stButton"] button:hover, [data-testid="stDownloadButton"] button:hover {
-  background: var(--sop-ink) !important;
-  color: var(--sop-bg) !important;
+  background: #1D4ED8 !important;
+  color: #FFFFFF !important;
 }
 
-/* radio nav = daftar isi */
-[data-testid="stSidebar"] [role="radiogroup"] label {
-  font-family: 'Source Serif 4', serif !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.02em;
-}
-[data-testid="stSidebar"] [role="radiogroup"] label:hover { color: var(--sop-red) !important; }
+/* radio nav */
+[data-testid="stSidebar"] [role="radiogroup"] label { font-weight: 500; border-radius: 8px; }
+[data-testid="stSidebar"] [role="radiogroup"] label:hover { background: var(--sc-blue-soft); }
 
-/* dataframe = appendix table */
+/* dataframe */
 [data-testid="stDataFrame"] {
-  border: 1px solid var(--sop-line-strong) !important;
-  border-radius: 0 !important;
-  background: var(--sop-panel) !important;
+  border: 1px solid var(--sc-line) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
 }
-[data-testid="stDataFrame"] * { font-family: 'Source Sans 3', sans-serif !important; }
 
-/* headings = serif chapter titles */
-h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif !important; color: var(--sop-ink) !important; }
-h1 { font-weight: 900; letter-spacing: -0.01em; }
-h2, h3 { font-weight: 700; }
+/* headings */
+h1 { font-weight: 700 !important; letter-spacing: -0.02em; color: var(--sc-ink) !important; }
+h2, h3 { font-weight: 650 !important; color: var(--sc-ink) !important; letter-spacing: -0.01em; }
 
 /* tabs */
-[data-testid="stTabs"] button {
-  background: transparent !important;
-  color: var(--sop-ink-dim) !important;
-  border-radius: 0 !important;
-  font-family: 'Source Serif 4', serif !important;
+[data-testid="stTabs"] button { border-radius: 8px !important; font-weight: 500; }
+[data-testid="stTabs"] button[aria-selected="true"] { background: var(--sc-blue-soft) !important; color: var(--sc-blue) !important; }
+
+[data-testid="stCaptionContainer"], .stCaption { color: var(--sc-ink-dim) !important; }
+
+/* slim header */
+.sc-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 0 18px 0; margin-bottom: 8px;
+  border-bottom: 1px solid var(--sc-line);
 }
-[data-testid="stTabs"] button[aria-selected="true"] {
-  color: var(--sop-red) !important;
-  border-bottom: 2px solid var(--sop-red) !important;
+.sc-header .brand { font-weight: 700; font-size: 1.05rem; color: var(--sc-ink); letter-spacing: -0.01em; }
+.sc-header .brand .dot { color: var(--sc-blue); }
+.sc-header .readout { font-size: 0.75rem; color: var(--sc-ink-dim); }
+
+/* KPI card */
+.sc-kpi {
+  background: var(--sc-card); border: 1px solid var(--sc-line); border-radius: 10px;
+  padding: 16px 18px; margin-bottom: 10px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+.sc-kpi .label { font-size: 0.7rem; color: var(--sc-ink-dim); font-weight: 600; letter-spacing: 0.02em; }
+.sc-kpi .value { font-size: 1.7rem; font-weight: 700; color: var(--sc-ink); line-height: 1.2; margin: 2px 0; letter-spacing: -0.02em; }
+.sc-kpi .value.blue { color: var(--sc-blue); }
+.sc-kpi .value.green { color: var(--sc-green); }
+.sc-kpi .value.amber { color: var(--sc-amber); }
+.sc-kpi .sub { font-size: 0.72rem; color: var(--sc-ink-faint); }
+
+/* result card */
+.sc-result {
+  background: var(--sc-card); border: 1px solid var(--sc-line); border-radius: 10px;
+  padding: 14px 18px; margin: 8px 0;
+  transition: border-color 0.12s ease;
+}
+.sc-result:hover { border-color: var(--sc-line-strong); }
+.sc-result .r-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.sc-result .r-title { font-weight: 600; font-size: 0.98rem; color: var(--sc-ink); }
+.sc-result .r-count { font-size: 0.72rem; color: var(--sc-amber); font-weight: 600; white-space: nowrap; }
+.sc-result .r-domain { font-size: 0.7rem; color: var(--sc-blue); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin: 3px 0 8px 0; }
+.sc-result .r-summary { color: var(--sc-ink-dim); font-size: 0.87rem; line-height: 1.55; margin-bottom: 10px; }
+.sc-result ol { margin: 0 0 0 20px; padding: 0; }
+.sc-result ol li { color: var(--sc-ink); font-size: 0.87rem; line-height: 1.6; margin-bottom: 3px; }
+.sc-result .r-note { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--sc-line); color: var(--sc-amber); font-size: 0.8rem; }
+
+/* section label */
+.sc-section {
+  font-size: 0.72rem; color: var(--sc-ink-dim); font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; margin: 20px 0 8px 0;
 }
 
-[data-testid="stCaptionContainer"], .stCaption { color: var(--sop-ink-dim) !important; }
-
-/* document header */
-.sop-header {
-  border: 1.5px solid var(--sop-ink); border-radius: 0;
-  background: var(--sop-panel); padding: 18px 22px; margin-bottom: 22px;
-  position: relative;
-}
-.sop-header .kicker { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--sop-red); font-weight: 700; text-transform: uppercase; }
-.sop-header .title { font-family: 'Source Serif 4', Georgia, serif; font-weight: 900; font-size: 1.5rem; color: var(--sop-ink); margin: 4px 0 2px 0; line-height: 1.15; }
-.sop-header .subtitle { font-size: 0.85rem; color: var(--sop-ink-dim); font-style: italic; }
-.sop-header .meta { display: flex; gap: 26px; margin-top: 10px; font-size: 0.72rem; color: var(--sop-ink-dim); letter-spacing: 0.06em; }
-.sop-header .meta b { color: var(--sop-ink); }
-/* red ink stamp */
-.sop-stamp {
-  position: absolute; right: 22px; top: 16px;
-  width: 118px; height: 118px; border-radius: 50%;
-  border: 3px solid var(--sop-red);
-  display: flex; align-items: center; justify-content: center;
-  transform: rotate(-8deg); opacity: 0.82;
-  color: var(--sop-red); font-weight: 700; text-align: center;
-  font-size: 0.72rem; line-height: 1.25; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 10px;
-  pointer-events: none; user-select: none;
-}
-.sop-stamp .inner { border: 1.5px solid var(--sop-red); border-radius: 50%; width: 92px; height: 92px; display: flex; align-items: center; justify-content: center; }
-
-/* KPI = form-field entry */
-.sop-kpi {
-  background: var(--sop-panel); border: 1px solid var(--sop-line-strong); border-radius: 0;
-  padding: 14px 16px 12px 16px; margin-bottom: 10px; position: relative;
-}
-.sop-kpi .label { font-size: 0.66rem; color: var(--sop-ink-dim); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; }
-.sop-kpi .value { font-size: 1.9rem; font-weight: 900; color: var(--sop-ink); line-height: 1.15; font-family: 'Source Serif 4', Georgia, serif; }
-.sop-kpi .value.red { color: var(--sop-red); }
-.sop-kpi .value.green { color: var(--sop-green); }
-.sop-kpi .value.gold { color: var(--sop-gold); }
-.sop-kpi .sub { font-size: 0.66rem; color: var(--sop-ink-dim); margin-top: 2px; letter-spacing: 0.04em; }
-.sop-kpi .rule { position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; }
-.sop-kpi .rule.red { background: var(--sop-red); }
-.sop-kpi .rule.green { background: var(--sop-green); }
-.sop-kpi .rule.gold { background: var(--sop-gold); }
-.sop-kpi .rule.navy { background: var(--sop-ink); }
-
-/* solution entry card */
-.sop-entry {
-  border: 1px solid var(--sop-line-strong); border-top: 3px solid var(--sop-ink);
-  background: var(--sop-panel); padding: 14px 18px 14px 62px; margin: 12px 0; border-radius: 0;
-  position: relative;
-}
-.sop-entry .step-no {
-  position: absolute; left: 12px; top: 14px;
-  font-family: 'Source Serif 4', Georgia, serif; font-weight: 900; font-size: 1.35rem;
-  color: var(--sop-red); line-height: 1;
-}
-.sop-entry .e-title { font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; font-size: 1.02rem; color: var(--sop-ink); }
-.sop-entry .e-meta { display: flex; gap: 16px; margin: 4px 0 8px 0; font-size: 0.68rem; color: var(--sop-ink-dim); letter-spacing: 0.05em; }
-.sop-entry .e-meta .katalog { color: var(--sop-teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
-.sop-entry .e-meta .count { color: var(--sop-red); font-weight: 700; }
-.sop-entry .e-summary { color: var(--sop-ink-dim); font-size: 0.84rem; line-height: 1.55; margin-bottom: 10px; font-style: italic; }
-.sop-entry ol { margin: 8px 0 0 22px; padding: 0; counter-reset: step; list-style: none; }
-.sop-entry ol li {
-  counter-increment: step; position: relative; padding-left: 30px;
-  color: var(--sop-ink); font-size: 0.84rem; line-height: 1.6; margin-bottom: 5px;
-}
-.sop-entry ol li::before {
-  content: counter(step, decimal-leading-zero);
-  position: absolute; left: 0; top: 0;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
-  color: var(--sop-ink-dim); letter-spacing: 0.04em;
-}
-.sop-entry .e-note {
-  margin-top: 10px; padding-top: 8px; border-top: 1px dotted var(--sop-line-strong);
-  color: var(--sop-gold); font-size: 0.78rem;
-}
-.sop-entry .e-note::before { content: "ANOTASI — "; font-weight: 700; letter-spacing: 0.08em; }
-
-/* empty state = blank form */
-.sop-empty {
-  border: 1.5px dashed var(--sop-line-strong); color: var(--sop-ink-dim);
-  padding: 26px; text-align: center; font-size: 0.85rem; letter-spacing: 0.06em;
-  background: transparent; font-style: italic;
+/* empty state */
+.sc-empty {
+  border: 1.5px dashed var(--sc-line-strong); color: var(--sc-ink-faint);
+  padding: 24px; text-align: center; font-size: 0.85rem; border-radius: 10px;
+  background: var(--sc-card);
 }
 
-/* section label = chapter heading */
-.sop-section {
-  font-size: 0.78rem; color: var(--sop-red); letter-spacing: 0.14em;
-  text-transform: uppercase; margin: 24px 0 10px 0; font-weight: 700;
-  font-family: 'Source Sans 3', sans-serif;
-}
+/* metrics cleanup */
+[data-testid="stMetric"] { background: var(--sc-card); border: 1px solid var(--sc-line); border-radius: 10px; padding: 14px; }
+[data-testid="stMetricLabel"] { color: var(--sc-ink-dim) !important; }
+[data-testid="stMetricValue"] { color: var(--sc-ink) !important; }
 
-/* ruled divider */
-.sop-rule { display: flex; align-items: center; gap: 10px; margin: 22px 0; color: var(--sop-line-strong); }
-.sop-rule .l { flex: 1; border-top: 1px solid var(--sop-line-strong); }
-.sop-rule .r { flex: 1; border-top: 3px double var(--sop-line-strong); }
-.sop-rule .diamond { color: var(--sop-red); font-size: 0.7rem; }
-
-/* metric cleanup */
-[data-testid="stMetric"] { background: var(--sop-panel); border: 1px solid var(--sop-line-strong); border-radius: 0; padding: 12px; }
-[data-testid="stMetricLabel"] { color: var(--sop-ink-dim) !important; }
-[data-testid="stMetricValue"] { color: var(--sop-ink) !important; font-family: 'Source Serif 4', serif !important; }
-
-/* info/warning flattened to document note */
+/* info/warning flattened */
 [data-testid="stInfo"], [data-testid="stWarning"], [data-testid="stError"], [data-testid="stSuccess"] {
-  background: var(--sop-panel) !important; border: 1px solid var(--sop-line-strong) !important;
-  border-radius: 0 !important; color: var(--sop-ink) !important;
+  background: var(--sc-card) !important; border: 1px solid var(--sc-line) !important;
+  border-radius: 10px !important; color: var(--sc-ink) !important;
 }
 
-/* chart backgrounds */
-[data-testid="stArrowVegaLiteChart"], [data-testid="stVegaLiteChart"] { background: var(--sop-panel) !important; border: 1px solid var(--sop-line-strong) !important; }
+/* charts */
+[data-testid="stArrowVegaLiteChart"], [data-testid="stVegaLiteChart"] {
+  background: var(--sc-card) !important; border: 1px solid var(--sc-line) !important;
+  border-radius: 10px !important; padding: 8px;
+}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -297,41 +239,27 @@ def esc(s):
 
 def header_bar():
     n = len(df)
-    mn = df["tanggal_dt"].min().strftime("%d.%m.%Y") if df["tanggal_dt"].notna().any() else "--"
-    mx = df["tanggal_dt"].max().strftime("%d.%m.%Y") if df["tanggal_dt"].notna().any() else "--"
-    h = f"""
-    <div class="sop-header">
-      <div class="kicker">KPPBC Tipe Madya Pabean A Pasuruan</div>
-      <div class="title">Buku Standar Operasional Prosedur — Penanganan Tiket CEISACare</div>
-      <div class="subtitle">Buku jawaban harian Duktek: setiap kendala punya prosedur bernomor.</div>
-      <div class="meta">
-        <span>NOMOR DOK: <b>PDAD/SOP/2026/02</b></span>
-        <span>EDISI: <b>2.0</b></span>
-        <span>DATA: <b>{n:,} tiket</b> ({mn} — {mx})</span>
-        <span>STATUS: <b>BERLAKU</b></span>
-      </div>
-      <div class="sop-stamp"><div class="inner">TERVERI<br>FIKASI<br>Duktek<br>PDAD</div></div>
-    </div>
-    """
-    st.markdown(h, unsafe_allow_html=True)
-
-
-def ruled_divider():
+    mn = df["tanggal_dt"].min().strftime("%d %b %Y") if df["tanggal_dt"].notna().any() else "--"
+    mx = df["tanggal_dt"].max().strftime("%d %b %Y") if df["tanggal_dt"].notna().any() else "--"
     st.markdown(
-        '<div class="sop-rule"><span class="l"></span><span class="diamond">◆</span><span class="r"></span></div>',
+        f"""
+        <div class="sc-header">
+          <div class="brand">Dashboard <span class="dot">PDAD</span> <span style="color:#9CA3AF;font-weight:400;">· Tiket CEISACare</span></div>
+          <div class="readout">{n:,} tiket · {mn} — {mx} · data segar</div>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
 
 
 def kpi_card(label, value, sub="", tone=""):
-    tone = tone if tone in ("red", "green", "gold") else "navy"
+    tone = tone if tone in ("blue", "green", "amber") else ""
     st.markdown(
         f"""
-        <div class="sop-kpi">
+        <div class="sc-kpi">
           <div class="label">{esc(label)}</div>
           <div class="value {tone}">{esc(value)}</div>
           <div class="sub">{esc(sub)}</div>
-          <div class="rule {tone}"></div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -339,39 +267,39 @@ def kpi_card(label, value, sub="", tone=""):
 
 
 def section_label(text):
-    st.markdown(f'<div class="sop-section">{esc(text)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sc-section">{esc(text)}</div>', unsafe_allow_html=True)
 
 
 def empty_state(text):
-    st.markdown(f'<div class="sop-empty">— {esc(text)} —</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sc-empty">{esc(text)}</div>', unsafe_allow_html=True)
 
 
 # ────────────────────────────────────────────────────────────────
-# SIDEBAR — DAFTAR ISI + FILTER
+# SIDEBAR — NAV + FILTER
 # ────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown('<div style="font-family:\'Source Serif 4\',serif;font-weight:900;font-size:1.05rem;letter-spacing:0.04em;">BUKU SOP<br><span style="color:#B23A2F;font-size:0.72rem;letter-spacing:0.18em;">DAFTAR ISI</span></div>', unsafe_allow_html=True)
-    st.markdown('<div style="font-size:0.66rem;color:#66708A;margin-top:-4px;">PDAD://SOP · Pasuruan</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-weight:700;font-size:1.02rem;letter-spacing:-0.01em;">Dashboard PDAD</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.72rem;color:#9CA3AF;margin-bottom:12px;">Tiket CEISACare · KPPBC Pasuruan</div>', unsafe_allow_html=True)
     page = st.radio(
-        "DAFTAR ISI",
-        ["BAB I — SCAN SOLUSI", "BAB II — RINGKASAN", "BAB III — SLA & KINERJA", "BAB IV — EKSPLORASI"],
+        "Navigasi",
+        ["🔍 Cari Solusi", "📊 Ringkasan", "⏱ SLA & Kinerja", "📋 Eksplorasi Tiket"],
         label_visibility="collapsed",
     )
     st.markdown("---")
-    st.markdown('<div style="font-size:0.68rem;letter-spacing:0.16em;color:#B23A2F;font-weight:700;">// LAMPIRAN FILTER</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.7rem;letter-spacing:0.08em;color:#6B7280;font-weight:600;">FILTER</div>', unsafe_allow_html=True)
 
     min_date = df["tanggal_dt"].min()
     max_date = df["tanggal_dt"].max()
     date_range = st.date_input(
-        "RENTANG", value=(min_date, max_date), min_value=min_date, max_value=max_date,
+        "Rentang tanggal", value=(min_date, max_date), min_value=min_date, max_value=max_date,
         label_visibility="collapsed",
     )
     katalog_list = sorted(df["katalog"].dropna().unique())
-    sel_katalog = st.multiselect("KATEGORI", katalog_list, default=[], label_visibility="collapsed",
-                                 placeholder="kategori…")
+    sel_katalog = st.multiselect("Kategori", katalog_list, default=[], label_visibility="collapsed",
+                                 placeholder="pilih kategori…")
     duktek_list = sorted(df["duktek"].dropna().unique())
-    sel_duktek = st.multiselect("DUKTEK", duktek_list, default=[], label_visibility="collapsed",
-                                placeholder="duktek…")
+    sel_duktek = st.multiselect("Duktek", duktek_list, default=[], label_visibility="collapsed",
+                                placeholder="pilih duktek…")
 
     mask = pd.Series(True, index=df.index)
     if len(date_range) == 2:
@@ -385,21 +313,19 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown(
-        f'<div style="font-size:0.66rem;color:#A99E85;">ENTRI {len(fdf):,} / {len(df):,} · TTL 3600s</div>',
+        f'<div style="font-size:0.7rem;color:#9CA3AF;">{len(fdf):,} dari {len(df):,} tiket</div>',
         unsafe_allow_html=True,
     )
 
 header_bar()
 
 # ────────────────────────────────────────────────────────────────
-# BAB I — SCAN SOLUSI (HERO)
+# HALAMAN: CARI SOLUSI (HERO)
 # ────────────────────────────────────────────────────────────────
-if page == "BAB I — SCAN SOLUSI":
-    st.markdown('<div style="font-size:0.7rem;letter-spacing:0.2em;color:#B23A2F;font-weight:700;">BAB I · PROSEDUR PENCARIAN SOLUSI</div>', unsafe_allow_html=True)
-    st.markdown('<h1 style="margin-top:2px;font-size:1.7rem;">SCAN <span style="color:#B23A2F;">SOLUSI</span></h1>', unsafe_allow_html=True)
-    st.markdown('<div style="color:#66708A;font-style:italic;font-size:0.85rem;">Tuliskan kendala pada lembar pencarian — buku membuka prosedur penanganan bernomor dari 65 pasal solusi + riwayat tiket.</div>', unsafe_allow_html=True)
+if page == "🔍 Cari Solusi":
+    st.markdown('<h1 style="font-size:1.45rem;">Cari Solusi</h1>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#6B7280;font-size:0.9rem;">Ketik kendala untuk melihat panduan penanganan dan tiket terkait.</div>', unsafe_allow_html=True)
 
-    # entry row (FIRST VIEWPORT: form-field KPI di atas lembar pencarian)
     _total = len(fdf)
     _kat = fdf["katalog"].nunique()
     _masalah = fdf["masalah"].nunique()
@@ -407,23 +333,20 @@ if page == "BAB I — SCAN SOLUSI":
     _med = _sla.median() if len(_sla) else 0
     ck1, ck2, ck3, ck4 = st.columns(4)
     with ck1:
-        kpi_card("ENTRI TIKET", f"{_total:,}", sub="dalam lampiran filter", tone="red")
+        kpi_card("Total Tiket", f"{_total:,}", sub="sesuai filter", tone="blue")
     with ck2:
-        kpi_card("KATEGORI", str(_kat), sub="katalog", tone="navy")
+        kpi_card("Kategori", str(_kat), sub="katalog")
     with ck3:
-        kpi_card("JENIS MASALAH", str(_masalah), sub="masalah unik", tone="gold")
+        kpi_card("Jenis Masalah", str(_masalah), sub="masalah unik", tone="amber")
     with ck4:
-        kpi_card("MEDIAN SLA", f"{_med:.1f} jam", sub="waktu penyelesaian", tone="green")
+        kpi_card("Median SLA", f"{_med:.1f} jam", sub="penyelesaian", tone="green")
 
-    ruled_divider()
-
-    # tombol contoh mengisi lembar pencarian via session_state
     if st.session_state.pop("scan_fill", None):
         st.session_state["scan_input"] = st.session_state["scan_fill"]
 
     query = st.text_input(
-        "LANGKAH 0 — ISI LEMBAR PENCARIAN",
-        placeholder="tulis kendala di sini ▍  cth: PIB reject validasi / MFA looping / CK-5…",
+        "Cari kendala",
+        placeholder="cth: PIB reject validasi, MFA looping login, CK-5 stuck…",
         label_visibility="collapsed", key="scan_input",
     )
 
@@ -431,7 +354,6 @@ if page == "BAB I — SCAN SOLUSI":
         q = query.lower()
         tokens = [t for t in re.split(r"\W+", q) if len(t) > 2]
 
-        # --- scan di synth_results (65 panduan) ---
         results = []
         for key, d in synth.items():
             domain = d.get("domain", "")
@@ -448,40 +370,35 @@ if page == "BAB I — SCAN SOLUSI":
 
         results.sort(key=lambda x: -x[0])
 
-        st.markdown(
-            f'<div class="sop-section">BAB I · {len(results)} PASAL SOLUSI COCOK</div>',
-            unsafe_allow_html=True,
-        )
+        section_label(f"Panduan ({len(results)})")
 
         if results:
-            for idx, (score, key, d) in enumerate(results[:8], 1):
+            for score, key, d in results[:8]:
                 domain = d.get("domain", "")
                 cnt = d.get("jumlah", "?")
                 title = d.get("masalah", key)
                 body = f"""
-                <div class="sop-entry">
-                  <div class="step-no">{idx:02d}</div>
-                  <div class="e-title">{esc(title)}</div>
-                  <div class="e-meta">
-                    <span class="katalog">{esc(domain)}</span>
-                    <span class="count">▮ {esc(cnt)} tiket</span>
+                <div class="sc-result">
+                  <div class="r-head">
+                    <span class="r-title">{esc(title)}</span>
+                    <span class="r-count">{esc(cnt)} tiket</span>
                   </div>
+                  <div class="r-domain">{esc(domain)}</div>
                 """
                 if d.get("ringkasan"):
-                    body += f'<div class="e-summary">{esc(d["ringkasan"])}</div>'
+                    body += f'<div class="r-summary">{esc(d["ringkasan"])}</div>'
                 if d.get("langkah"):
-                    body += '<div style="font-size:0.7rem;letter-spacing:0.14em;color:#23314F;font-weight:700;margin-top:6px;">PROSEDUR PENANGANAN</div><ol>'
+                    body += "<ol>"
                     for s in d["langkah"]:
                         body += f"<li>{esc(s)}</li>"
                     body += "</ol>"
                 if d.get("catatan"):
-                    body += f'<div class="e-note">{esc(d["catatan"])}</div>'
+                    body += f'<div class="r-note">💡 {esc(d["catatan"])}</div>'
                 st.markdown(body + "</div>", unsafe_allow_html=True)
         else:
-            empty_state("Tidak ada pasal yang cocok — coba kata kunci lain, atau periksa lampiran tiket di bawah.")
+            empty_state("Tidak ada panduan yang cocok. Coba kata kunci lain, atau lihat tiket terkait di bawah.")
 
-        # --- scan tiket mentah ---
-        section_label("LAMPIRAN — TIKET TERKAIT")
+        section_label("Tiket terkait")
         if tokens:
             def ticket_score(row):
                 hay = f"{row['masalah'] or ''} {row['katalog'] or ''} {row['uraian'] or ''}".lower()
@@ -505,30 +422,20 @@ if page == "BAB I — SCAN SOLUSI":
             else:
                 empty_state("Tidak ada tiket terkait.")
     else:
-        ruled_divider()
-        st.markdown(
-            """
-            <div class="sop-empty">Lembar pencarian kosong. Contoh kendala yang sering dihadapi:</div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown('<div style="font-size:0.72rem;color:#9CA3AF;margin:14px 0 6px 0;">Contoh pencarian:</div>', unsafe_allow_html=True)
         ex = ["PIB reject validasi", "MFA looping login", "CK-5 stuck", "tidak bisa akses aplikasi", "perubahan data"]
-        cols = st.columns(len(ex))
+        cols = st.columns(5)
         for c, e in zip(cols, ex):
             with c:
-                if st.button(f"› {e}", key=f"ex_{e}"):
+                if st.button(f"{e}", key=f"ex_{e}", use_container_width=False):
                     st.session_state["scan_fill"] = e
                     st.rerun()
 
-    ruled_divider()
-    st.markdown('<div style="font-size:0.66rem;color:#A99E85;">PASAL 65 · LAMPIRAN 3.807 · MESIN PENCARIAN: FUZZY-TOKEN</div>', unsafe_allow_html=True)
-
 # ────────────────────────────────────────────────────────────────
-# BAB II — RINGKASAN
+# HALAMAN: RINGKASAN
 # ────────────────────────────────────────────────────────────────
-elif page == "BAB II — RINGKASAN":
-    st.markdown('<h1 style="font-size:1.7rem;">BAB II · RINGKASAN <span style="color:#A99E85;font-size:0.9rem;">// ikhtisar dokumen</span></h1>', unsafe_allow_html=True)
-    ruled_divider()
+elif page == "📊 Ringkasan":
+    st.markdown('<h1 style="font-size:1.45rem;">Ringkasan</h1>', unsafe_allow_html=True)
 
     total = len(fdf)
     total_kat = fdf["katalog"].nunique()
@@ -539,62 +446,59 @@ elif page == "BAB II — RINGKASAN":
 
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        kpi_card("ENTRI TIKET", f"{total:,}", sub="dalam filter", tone="red")
+        kpi_card("Total Tiket", f"{total:,}", sub="sesuai filter", tone="blue")
     with c2:
-        kpi_card("KATEGORI", str(total_kat), sub="katalog", tone="navy")
+        kpi_card("Kategori", str(total_kat), sub="katalog")
     with c3:
-        kpi_card("JENIS MASALAH", str(total_masalah), sub="masalah unik", tone="gold")
+        kpi_card("Jenis Masalah", str(total_masalah), sub="masalah unik", tone="amber")
     with c4:
-        kpi_card("MEDIAN SLA", f"{med_sla:.1f} jam", sub=f"≤24 jam: {pct24:.0f}%", tone="green")
+        kpi_card("Median SLA", f"{med_sla:.1f} jam", sub=f"≤24 jam: {pct24:.0f}%", tone="green")
 
-    ruled_divider()
     col_left, col_right = st.columns([3, 2])
 
     with col_left:
-        section_label("PASAL 1 · TREN TIKET PER BULAN")
+        section_label("Tren tiket per bulan")
         tren = fdf.groupby("bulan").size().reset_index(name="jumlah")
         st.line_chart(tren, x="bulan", y="jumlah", height=300)
 
-        section_label("PASAL 2 · DISTRIBUSI PER KATEGORI")
+        section_label("Distribusi per kategori")
         kat = fdf["katalog"].value_counts().reset_index()
         kat.columns = ["kategori", "jumlah"]
         st.bar_chart(kat.set_index("kategori"), height=260)
 
     with col_right:
-        section_label("PASAL 3 · TOP MASALAH")
+        section_label("Top masalah")
         top_masalah = fdf["masalah"].value_counts().head(12)
         st.dataframe(top_masalah.rename("jumlah"), width="stretch", height=320, hide_index=False)
 
-        section_label("PASAL 4 · TOP PELAPOR")
+        section_label("Top pelapor")
         top_perusahaan = fdf["pelapor"].value_counts().head(10)
         st.dataframe(top_perusahaan.rename("tiket"), width="stretch", height=280, hide_index=False)
 
 # ────────────────────────────────────────────────────────────────
-# BAB III — SLA & KINERJA
+# HALAMAN: SLA & KINERJA
 # ────────────────────────────────────────────────────────────────
-elif page == "BAB III — SLA & KINERJA":
-    st.markdown('<h1 style="font-size:1.7rem;">BAB III · SLA & KINERJA <span style="color:#A99E85;font-size:0.9rem;">// standar pelayanan</span></h1>', unsafe_allow_html=True)
-    ruled_divider()
+elif page == "⏱ SLA & Kinerja":
+    st.markdown('<h1 style="font-size:1.45rem;">SLA & Kinerja</h1>', unsafe_allow_html=True)
 
     sla = fdf[fdf["sla_hours"].notna()].copy()
 
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        kpi_card("MEDIAN SLA", f"{sla['sla_hours'].median():.1f} jam", tone="gold")
+        kpi_card("Median SLA", f"{sla['sla_hours'].median():.1f} jam", tone="amber")
     with c2:
-        kpi_card("RATA-RATA", f"{sla['sla_hours'].mean():.1f} jam", tone="navy")
+        kpi_card("Rata-rata", f"{sla['sla_hours'].mean():.1f} jam")
     with c3:
         pct_24 = (sla["sla_hours"] <= 24).mean() * 100
-        kpi_card("SELESAI ≤24J", f"{pct_24:.0f}%", tone="green")
+        kpi_card("Selesai ≤24 jam", f"{pct_24:.0f}%", tone="green")
     with c4:
         pct_1 = (sla["sla_hours"] <= 1).mean() * 100
-        kpi_card("SELESAI ≤1J", f"{pct_1:.0f}%", tone="red")
+        kpi_card("Selesai ≤1 jam", f"{pct_1:.0f}%", tone="blue")
 
-    ruled_divider()
     col_left, col_right = st.columns(2)
 
     with col_left:
-        section_label("PASAL 5 · DISTRIBUSI WAKTU PENYELESAIAN")
+        section_label("Distribusi waktu penyelesaian")
         bins = [0, 1, 4, 24, 72, 168, float("inf")]
         labels = ["≤1 jam", "1-4 jam", "4-24 jam", "1-3 hari", "3-7 hari", ">7 hari"]
         sla["bucket"] = pd.cut(sla["sla_hours"], bins=bins, labels=labels, right=True)
@@ -602,12 +506,11 @@ elif page == "BAB III — SLA & KINERJA":
         st.bar_chart(bucket_cnt.rename("jumlah"), height=300)
 
     with col_right:
-        section_label("PASAL 6 · SLA PER KATEGORI (median jam)")
+        section_label("SLA per kategori (median jam)")
         sla_kat = sla.groupby("katalog")["sla_hours"].median().round(1).sort_values()
         st.dataframe(sla_kat.rename("median_jam"), width="stretch", height=300, hide_index=False)
 
-    ruled_divider()
-    section_label("PASAL 7 · KINERJA PER DUKTEK")
+    section_label("Kinerja per duktek")
     kinerja = (
         sla.groupby("duktek")
         .agg(jumlah=("nomor_tiket", "count"), median_jam=("sla_hours", "median"), max_jam=("sla_hours", "max"))
@@ -617,19 +520,18 @@ elif page == "BAB III — SLA & KINERJA":
     st.dataframe(kinerja, width="stretch", hide_index=False)
 
 # ────────────────────────────────────────────────────────────────
-# BAB IV — EKSPLORASI
+# HALAMAN: EKSPLORASI
 # ────────────────────────────────────────────────────────────────
 else:
-    st.markdown('<h1 style="font-size:1.7rem;">BAB IV · EKSPLORASI <span style="color:#A99E85;font-size:0.9rem;">// lampiran tiket</span></h1>', unsafe_allow_html=True)
-    ruled_divider()
+    st.markdown('<h1 style="font-size:1.45rem;">Eksplorasi Tiket</h1>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        q_pelapor = st.text_input("FILTER PELAPOR", placeholder="mengandung…", label_visibility="collapsed")
+        q_pelapor = st.text_input("Filter pelapor", placeholder="mengandung…", label_visibility="collapsed")
     with col2:
-        q_masalah = st.text_input("FILTER MASALAH", placeholder="mengandung…", label_visibility="collapsed")
+        q_masalah = st.text_input("Filter masalah", placeholder="mengandung…", label_visibility="collapsed")
     with col3:
-        q_nomor = st.text_input("NOMOR TIKET", placeholder="cth: JFBC…", label_visibility="collapsed")
+        q_nomor = st.text_input("Nomor tiket", placeholder="cth: JFBC…", label_visibility="collapsed")
 
     view = fdf.copy()
     if q_pelapor:
@@ -639,7 +541,7 @@ else:
     if q_nomor:
         view = view[view["nomor_tiket"].str.contains(q_nomor, case=False, na=False)]
 
-    st.markdown(f'<div class="sop-section">LAMPIRAN · {len(view):,} ENTRI DITAMPILKAN</div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="font-size:0.75rem;color:#6B7280;margin-bottom:8px;">{len(view):,} tiket ditampilkan</div>', unsafe_allow_html=True)
     st.dataframe(
         view[["nomor_tiket", "tanggal", "pelapor", "katalog", "masalah", "probis", "duktek", "sla_hours", "uraian"]]
         .rename(columns={"sla_hours": "sla_jam"}),
@@ -647,7 +549,7 @@ else:
     )
 
     st.download_button(
-        "⬇ UNDUH CSV",
+        "Download CSV",
         view.to_csv(index=False).encode("utf-8"),
         file_name="tiket_pdad.csv",
         mime="text/csv",

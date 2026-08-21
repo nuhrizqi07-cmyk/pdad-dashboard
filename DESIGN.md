@@ -1,93 +1,91 @@
-# DESIGN.md — Dashboard PDAD // BUKU SOP
+# DESIGN.md — Dashboard PDAD // SIMPLE CLEAN
 
 <!-- impeccable:design-schema 1 -->
 
 ## World
 
-**Buku SOP** (user-pinned direction; replaces Data Terminal, seed 02dade84). The dashboard is the unit's own SOP manual made live — a book of answers the Duktek opens every day, where each kendala has a numbered handling procedure. It is an official document, not a screen: chapter numbering, margin steps, ink-stamp marks, ruled dividers.
+**Simple Clean** (user-requested "simple alternative"; follows Buku SOP and Data Terminal rounds). A calm, legible work surface: the Duktek reads the numbers and finds the answer without fighting the furniture. Heavy metaphors are refused (no stamp, no barcode, no chapter book) — clarity is the whole identity.
 
 ## Mode
 
-**Operate** (with a Read flavor). The Duktek completes a task — find the handling steps for a kendala, read SLA status, trace tickets — in the register of the office's own procedures.
+**Operate.** The Duktek completes a task — find the handling steps for a kendala, read SLA status, trace tickets. Scanability and calm consistency outrank expression.
 
 ## Palette
 
 | Token | Hex | Role |
 |---|---|---|
-| `--sop-bg` | `#F5EFE0` | Cream paper field (ground) |
-| `--sop-panel` | `#FBF7EC` | Panel / card paper |
-| `--sop-panel2` | `#EDE4CE` | Sidebar aged paper |
-| `--sop-line` | `#D8CDB2` | Hairline rule |
-| `--sop-line-strong` | `#B9AB8A` | Strong border |
-| `--sop-ink` | `#23314F` | Navy ink (primary text) |
-| `--sop-ink-dim` | `#66708A` | Secondary text / labels |
-| `--sop-red` | `#B23A2F` | Stamp red (action / accent) |
-| `--sop-gold` | `#A87F2D` | Annotation / watch |
-| `--sop-green` | `#2F7D4F` | Clear / OK |
-| `--sop-teal` | `#1F6F8F` | Katalog labels |
+| `--sc-bg` | `#FAFAF8` | Near-white neutral ground |
+| `--sc-card` | `#FFFFFF` | Card surface |
+| `--sc-line` | `#E6E6E1` | Hairline border |
+| `--sc-line-strong` | `#D4D4CE` | Strong border |
+| `--sc-ink` | `#1A1D21` | Primary text |
+| `--sc-ink-dim` | `#6B7280` | Secondary text |
+| `--sc-ink-faint` | `#9CA3AF` | Placeholder / meta |
+| `--sc-blue` | `#2563EB` | Action / focus / primary |
+| `--sc-green` | `#16A34A` | OK / status |
+| `--sc-amber` | `#B45309` | Watch / count |
+| `--sc-red` | `#DC2626` | Critical (reserved) |
 
-Color strategy: **Restrained** — paper + navy ink, one saturated accent (stamp red) used as ink marks, gold/green for status. Red appears as stamp-like marks (chapter eyebrows, entry numbers, TERVERIFIKASI stamp), never as a scattered highlight.
+Color strategy: **Restrained** — neutrals plus one blue accent for actions and focus; green/amber carry semantic status only.
 
 ## Typography
 
-- **Chapter titles / headings:** Source Serif 4 (900/700) — the document voice.
-- **Body / UI / labels:** Source Sans 3 (400/600/700), tabular numerals via `font-feature-settings: "tnum" 1`.
-- **Form values / entry numbers:** JetBrains Mono (700) — reads as typed form fields.
-- **Scale:** KPI value 1.9rem/900 serif; page title 1.7rem/900; section eyebrow 0.78rem/700 tracked +0.14em uppercase red; body 0.84–0.85rem; micro-labels 0.66–0.72rem tracked +0.14–0.22em uppercase.
+- **Face:** system-ui stack (`ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto`) — no font import, crisp native rendering.
+- **Numerals:** `font-feature-settings: "tnum" 1, "zero" 1` — tabular throughout.
+- **Scale:** page title 1.45rem/700; KPI value 1.7rem/700; body 0.87–0.95rem; labels 0.7–0.75rem/600; section eyebrow 0.72rem/600 tracked +0.08em uppercase.
 
 ## Shape & Components
 
-- **Corners:** square (`border-radius: 0`) — document edges.
-- **Document header:** bordered block: kicker (unit, red tracked caps) → serif title → italic subtitle → meta row (nomor dok, edisi, data, status) → red circular **TERVERIFIKASI ink stamp** (rotated −8°, 118px, double-ring) top-right.
-- **KPI form-field entry:** uppercase micro-label, 1.9rem serif value, sub-line, 2px bottom rule in tone (red/navy/gold/green).
-- **Solution entry card:** 1px border + 3px navy top rule; serif title; meta row (teal katalog caps + red ticket count); italic summary; numbered steps `<ol>` with **margin column counters** (decimal-leading-zero, mono); gold ANOTASI block with dotted top border; red serif entry number (01–08) in left margin.
-- **Ruled divider:** `◆` diamond between single rule and double rule.
-- **Empty state:** dashed-border blank form note, italic, `— msg —`.
-- **Buttons:** outlined navy, uppercase tracked; hover inverts to navy fill.
-- **Inputs:** borderless with 2px navy bottom rule (form field); focus turns red; mono value.
+- **Corners:** 8–10px radius (cards, inputs, buttons) — soft modern, not pill, not square.
+- **Slim header:** app name + blue dot accent, muted readout (ticket count · date window · freshness) on the right.
+- **KPI card:** white card, hairline border, subtle shadow; uppercase label, 1.7rem value (tone optional), faint sub-line.
+- **Result card:** white card, hairline border, 10px radius; title + amber count head row; blue uppercase domain eyebrow; summary; numbered `<ol>` steps; amber 💡 note with top hairline. Hover darkens border.
+- **Search hero:** full-width input (white, 8px, blue focus ring) with clear placeholder; example chips as small buttons below when empty.
+- **Empty state:** dashed-border card, centered faint message.
+- **Buttons:** solid blue, white text, 8px radius; hover darkens.
+- **Sidebar:** white, right hairline; app masthead, radio nav (4 pages), `FILTER` section (date, kategori, duktek), ticket counter.
 
 ## Typographic / Layout Rhythm
 
-- Chapter eyebrows `BAB I · …` red tracked caps before each block; chart/dataframe sections numbered `PASAL 1..7`.
-- One spacing rhythm: ~10px cards, ~22px section gaps, more space above headings.
-- Sidebar = `BUKU SOP` serif masthead + `DAFTAR ISI` radio (BAB I–IV) + `// LAMPIRAN FILTER` (tanggal, kategori, duktek) + entry counter.
+- Section eyebrows `UPPERCASE` gray before each block.
+- One spacing rhythm: ~10px cards, ~20px section gaps, more space above headings than below.
+- Charts sit in white cards with hairline border + padding.
 
 ## Navigation / Topology
 
-4 chapters (radio in sidebar), BAB I default:
+4 pages (radio in sidebar), Cari Solusi default:
 
-1. `BAB I — SCAN SOLUSI` — hero: KPI entry row (4) → ruled divider → search form (`LANGKAH 0 — ISI LEMBAR PENCARIAN`) → solution entries (numbered pasal) → appendix tickets table.
-2. `BAB II — RINGKASAN` — KPI row, tren line chart, kategori bar chart, top masalah/pelapor dataframes.
-3. `BAB III — SLA & KINERJA` — KPI row, bucket bar chart, SLA-per-kategori, kinerja per duktek.
-4. `BAB IV — EKSPLORASI` — filter inputs (pelapor/masalah/nomor), full dataframe, CSV download.
+1. `🔍 Cari Solusi` — hero: KPI row (4) → search input → Panduan result cards → Tiket terkait table. Example chips on empty state.
+2. `📊 Ringkasan` — KPI row, tren line chart, kategori bar chart, top masalah/pelapor tables.
+3. `⏱ SLA & Kinerja` — KPI row, bucket bar chart, SLA-per-kategori, kinerja per duktek.
+4. `📋 Eksplorasi Tiket` — filter inputs (pelapor/masalah/nomor), full table, CSV download.
 
 ## Interaction & State
 
-- **Focus:** input bottom rule turns stamp red (active "writing on the form" state).
-- **Buttons:** example scan chips fill the search form and rerun (session_state `scan_fill` → `scan_input`).
-- **Hover:** buttons invert to navy fill; radio labels turn red.
-- **Tabs:** active tab red underline.
-- **State language:** empty form = `Lembar pencarian kosong…`; no match = dashed blank note; result count in chapter eyebrow.
+- **Focus:** blue border + soft blue ring (12% alpha).
+- **Buttons:** example chips fill the search input and rerun (session_state `scan_fill` → `scan_input`).
+- **Hover:** primary buttons darken; radio labels get blue-soft background; result cards darken border.
+- **Tabs:** active tab blue-soft background + blue text.
+- **State language:** empty input = example chips; no match = dashed note; counts in section eyebrows.
 
 ## Responsive
 
 - Full-bleed wide layout; KPI row collapses to 4-up → stacks on narrow viewports via Streamlit columns.
-- Charts and dataframes stretch to container; chart canvases get panel paper + hairline border.
+- Charts and tables stretch to container; charts in white cards.
 
 ## Implementation Notes (Streamlit)
 
-- Light paper theme via `.streamlit/config.toml` (`base="light"`, cream palette, `font="sans serif"`) **plus** CSS injection with `!important` overrides (background, inputs, buttons, sidebar, dataframes, tabs, charts).
+- Light neutral theme via `.streamlit/config.toml` (`base="light"`, white/neutral palette, `font="sans serif"`) **plus** CSS injection with `!important` overrides (background, inputs, buttons, sidebar, dataframes, tabs, charts).
 - All custom HTML escaped via `html.escape` (user data rendered safely).
 - `width="stretch"` used (no deprecated `use_container_width`).
-- Google Fonts `@import` (Source Serif 4 / Source Sans 3 / JetBrains Mono); system fallbacks cover offline.
+- No external font import — system-ui stack, instant load.
 - Data cached `ttl=3600`; `probis` empty → `-` per user document convention.
 
 ## Anti-Patterns Guarded
 
-- No generic cream+serif+terracotta AI look → the world is a **specific** official SOP manual: chapter numbering, margin step counters, ink-stamp mark, document meta block. These devices carry the identity, not a palette alone.
-- No Inter-everywhere → Source Sans 3 / Source Serif 4 / JetBrains Mono.
-- No purple-blue gradients → flat ink palette.
-- No card-in-card → flat document entries.
-- No gray text on colored backgrounds → dim ink only on paper.
-- No thick side-tab borders → top-rule + margin counters instead (detector-verified).
-- No rounded everything → radius 0 globally.
+- No heavy theme metaphors (this round is deliberately plain).
+- No Inter-everywhere → native system-ui stack.
+- No purple-blue gradients → flat palette with one blue.
+- No card-in-card → flat result cards.
+- No gray text on colored backgrounds → dim ink only on white/near-white.
+- No thick side-tab borders → plain hairline cards (detector-verified).
