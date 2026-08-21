@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Dashboard PDAD — DATA TERMINAL.
+"""Dashboard PDAD — BUKU SOP.
 KPPBC Tipe Madya Pabean A Pasuruan · Analitik tiket CEISACare + scan solusi.
-World: data terminal (monospace tabular, barcode bar-fields, sine dividers).
+World: official SOP manual (chapter numbering, margin steps, stamp marks).
 Data: data/tickets_clean.json + data/synth_results.json
 """
 import html
@@ -13,21 +13,21 @@ import pandas as pd
 import streamlit as st
 
 # ────────────────────────────────────────────────────────────────
-# KONFIGURASI + KONTRAK ARAH (Data Terminal / seed 02dade84)
+# KONFIGURASI + KONTRAK ARAH (Buku SOP — user-pinned)
 # ────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="PDAD // TERMINAL",
-    page_icon="▚",
+    page_title="BUKU SOP // PDAD",
+    page_icon="📗",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 DIRECTION_CONTRACT = """<!--
-THESIS: Dashboard PDAD is a data terminal, not a brochure. Every ticket is a signal frame, every SLA is an instrument reading, every search is a scan across the known solution space. It refuses the category default of rounded pastel cards on a white page.
-OWN-WORLD: Near-black blue field (#0B0F14) with slate panels and hairline borders; one monospace face (JetBrains Mono) at data density with tabular numerals; barcode bar-fields and sine dividers as the only ornament; status ink in amber (watch), green (clear), red (critical), cyan (action).
-STORY: The Duktek opens the terminal, scans the instrument row, types the kendala into the scan line, and receives solution frames with numbered handling steps — answers in seconds, not minutes.
-FIRST VIEWPORT: Terminal header bar with system readout (dataset, window, frame count). Instrument row: four KPI readouts with uppercase labels and large tabular values. Below: the SCAN line (search) as the hero — a wide input with a blinking caret affordance and a live match counter, then solution frames as result cards and signal traces as a table.
-FORM: Data terminal (ikeda-datamatics challenger, seed 02dade84).
+THESIS: Dashboard PDAD is the unit's own SOP manual made live — a book of answers the Duktek opens every day, where each kendala has a numbered handling procedure. It refuses the category default of a dark analytics dashboard and of generic cream-and-serif AI pages alike; this is an official document, not a screen.
+OWN-WORLD: Cream paper field (#F5EFE0) with aged panels and hairline rules; chapter numbering (BAB I–IV) as navigation; Source Serif 4 for chapter titles, Source Sans 3 for body with tabular numerals, JetBrains Mono for form values; red ink-stamp marks (cap) as the only saturated accent; dotted leaders and ruled dividers instead of charts-chrome.
+STORY: The Duktek opens the book, reads the instrument entries, writes the kendala into the search form, and turns to the numbered steps — answers in seconds, in the register of the office's own procedures.
+FIRST VIEWPORT: Document header with book title, unit line, edition and a red TERVERIFIKASI stamp. Entry row: four form-field KPI entries with underlined values. Below: the search form as the hero (LANGKAH 0 — ISI LEMBAR PENCARIAN), then solution entries as numbered margin-step cards and signal traces as an appendix table.
+FORM: Buku SOP manual (user-pinned direction; replaces Data Terminal seed 02dade84).
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 -->
 """
@@ -36,207 +36,227 @@ st.markdown(DIRECTION_CONTRACT, unsafe_allow_html=True)
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
 # ────────────────────────────────────────────────────────────────
-# CSS — DATA TERMINAL WORLD
+# CSS — BUKU SOP WORLD
 # ────────────────────────────────────────────────────────────────
 CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,900&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
-  --dt-bg: #0B0F14;
-  --dt-panel: #121A22;
-  --dt-panel2: #0F151C;
-  --dt-line: #1F2A36;
-  --dt-ink: #E8EEF5;
-  --dt-ink-dim: #8FA3B8;
-  --dt-amber: #FFB454;
-  --dt-green: #4ADE80;
-  --dt-red: #F87171;
-  --dt-cyan: #22D3EE;
-  --dt-violet: #A78BFA;
+  --sop-bg: #F5EFE0;
+  --sop-panel: #FBF7EC;
+  --sop-panel2: #EDE4CE;
+  --sop-line: #D8CDB2;
+  --sop-line-strong: #B9AB8A;
+  --sop-ink: #23314F;
+  --sop-ink-dim: #66708A;
+  --sop-red: #B23A2F;
+  --sop-gold: #A87F2D;
+  --sop-green: #2F7D4F;
+  --sop-teal: #1F6F8F;
 }
 
 html, body, [class*="css"], .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
-  background: var(--dt-bg) !important;
-  color: var(--dt-ink) !important;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+  background: var(--sop-bg) !important;
+  color: var(--sop-ink) !important;
+  font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif !important;
 }
-[data-testid="stAppViewContainer"] { background: var(--dt-bg) !important; }
+[data-testid="stAppViewContainer"] { background: var(--sop-bg) !important; }
 
-/* angka tabular di semua angka */
+/* tabular numerals for all numbers */
 .stApp * { font-feature-settings: "tnum" 1, "zero" 1; }
 
-/* sidebar = panel gelap */
+/* sidebar = aged paper table of contents */
 [data-testid="stSidebar"], [data-testid="stSidebarContent"] {
-  background: var(--dt-panel2) !important;
-  border-right: 1px solid var(--dt-line) !important;
+  background: var(--sop-panel2) !important;
+  border-right: 1px solid var(--sop-line) !important;
 }
-[data-testid="stSidebar"] * { color: var(--dt-ink) !important; }
+[data-testid="stSidebar"] * { color: var(--sop-ink) !important; }
 
-/* text input = scan line */
+/* inputs = form fields with bottom rule */
 [data-testid="stTextInput"] input, [data-testid="stNumberInput"] input, [data-testid="stDateInput"] input {
-  background: var(--dt-panel) !important;
-  color: var(--dt-ink) !important;
-  border: 1px solid var(--dt-line) !important;
+  background: transparent !important;
+  color: var(--sop-ink) !important;
+  border: none !important;
+  border-bottom: 2px solid var(--sop-ink) !important;
   border-radius: 0 !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'JetBrains Mono', 'Source Sans 3', monospace !important;
+  font-weight: 700;
 }
 [data-testid="stTextInput"] input:focus {
-  border-color: var(--dt-cyan) !important;
-  box-shadow: 0 0 0 1px var(--dt-cyan) !important;
+  border-bottom-color: var(--sop-red) !important;
+  box-shadow: none !important;
 }
-[data-testid="stTextInput"] input::placeholder { color: #4A5B6D !important; }
+[data-testid="stTextInput"] input::placeholder { color: #A99E85 !important; font-weight: 400; }
 
 /* selectbox & multiselect */
 [data-baseweb="select"] > div {
-  background: var(--dt-panel) !important;
-  border-color: var(--dt-line) !important;
+  background: var(--sop-panel) !important;
+  border: 1px solid var(--sop-line-strong) !important;
   border-radius: 0 !important;
-  color: var(--dt-ink) !important;
+  color: var(--sop-ink) !important;
 }
+[data-baseweb="popover"] { background: var(--sop-panel) !important; }
 
-/* button = terminal action */
+/* buttons = document actions */
 [data-testid="stButton"] button, [data-testid="stDownloadButton"] button {
-  background: var(--dt-panel) !important;
-  color: var(--dt-cyan) !important;
-  border: 1px solid var(--dt-cyan) !important;
+  background: transparent !important;
+  color: var(--sop-ink) !important;
+  border: 1.5px solid var(--sop-ink) !important;
   border-radius: 0 !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Source Sans 3', sans-serif !important;
   font-weight: 700 !important;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 [data-testid="stButton"] button:hover, [data-testid="stDownloadButton"] button:hover {
-  background: var(--dt-cyan) !important;
-  color: var(--dt-bg) !important;
-  border-color: var(--dt-cyan) !important;
+  background: var(--sop-ink) !important;
+  color: var(--sop-bg) !important;
 }
 
-/* radio nav */
+/* radio nav = daftar isi */
 [data-testid="stSidebar"] [role="radiogroup"] label {
-  font-family: 'JetBrains Mono', monospace !important;
-  letter-spacing: 0.05em;
+  font-family: 'Source Serif 4', serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
 }
-[data-testid="stSidebar"] [role="radiogroup"] label:hover { color: var(--dt-cyan) !important; }
+[data-testid="stSidebar"] [role="radiogroup"] label:hover { color: var(--sop-red) !important; }
 
-/* dataframe = signal trace table */
+/* dataframe = appendix table */
 [data-testid="stDataFrame"] {
-  border: 1px solid var(--dt-line) !important;
+  border: 1px solid var(--sop-line-strong) !important;
   border-radius: 0 !important;
+  background: var(--sop-panel) !important;
 }
-[data-testid="stDataFrame"] * { font-family: 'JetBrains Mono', monospace !important; }
+[data-testid="stDataFrame"] * { font-family: 'Source Sans 3', sans-serif !important; }
 
-/* markdown headings */
-h1, h2, h3, h4 { color: var(--dt-ink) !important; letter-spacing: -0.01em; }
-h1 { font-weight: 800; }
+/* headings = serif chapter titles */
+h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif !important; color: var(--sop-ink) !important; }
+h1 { font-weight: 900; letter-spacing: -0.01em; }
 h2, h3 { font-weight: 700; }
 
 /* tabs */
 [data-testid="stTabs"] button {
   background: transparent !important;
-  color: var(--dt-ink-dim) !important;
+  color: var(--sop-ink-dim) !important;
   border-radius: 0 !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  letter-spacing: 0.05em;
+  font-family: 'Source Serif 4', serif !important;
 }
 [data-testid="stTabs"] button[aria-selected="true"] {
-  color: var(--dt-cyan) !important;
-  border-bottom: 2px solid var(--dt-cyan) !important;
+  color: var(--sop-red) !important;
+  border-bottom: 2px solid var(--sop-red) !important;
 }
 
-/* tooltip / caption */
-[data-testid="stCaptionContainer"], .stCaption { color: var(--dt-ink-dim) !important; }
+[data-testid="stCaptionContainer"], .stCaption { color: var(--sop-ink-dim) !important; }
 
-/* header terminal bar */
-.dt-header {
-  display: flex; align-items: center; justify-content: space-between;
-  border: 1px solid var(--dt-line); border-radius: 0;
-  background: var(--dt-panel); padding: 10px 16px; margin-bottom: 20px;
-}
-.dt-header .brand { font-weight: 800; font-size: 1.05rem; color: var(--dt-ink); letter-spacing: 0.1em; }
-.dt-header .brand .cyan { color: var(--dt-cyan); }
-.dt-header .readout { color: var(--dt-ink-dim); font-size: 0.72rem; letter-spacing: 0.06em; }
-.dt-header .readout .ok { color: var(--dt-green); }
-.dt-header .readout .warn { color: var(--dt-amber); }
-
-/* barcode bar-field */
-.dt-barcode {
-  height: 26px; margin: 4px 0 18px 0;
-  background: repeating-linear-gradient(90deg,
-    var(--dt-ink) 0 2px, transparent 2px 5px,
-    var(--dt-ink) 5px 6px, transparent 6px 11px,
-    var(--dt-ink) 11px 14px, transparent 14px 18px,
-    var(--dt-ink-dim) 18px 19px, transparent 19px 23px);
-  opacity: 0.55;
-}
-
-/* sine divider */
-.dt-sine {
-  margin: 26px 0; opacity: 0.35;
-}
-
-/* KPI instrument readout */
-.dt-kpi {
-  background: var(--dt-panel); border: 1px solid var(--dt-line); border-radius: 0;
-  padding: 14px 16px; margin-bottom: 10px; position: relative;
-  overflow: hidden;
-}
-.dt-kpi .label { font-size: 0.68rem; color: var(--dt-ink-dim); letter-spacing: 0.14em; text-transform: uppercase; }
-.dt-kpi .value { font-size: 1.9rem; font-weight: 800; color: var(--dt-ink); line-height: 1.15; font-variant-numeric: tabular-nums; }
-.dt-kpi .value.amber { color: var(--dt-amber); }
-.dt-kpi .value.green { color: var(--dt-green); }
-.dt-kpi .value.red { color: var(--dt-red); }
-.dt-kpi .value.cyan { color: var(--dt-cyan); }
-.dt-kpi .sub { font-size: 0.66rem; color: var(--dt-ink-dim); margin-top: 2px; }
-.dt-kpi .bar { position: absolute; right: 0; top: 0; bottom: 0; width: 6px; }
-.dt-kpi .bar.amber { background: var(--dt-amber); }
-.dt-kpi .bar.green { background: var(--dt-green); }
-.dt-kpi .bar.red { background: var(--dt-red); }
-.dt-kpi .bar.cyan { background: var(--dt-cyan); }
-
-/* solution frame card — terminal corner brackets, no side tab */
-.dt-frame {
-  border: 1px solid var(--dt-line);
-  background: var(--dt-panel); padding: 14px 18px; margin: 10px 0; border-radius: 0;
+/* document header */
+.sop-header {
+  border: 1.5px solid var(--sop-ink); border-radius: 0;
+  background: var(--sop-panel); padding: 18px 22px; margin-bottom: 22px;
   position: relative;
 }
-.dt-frame::before, .dt-frame::after {
-  content: ""; position: absolute; width: 10px; height: 10px;
-  border-color: var(--dt-cyan); border-style: solid;
+.sop-header .kicker { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--sop-red); font-weight: 700; text-transform: uppercase; }
+.sop-header .title { font-family: 'Source Serif 4', Georgia, serif; font-weight: 900; font-size: 1.5rem; color: var(--sop-ink); margin: 4px 0 2px 0; line-height: 1.15; }
+.sop-header .subtitle { font-size: 0.85rem; color: var(--sop-ink-dim); font-style: italic; }
+.sop-header .meta { display: flex; gap: 26px; margin-top: 10px; font-size: 0.72rem; color: var(--sop-ink-dim); letter-spacing: 0.06em; }
+.sop-header .meta b { color: var(--sop-ink); }
+/* red ink stamp */
+.sop-stamp {
+  position: absolute; right: 22px; top: 16px;
+  width: 118px; height: 118px; border-radius: 50%;
+  border: 3px solid var(--sop-red);
+  display: flex; align-items: center; justify-content: center;
+  transform: rotate(-8deg); opacity: 0.82;
+  color: var(--sop-red); font-weight: 700; text-align: center;
+  font-size: 0.72rem; line-height: 1.25; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 10px;
+  pointer-events: none; user-select: none;
 }
-.dt-frame::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-.dt-frame::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-.dt-frame .f-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.dt-frame .f-title { font-weight: 700; font-size: 0.95rem; color: var(--dt-ink); }
-.dt-frame .f-count { font-size: 0.7rem; color: var(--dt-amber); letter-spacing: 0.08em; white-space: nowrap; }
-.dt-frame .f-domain { font-size: 0.66rem; color: var(--dt-cyan); letter-spacing: 0.12em; text-transform: uppercase; margin: 2px 0 8px 0; }
-.dt-frame .f-summary { color: var(--dt-ink-dim); font-size: 0.82rem; line-height: 1.5; margin-bottom: 10px; }
-.dt-frame ol { margin: 0 0 0 18px; padding: 0; }
-.dt-frame ol li { color: var(--dt-ink); font-size: 0.82rem; line-height: 1.55; margin-bottom: 4px; }
-.dt-frame .f-note { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--dt-line); color: var(--dt-amber); font-size: 0.76rem; }
+.sop-stamp .inner { border: 1.5px solid var(--sop-red); border-radius: 50%; width: 92px; height: 92px; display: flex; align-items: center; justify-content: center; }
 
-/* empty state */
-.dt-empty {
-  border: 1px dashed var(--dt-line); color: var(--dt-ink-dim);
-  padding: 26px; text-align: center; font-size: 0.85rem; letter-spacing: 0.05em;
+/* KPI = form-field entry */
+.sop-kpi {
+  background: var(--sop-panel); border: 1px solid var(--sop-line-strong); border-radius: 0;
+  padding: 14px 16px 12px 16px; margin-bottom: 10px; position: relative;
+}
+.sop-kpi .label { font-size: 0.66rem; color: var(--sop-ink-dim); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; }
+.sop-kpi .value { font-size: 1.9rem; font-weight: 900; color: var(--sop-ink); line-height: 1.15; font-family: 'Source Serif 4', Georgia, serif; }
+.sop-kpi .value.red { color: var(--sop-red); }
+.sop-kpi .value.green { color: var(--sop-green); }
+.sop-kpi .value.gold { color: var(--sop-gold); }
+.sop-kpi .sub { font-size: 0.66rem; color: var(--sop-ink-dim); margin-top: 2px; letter-spacing: 0.04em; }
+.sop-kpi .rule { position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; }
+.sop-kpi .rule.red { background: var(--sop-red); }
+.sop-kpi .rule.green { background: var(--sop-green); }
+.sop-kpi .rule.gold { background: var(--sop-gold); }
+.sop-kpi .rule.navy { background: var(--sop-ink); }
+
+/* solution entry card */
+.sop-entry {
+  border: 1px solid var(--sop-line-strong); border-top: 3px solid var(--sop-ink);
+  background: var(--sop-panel); padding: 14px 18px 14px 62px; margin: 12px 0; border-radius: 0;
+  position: relative;
+}
+.sop-entry .step-no {
+  position: absolute; left: 12px; top: 14px;
+  font-family: 'Source Serif 4', Georgia, serif; font-weight: 900; font-size: 1.35rem;
+  color: var(--sop-red); line-height: 1;
+}
+.sop-entry .e-title { font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; font-size: 1.02rem; color: var(--sop-ink); }
+.sop-entry .e-meta { display: flex; gap: 16px; margin: 4px 0 8px 0; font-size: 0.68rem; color: var(--sop-ink-dim); letter-spacing: 0.05em; }
+.sop-entry .e-meta .katalog { color: var(--sop-teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+.sop-entry .e-meta .count { color: var(--sop-red); font-weight: 700; }
+.sop-entry .e-summary { color: var(--sop-ink-dim); font-size: 0.84rem; line-height: 1.55; margin-bottom: 10px; font-style: italic; }
+.sop-entry ol { margin: 8px 0 0 22px; padding: 0; counter-reset: step; list-style: none; }
+.sop-entry ol li {
+  counter-increment: step; position: relative; padding-left: 30px;
+  color: var(--sop-ink); font-size: 0.84rem; line-height: 1.6; margin-bottom: 5px;
+}
+.sop-entry ol li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute; left: 0; top: 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
+  color: var(--sop-ink-dim); letter-spacing: 0.04em;
+}
+.sop-entry .e-note {
+  margin-top: 10px; padding-top: 8px; border-top: 1px dotted var(--sop-line-strong);
+  color: var(--sop-gold); font-size: 0.78rem;
+}
+.sop-entry .e-note::before { content: "ANOTASI — "; font-weight: 700; letter-spacing: 0.08em; }
+
+/* empty state = blank form */
+.sop-empty {
+  border: 1.5px dashed var(--sop-line-strong); color: var(--sop-ink-dim);
+  padding: 26px; text-align: center; font-size: 0.85rem; letter-spacing: 0.06em;
+  background: transparent; font-style: italic;
 }
 
-/* section label */
-.dt-section {
-  font-size: 0.72rem; color: var(--dt-cyan); letter-spacing: 0.16em;
-  text-transform: uppercase; margin: 22px 0 10px 0; font-weight: 700;
+/* section label = chapter heading */
+.sop-section {
+  font-size: 0.78rem; color: var(--sop-red); letter-spacing: 0.14em;
+  text-transform: uppercase; margin: 24px 0 10px 0; font-weight: 700;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
-/* metric-ish plain text cleanup */
-[data-testid="stMetric"] { background: var(--dt-panel); border: 1px solid var(--dt-line); border-radius: 0; padding: 12px; }
-[data-testid="stMetricLabel"] { color: var(--dt-ink-dim) !important; }
-[data-testid="stMetricValue"] { color: var(--dt-ink) !important; }
+/* ruled divider */
+.sop-rule { display: flex; align-items: center; gap: 10px; margin: 22px 0; color: var(--sop-line-strong); }
+.sop-rule .l { flex: 1; border-top: 1px solid var(--sop-line-strong); }
+.sop-rule .r { flex: 1; border-top: 3px double var(--sop-line-strong); }
+.sop-rule .diamond { color: var(--sop-red); font-size: 0.7rem; }
 
-/* info/warning boxes flattened */
+/* metric cleanup */
+[data-testid="stMetric"] { background: var(--sop-panel); border: 1px solid var(--sop-line-strong); border-radius: 0; padding: 12px; }
+[data-testid="stMetricLabel"] { color: var(--sop-ink-dim) !important; }
+[data-testid="stMetricValue"] { color: var(--sop-ink) !important; font-family: 'Source Serif 4', serif !important; }
+
+/* info/warning flattened to document note */
 [data-testid="stInfo"], [data-testid="stWarning"], [data-testid="stError"], [data-testid="stSuccess"] {
-  background: var(--dt-panel) !important; border: 1px solid var(--dt-line) !important;
-  border-radius: 0 !important; color: var(--dt-ink) !important;
+  background: var(--sop-panel) !important; border: 1px solid var(--sop-line-strong) !important;
+  border-radius: 0 !important; color: var(--sop-ink) !important;
 }
+
+/* chart backgrounds */
+[data-testid="stArrowVegaLiteChart"], [data-testid="stVegaLiteChart"] { background: var(--sop-panel) !important; border: 1px solid var(--sop-line-strong) !important; }
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -277,43 +297,41 @@ def esc(s):
 
 def header_bar():
     n = len(df)
-    mn = df["tanggal_dt"].min().strftime("%y.%m.%d") if df["tanggal_dt"].notna().any() else "--"
-    mx = df["tanggal_dt"].max().strftime("%y.%m.%d") if df["tanggal_dt"].notna().any() else "--"
+    mn = df["tanggal_dt"].min().strftime("%d.%m.%Y") if df["tanggal_dt"].notna().any() else "--"
+    mx = df["tanggal_dt"].max().strftime("%d.%m.%Y") if df["tanggal_dt"].notna().any() else "--"
     h = f"""
-    <div class="dt-header">
-      <div class="brand"><span class="cyan">PDAD</span>://TERMINAL <span style="color:#4A5B6D">v2.0</span></div>
-      <div class="readout">
-        FRAMES <span class="ok">{n:,}</span> · WINDOW <span class="warn">{mn}→{mx}</span> · MODE OPERATE · SIG <span class="ok">ONLINE</span>
+    <div class="sop-header">
+      <div class="kicker">KPPBC Tipe Madya Pabean A Pasuruan</div>
+      <div class="title">Buku Standar Operasional Prosedur — Penanganan Tiket CEISACare</div>
+      <div class="subtitle">Buku jawaban harian Duktek: setiap kendala punya prosedur bernomor.</div>
+      <div class="meta">
+        <span>NOMOR DOK: <b>PDAD/SOP/2026/02</b></span>
+        <span>EDISI: <b>2.0</b></span>
+        <span>DATA: <b>{n:,} tiket</b> ({mn} — {mx})</span>
+        <span>STATUS: <b>BERLAKU</b></span>
       </div>
+      <div class="sop-stamp"><div class="inner">TERVERI<br>FIKASI<br>Duktek<br>PDAD</div></div>
     </div>
     """
     st.markdown(h, unsafe_allow_html=True)
 
 
-def barcode():
-    st.markdown('<div class="dt-barcode"></div>', unsafe_allow_html=True)
-
-
-def sine_divider():
-    svg = """
-    <svg class="dt-sine" viewBox="0 0 1200 24" width="100%" height="24" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 12 Q 30 0 60 12 T 120 12 T 180 12 T 240 12 T 300 12 T 360 12 T 420 12 T 480 12 T 540 12 T 600 12 T 660 12 T 720 12 T 780 12 T 840 12 T 900 12 T 960 12 T 1020 12 T 1080 12 T 1140 12 T 1200 12"
-        fill="none" stroke="#22D3EE" stroke-width="1.2" opacity="0.5"/>
-      <path d="M0 12 Q 30 24 60 12 T 120 12 T 180 12 T 240 12 T 300 12 T 360 12 T 420 12 T 480 12 T 540 12 T 600 12 T 660 12 T 720 12 T 780 12 T 840 12 T 900 12 T 960 12 T 1020 12 T 1080 12 T 1140 12 T 1200 12"
-        fill="none" stroke="#4A5B6D" stroke-width="0.8" opacity="0.5"/>
-    </svg>
-    """
-    st.markdown(svg, unsafe_allow_html=True)
+def ruled_divider():
+    st.markdown(
+        '<div class="sop-rule"><span class="l"></span><span class="diamond">◆</span><span class="r"></span></div>',
+        unsafe_allow_html=True,
+    )
 
 
 def kpi_card(label, value, sub="", tone=""):
+    tone = tone if tone in ("red", "green", "gold") else "navy"
     st.markdown(
         f"""
-        <div class="dt-kpi">
+        <div class="sop-kpi">
           <div class="label">{esc(label)}</div>
           <div class="value {tone}">{esc(value)}</div>
           <div class="sub">{esc(sub)}</div>
-          <div class="bar {tone if tone else 'cyan'}"></div>
+          <div class="rule {tone}"></div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -321,25 +339,26 @@ def kpi_card(label, value, sub="", tone=""):
 
 
 def section_label(text):
-    st.markdown(f'<div class="dt-section">▸ {esc(text)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sop-section">{esc(text)}</div>', unsafe_allow_html=True)
 
 
 def empty_state(text):
-    st.markdown(f'<div class="dt-empty">■ {esc(text)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sop-empty">— {esc(text)} —</div>', unsafe_allow_html=True)
 
 
 # ────────────────────────────────────────────────────────────────
-# SIDEBAR — NAV + FILTER GLOBAL
+# SIDEBAR — DAFTAR ISI + FILTER
 # ────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown('<div style="font-weight:800;letter-spacing:0.12em;color:#22D3EE;">PDAD::NAV</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-family:\'Source Serif 4\',serif;font-weight:900;font-size:1.05rem;letter-spacing:0.04em;">BUKU SOP<br><span style="color:#B23A2F;font-size:0.72rem;letter-spacing:0.18em;">DAFTAR ISI</span></div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.66rem;color:#66708A;margin-top:-4px;">PDAD://SOP · Pasuruan</div>', unsafe_allow_html=True)
     page = st.radio(
-        "NAVIGASI",
-        ["▚ SCAN SOLUSI", "▤ RINGKASAN", "⏱ SLA & KINERJA", "▦ EKSPLORASI"],
+        "DAFTAR ISI",
+        ["BAB I — SCAN SOLUSI", "BAB II — RINGKASAN", "BAB III — SLA & KINERJA", "BAB IV — EKSPLORASI"],
         label_visibility="collapsed",
     )
     st.markdown("---")
-    st.markdown('<div style="font-size:0.72rem;letter-spacing:0.14em;color:#8FA3B8;">// FILTER GLOBAL</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.68rem;letter-spacing:0.16em;color:#B23A2F;font-weight:700;">// LAMPIRAN FILTER</div>', unsafe_allow_html=True)
 
     min_date = df["tanggal_dt"].min()
     max_date = df["tanggal_dt"].max()
@@ -366,21 +385,21 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown(
-        f'<div style="font-size:0.68rem;color:#4A5B6D;">FRAMES {len(fdf):,} / {len(df):,} · TTL 3600s</div>',
+        f'<div style="font-size:0.66rem;color:#A99E85;">ENTRI {len(fdf):,} / {len(df):,} · TTL 3600s</div>',
         unsafe_allow_html=True,
     )
 
 header_bar()
 
 # ────────────────────────────────────────────────────────────────
-# HALAMAN: SCAN SOLUSI (HERO — default)
+# BAB I — SCAN SOLUSI (HERO)
 # ────────────────────────────────────────────────────────────────
-if page == "▚ SCAN SOLUSI":
-    st.markdown('<div style="font-size:0.72rem;letter-spacing:0.2em;color:#22D3EE;">SCAN LINE // Cari kendala → solusi</div>', unsafe_allow_html=True)
-    st.markdown('<h1 style="margin-top:2px;font-size:1.7rem;">SCAN <span style="color:#FFB454;">SOLUSI</span></h1>', unsafe_allow_html=True)
-    st.caption("Ketik kendala (mis. CK-5 stuck, login MFA, PIB reject) — terminal mencari panduan penanganan di 65 solution frames + riwayat tiket.")
+if page == "BAB I — SCAN SOLUSI":
+    st.markdown('<div style="font-size:0.7rem;letter-spacing:0.2em;color:#B23A2F;font-weight:700;">BAB I · PROSEDUR PENCARIAN SOLUSI</div>', unsafe_allow_html=True)
+    st.markdown('<h1 style="margin-top:2px;font-size:1.7rem;">SCAN <span style="color:#B23A2F;">SOLUSI</span></h1>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#66708A;font-style:italic;font-size:0.85rem;">Tuliskan kendala pada lembar pencarian — buku membuka prosedur penanganan bernomor dari 65 pasal solusi + riwayat tiket.</div>', unsafe_allow_html=True)
 
-    # instrument row (FIRST VIEWPORT: KPI readouts di atas scan line)
+    # entry row (FIRST VIEWPORT: form-field KPI di atas lembar pencarian)
     _total = len(fdf)
     _kat = fdf["katalog"].nunique()
     _masalah = fdf["masalah"].nunique()
@@ -388,21 +407,23 @@ if page == "▚ SCAN SOLUSI":
     _med = _sla.median() if len(_sla) else 0
     ck1, ck2, ck3, ck4 = st.columns(4)
     with ck1:
-        kpi_card("FRAMES", f"{_total:,}", sub="tiket dalam filter", tone="cyan")
+        kpi_card("ENTRI TIKET", f"{_total:,}", sub="dalam lampiran filter", tone="red")
     with ck2:
-        kpi_card("KATEGORI", str(_kat), sub="katalog", tone="")
+        kpi_card("KATEGORI", str(_kat), sub="katalog", tone="navy")
     with ck3:
-        kpi_card("MASALAH", str(_masalah), sub="jenis unik", tone="amber")
+        kpi_card("JENIS MASALAH", str(_masalah), sub="masalah unik", tone="gold")
     with ck4:
-        kpi_card("MEDIAN SLA", f"{_med:.1f} jam", sub="resolve", tone="green")
-    barcode()
+        kpi_card("MEDIAN SLA", f"{_med:.1f} jam", sub="waktu penyelesaian", tone="green")
 
-    # tombol contoh mengisi widget scan via session_state
+    ruled_divider()
+
+    # tombol contoh mengisi lembar pencarian via session_state
     if st.session_state.pop("scan_fill", None):
         st.session_state["scan_input"] = st.session_state["scan_fill"]
 
     query = st.text_input(
-        "SCAN", placeholder="SCAN █  cth: PIB stuck validasi / MFA looping / CK-5…",
+        "LANGKAH 0 — ISI LEMBAR PENCARIAN",
+        placeholder="tulis kendala di sini ▍  cth: PIB reject validasi / MFA looping / CK-5…",
         label_visibility="collapsed", key="scan_input",
     )
 
@@ -426,41 +447,41 @@ if page == "▚ SCAN SOLUSI":
                 results.append((score, key, d))
 
         results.sort(key=lambda x: -x[0])
-        barcode()
+
         st.markdown(
-            f'<div class="dt-section">▸ {len(results)} SOLUTION FRAME(S) COCOK · SCORE>0</div>',
+            f'<div class="sop-section">BAB I · {len(results)} PASAL SOLUSI COCOK</div>',
             unsafe_allow_html=True,
         )
 
         if results:
-            for score, key, d in results[:8]:
+            for idx, (score, key, d) in enumerate(results[:8], 1):
                 domain = d.get("domain", "")
                 cnt = d.get("jumlah", "?")
                 title = d.get("masalah", key)
-                head = f"""
-                <div class="dt-frame">
-                  <div class="f-head">
-                    <span class="f-title">{esc(title)}</span>
-                    <span class="f-count">▮ {esc(cnt)} tiket</span>
+                body = f"""
+                <div class="sop-entry">
+                  <div class="step-no">{idx:02d}</div>
+                  <div class="e-title">{esc(title)}</div>
+                  <div class="e-meta">
+                    <span class="katalog">{esc(domain)}</span>
+                    <span class="count">▮ {esc(cnt)} tiket</span>
                   </div>
-                  <div class="f-domain">{esc(domain)}</div>
                 """
-                body = ""
                 if d.get("ringkasan"):
-                    body += f'<div class="f-summary">{esc(d["ringkasan"])}</div>'
+                    body += f'<div class="e-summary">{esc(d["ringkasan"])}</div>'
                 if d.get("langkah"):
-                    body += "<ol>"
-                    for i, s in enumerate(d["langkah"], 1):
+                    body += '<div style="font-size:0.7rem;letter-spacing:0.14em;color:#23314F;font-weight:700;margin-top:6px;">PROSEDUR PENANGANAN</div><ol>'
+                    for s in d["langkah"]:
                         body += f"<li>{esc(s)}</li>"
                     body += "</ol>"
                 if d.get("catatan"):
-                    body += f'<div class="f-note">◆ {esc(d["catatan"])}</div>'
-                st.markdown(head + body + "</div>", unsafe_allow_html=True)
+                    body += f'<div class="e-note">{esc(d["catatan"])}</div>'
+                st.markdown(body + "</div>", unsafe_allow_html=True)
         else:
-            empty_state("TIDAK ADA FRAME COCOK — coba kata kunci lain, atau cek tiket terkait di bawah.")
+            empty_state("Tidak ada pasal yang cocok — coba kata kunci lain, atau periksa lampiran tiket di bawah.")
 
         # --- scan tiket mentah ---
-        section_label("SIGNAL TRACES // tiket terkait")
+        section_label("LAMPIRAN — TIKET TERKAIT")
         if tokens:
             def ticket_score(row):
                 hay = f"{row['masalah'] or ''} {row['katalog'] or ''} {row['uraian'] or ''}".lower()
@@ -482,15 +503,12 @@ if page == "▚ SCAN SOLUSI":
                     width="stretch", hide_index=True,
                 )
             else:
-                empty_state("TIDAK ADA TIKET TERKAIT")
+                empty_state("Tidak ada tiket terkait.")
     else:
-        barcode()
+        ruled_divider()
         st.markdown(
             """
-            <div class="dt-frame" style="border-left-color:#4A5B6D;">
-              <div class="f-title" style="color:#8FA3B8;">TUNGGU INPUT…</div>
-              <div class="f-summary">Contoh scan yang sering dilakukan Duktek:</div>
-            </div>
+            <div class="sop-empty">Lembar pencarian kosong. Contoh kendala yang sering dihadapi:</div>
             """,
             unsafe_allow_html=True,
         )
@@ -502,15 +520,15 @@ if page == "▚ SCAN SOLUSI":
                     st.session_state["scan_fill"] = e
                     st.rerun()
 
-    sine_divider()
-    st.markdown('<div style="font-size:0.66rem;color:#4A5B6D;">SCAN ENGINE: fuzzy-token · 65 frames · 3.807 signals</div>', unsafe_allow_html=True)
+    ruled_divider()
+    st.markdown('<div style="font-size:0.66rem;color:#A99E85;">PASAL 65 · LAMPIRAN 3.807 · MESIN PENCARIAN: FUZZY-TOKEN</div>', unsafe_allow_html=True)
 
 # ────────────────────────────────────────────────────────────────
-# HALAMAN: RINGKASAN
+# BAB II — RINGKASAN
 # ────────────────────────────────────────────────────────────────
-elif page == "▤ RINGKASAN":
-    st.markdown('<h1 style="font-size:1.7rem;">▤ RINGKASAN <span style="color:#4A5B6D;">// signal summary</span></h1>', unsafe_allow_html=True)
-    barcode()
+elif page == "BAB II — RINGKASAN":
+    st.markdown('<h1 style="font-size:1.7rem;">BAB II · RINGKASAN <span style="color:#A99E85;font-size:0.9rem;">// ikhtisar dokumen</span></h1>', unsafe_allow_html=True)
+    ruled_divider()
 
     total = len(fdf)
     total_kat = fdf["katalog"].nunique()
@@ -521,62 +539,62 @@ elif page == "▤ RINGKASAN":
 
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        kpi_card("TOTAL FRAMES", f"{total:,}", sub="tiket dalam filter", tone="cyan")
+        kpi_card("ENTRI TIKET", f"{total:,}", sub="dalam filter", tone="red")
     with c2:
-        kpi_card("KATEGORI", str(total_kat), sub="katalog", tone="")
+        kpi_card("KATEGORI", str(total_kat), sub="katalog", tone="navy")
     with c3:
-        kpi_card("JENIS MASALAH", str(total_masalah), sub="masalah unik", tone="amber")
+        kpi_card("JENIS MASALAH", str(total_masalah), sub="masalah unik", tone="gold")
     with c4:
         kpi_card("MEDIAN SLA", f"{med_sla:.1f} jam", sub=f"≤24 jam: {pct24:.0f}%", tone="green")
 
-    sine_divider()
+    ruled_divider()
     col_left, col_right = st.columns([3, 2])
 
     with col_left:
-        section_label("TREN TIKET PER BULAN")
+        section_label("PASAL 1 · TREN TIKET PER BULAN")
         tren = fdf.groupby("bulan").size().reset_index(name="jumlah")
         st.line_chart(tren, x="bulan", y="jumlah", height=300)
 
-        section_label("DISTRIBUSI PER KATEGORI")
+        section_label("PASAL 2 · DISTRIBUSI PER KATEGORI")
         kat = fdf["katalog"].value_counts().reset_index()
         kat.columns = ["kategori", "jumlah"]
         st.bar_chart(kat.set_index("kategori"), height=260)
 
     with col_right:
-        section_label("TOP MASALAH")
+        section_label("PASAL 3 · TOP MASALAH")
         top_masalah = fdf["masalah"].value_counts().head(12)
         st.dataframe(top_masalah.rename("jumlah"), width="stretch", height=320, hide_index=False)
 
-        section_label("TOP PELAPOR")
+        section_label("PASAL 4 · TOP PELAPOR")
         top_perusahaan = fdf["pelapor"].value_counts().head(10)
         st.dataframe(top_perusahaan.rename("tiket"), width="stretch", height=280, hide_index=False)
 
 # ────────────────────────────────────────────────────────────────
-# HALAMAN: SLA & KINERJA
+# BAB III — SLA & KINERJA
 # ────────────────────────────────────────────────────────────────
-elif page == "⏱ SLA & KINERJA":
-    st.markdown('<h1 style="font-size:1.7rem;">⏱ SLA & KINERJA <span style="color:#4A5B6D;">// resolve instrument</span></h1>', unsafe_allow_html=True)
-    barcode()
+elif page == "BAB III — SLA & KINERJA":
+    st.markdown('<h1 style="font-size:1.7rem;">BAB III · SLA & KINERJA <span style="color:#A99E85;font-size:0.9rem;">// standar pelayanan</span></h1>', unsafe_allow_html=True)
+    ruled_divider()
 
     sla = fdf[fdf["sla_hours"].notna()].copy()
 
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        kpi_card("MEDIAN SLA", f"{sla['sla_hours'].median():.1f} jam", tone="amber")
+        kpi_card("MEDIAN SLA", f"{sla['sla_hours'].median():.1f} jam", tone="gold")
     with c2:
-        kpi_card("RATA-RATA", f"{sla['sla_hours'].mean():.1f} jam", tone="")
+        kpi_card("RATA-RATA", f"{sla['sla_hours'].mean():.1f} jam", tone="navy")
     with c3:
         pct_24 = (sla["sla_hours"] <= 24).mean() * 100
         kpi_card("SELESAI ≤24J", f"{pct_24:.0f}%", tone="green")
     with c4:
         pct_1 = (sla["sla_hours"] <= 1).mean() * 100
-        kpi_card("SELESAI ≤1J", f"{pct_1:.0f}%", tone="cyan")
+        kpi_card("SELESAI ≤1J", f"{pct_1:.0f}%", tone="red")
 
-    sine_divider()
+    ruled_divider()
     col_left, col_right = st.columns(2)
 
     with col_left:
-        section_label("DISTRIBUSI WAKTU PENYELESAIAN")
+        section_label("PASAL 5 · DISTRIBUSI WAKTU PENYELESAIAN")
         bins = [0, 1, 4, 24, 72, 168, float("inf")]
         labels = ["≤1 jam", "1-4 jam", "4-24 jam", "1-3 hari", "3-7 hari", ">7 hari"]
         sla["bucket"] = pd.cut(sla["sla_hours"], bins=bins, labels=labels, right=True)
@@ -584,12 +602,12 @@ elif page == "⏱ SLA & KINERJA":
         st.bar_chart(bucket_cnt.rename("jumlah"), height=300)
 
     with col_right:
-        section_label("SLA PER KATEGORI (median jam)")
+        section_label("PASAL 6 · SLA PER KATEGORI (median jam)")
         sla_kat = sla.groupby("katalog")["sla_hours"].median().round(1).sort_values()
         st.dataframe(sla_kat.rename("median_jam"), width="stretch", height=300, hide_index=False)
 
-    sine_divider()
-    section_label("KINERJA PER DUKTEK")
+    ruled_divider()
+    section_label("PASAL 7 · KINERJA PER DUKTEK")
     kinerja = (
         sla.groupby("duktek")
         .agg(jumlah=("nomor_tiket", "count"), median_jam=("sla_hours", "median"), max_jam=("sla_hours", "max"))
@@ -599,11 +617,11 @@ elif page == "⏱ SLA & KINERJA":
     st.dataframe(kinerja, width="stretch", hide_index=False)
 
 # ────────────────────────────────────────────────────────────────
-# HALAMAN: EKSPLORASI
+# BAB IV — EKSPLORASI
 # ────────────────────────────────────────────────────────────────
 else:
-    st.markdown('<h1 style="font-size:1.7rem;">▦ EKSPLORASI <span style="color:#4A5B6D;">// signal dump</span></h1>', unsafe_allow_html=True)
-    barcode()
+    st.markdown('<h1 style="font-size:1.7rem;">BAB IV · EKSPLORASI <span style="color:#A99E85;font-size:0.9rem;">// lampiran tiket</span></h1>', unsafe_allow_html=True)
+    ruled_divider()
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -621,7 +639,7 @@ else:
     if q_nomor:
         view = view[view["nomor_tiket"].str.contains(q_nomor, case=False, na=False)]
 
-    st.markdown(f'<div class="dt-section">▸ {len(view):,} FRAME DITAMPILKAN</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sop-section">LAMPIRAN · {len(view):,} ENTRI DITAMPILKAN</div>', unsafe_allow_html=True)
     st.dataframe(
         view[["nomor_tiket", "tanggal", "pelapor", "katalog", "masalah", "probis", "duktek", "sla_hours", "uraian"]]
         .rename(columns={"sla_hours": "sla_jam"}),
@@ -629,7 +647,7 @@ else:
     )
 
     st.download_button(
-        "⬇ DOWNLOAD CSV",
+        "⬇ UNDUH CSV",
         view.to_csv(index=False).encode("utf-8"),
         file_name="tiket_pdad.csv",
         mime="text/csv",
