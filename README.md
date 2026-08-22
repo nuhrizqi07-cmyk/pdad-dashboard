@@ -1,12 +1,12 @@
-# Dashboard PDAD Interaktif
+# Recap CEISACare
 
-Dashboard analitik tiket CEISACare untuk KPPBC Tipe Madya Pabean A Pasuruan.
+Rekap & Solusi Tiket CEISACare — dashboard analitik untuk Duktek PDAD KPPBC Tipe Madya Pabean A Pasuruan.
 
 ## Fitur
 
+- **🔍 Cari Solusi** — cari kendala → panduan penanganan (dari sintesis 65 masalah) + tiket terkait
 - **📊 Ringkasan** — tren tiket per bulan, distribusi kategori, top masalah, top perusahaan
-- **⏱️ SLA & Kinerja** — median waktu penyelesaian, distribusi bucket, kinerja per Duktek
-- **🔍 Search Solusi** — cari kendala → panduan penanganan (dari sintesis 65 masalah) + tiket terkait
+- **⏱ SLA & Kinerja** — median waktu penyelesaian, distribusi bucket, kinerja per Duktek
 - **📋 Eksplorasi Tiket** — tabel tiket dengan filter + download CSV
 
 ## Data

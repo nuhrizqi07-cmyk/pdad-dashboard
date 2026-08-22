@@ -36,7 +36,7 @@ Search engine solusi yang dilatih dari pengalaman nyata tiket internal — bukan
 
 ## Brand Commitments
 
-Belum ada identitas visual yang mengikat. Pengguna memberi kebebasan penuh untuk redesign ("surprised me") — tema baru boleh menyimpang dari tampilan Streamlit default.
+Nama produk: **Recap CEISACare** (keputusan user, 2026-08) — "Recap" dari rekapitulasi, "CEISACare" dari platform yang direkap. Tagline: "Rekap & Solusi Tiket". Identitas visual: Simple Clean (netral terang, satu aksen biru) — user meminta sederhana setelah mencoba Data Terminal dan Buku SOP.
 
 ## Evidence on Hand
 

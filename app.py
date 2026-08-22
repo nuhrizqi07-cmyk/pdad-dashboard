@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Dashboard PDAD — SIMPLE CLEAN.
-KPPBC Tipe Madya Pabean A Pasuruan · Analitik tiket CEISACare + cari solusi.
+"""Recap CEISACare — Rekap & Solusi Tiket CEISACare.
+KPPBC Tipe Madya Pabean A Pasuruan · Duktek PDAD.
 World: clean minimal work dashboard (canon played straight, user-requested simple).
 Data: data/tickets_clean.json + data/synth_results.json
 """
@@ -16,7 +16,7 @@ import streamlit as st
 # KONFIGURASI + KONTRAK ARAH (Simple Clean — user-requested)
 # ────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Dashboard PDAD",
+    page_title="Recap CEISACare",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -244,7 +244,7 @@ def header_bar():
     st.markdown(
         f"""
         <div class="sc-header">
-          <div class="brand">Dashboard <span class="dot">PDAD</span> <span style="color:#9CA3AF;font-weight:400;">· Tiket CEISACare</span></div>
+          <div class="brand">Recap <span class="dot">CEISACare</span> <span style="color:#9CA3AF;font-weight:400;">· Rekap & Solusi Tiket</span></div>
           <div class="readout">{n:,} tiket · {mn} — {mx} · data segar</div>
         </div>
         """,
@@ -278,8 +278,8 @@ def empty_state(text):
 # SIDEBAR — NAV + FILTER
 # ────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown('<div style="font-weight:700;font-size:1.02rem;letter-spacing:-0.01em;">Dashboard PDAD</div>', unsafe_allow_html=True)
-    st.markdown('<div style="font-size:0.72rem;color:#9CA3AF;margin-bottom:12px;">Tiket CEISACare · KPPBC Pasuruan</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-weight:700;font-size:1.02rem;letter-spacing:-0.01em;">Recap CEISACare</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.72rem;color:#9CA3AF;margin-bottom:12px;">Rekap & Solusi Tiket · Duktek PDAD · KPPBC Pasuruan</div>', unsafe_allow_html=True)
     page = st.radio(
         "Navigasi",
         ["🔍 Cari Solusi", "📊 Ringkasan", "⏱ SLA & Kinerja", "📋 Eksplorasi Tiket"],
