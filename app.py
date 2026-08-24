@@ -421,15 +421,6 @@ if page == "🔍 Cari Solusi":
                 )
             else:
                 empty_state("Tidak ada tiket terkait.")
-    else:
-        st.markdown('<div style="font-size:0.72rem;color:#9CA3AF;margin:14px 0 6px 0;">Contoh pencarian:</div>', unsafe_allow_html=True)
-        ex = ["PIB reject validasi", "MFA looping login", "CK-5 stuck", "tidak bisa akses aplikasi", "perubahan data"]
-        cols = st.columns(5)
-        for c, e in zip(cols, ex):
-            with c:
-                if st.button(f"{e}", key=f"ex_{e}", use_container_width=False):
-                    st.session_state["scan_fill"] = e
-                    st.rerun()
 
 # ────────────────────────────────────────────────────────────────
 # HALAMAN: RINGKASAN
