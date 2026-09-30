@@ -22,7 +22,7 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TOKEN_FILE = "/home/noah/.hermes/scripts/ceisacare_token.json"
-VENV_PY = "/run/media/noah/Data/My SaaS/project-perbaikan/venv/bin/python"
+VENV_PY = "/run/media/noah/Data/My-SaaS/project-perbaikan/venv/bin/python"
 
 
 def check_token():
@@ -60,7 +60,7 @@ def run_prep():
 def run_synth():
     print("\n[2.5/3] Sintesis ulang masalah baru (DeepSeek)...")
     # synth_llm.py ada di buku-saku-ceisacare; jalankan dengan venv
-    synth_script = "/run/media/noah/Data/My SaaS/buku-saku-ceisacare/synth_llm.py"
+    synth_script = "/run/media/noah/Data/My-SaaS/buku-saku-ceisacare/synth_llm.py"
     if not os.path.exists(synth_script):
         print("  ⚠️ synth_llm.py tidak ditemukan, skip.")
         return True
