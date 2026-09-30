@@ -91,11 +91,19 @@ def git_push():
         ["git", "commit", "-q", "-m", f"chore: update data tiket {today} ({count_tickets()} tiket)"],
         cwd=BASE_DIR, check=False,
     )
-    if r.returncode == 0:
-        subprocess.run(["git", "push", "-q"], cwd=BASE_DIR, check=False)
+    if r.returncode != 0:
+        print("  (tidak ada perubahan / commit kosong, tetap coba push)")
+    # Cek hasil push yang SEBENARNYA — jangan lapor sukses tanpa bukti.
+    p = subprocess.run(["git", "push", "-q"], cwd=BASE_DIR, check=False,
+                       capture_output=True, text=True)
+    if p.returncode == 0:
         print("  ✓ pushed ke GitHub")
-    else:
-        print("  (tidak ada perubahan / commit kosong, skip push)")
+        return True
+    print("  ❌ PUSH GAGAL — dashboard online BELUM ter-update.")
+    if (p.stderr or "").strip():
+        print("     " + p.stderr.strip().replace("\n", "\n     "))
+    print("     Kalau remote lebih maju: git pull --rebase lalu ulangi.")
+    return False
 
 
 def main():
