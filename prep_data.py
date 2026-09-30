@@ -3,11 +3,16 @@
 Baca ceisacare_selesai_all.json → hitung SLA (Submit→Penyelesaian) → data bersih.
 Output: tickets_clean.json (kompak) untuk dibaca app.py."""
 import json
+import os
 import re
 import datetime
 
-SRC = "/run/media/noah/Data/My SaaS/buku-saku-ceisacare/ceisacare_selesai_all.json"
-OUT = "/run/media/noah/Data/My SaaS/pdad-dashboard/data/tickets_clean.json"
+# Path relatif ke lokasi script ini, supaya tidak rusak kalau folder dipindah.
+# (Sebelumnya hardcoded ke path lama ".../My SaaS/..." yang pakai spasi dan sudah
+#  tidak ada — akibatnya prep gagal diam-diam & tickets_clean.json jadi basi.)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.join(BASE_DIR, "data", "ceisacare_selesai_all.json")
+OUT = os.path.join(BASE_DIR, "data", "tickets_clean.json")
 
 def parse(w):
     if not w:

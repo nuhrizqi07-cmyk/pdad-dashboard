@@ -119,7 +119,16 @@ def main():
     print(f"Jumlah tiket sebelum update: {before:,}")
 
     ok_collect = run_collect()
+    if not ok_collect:
+        print("  ⚠️ Collector gagal/terputus — data mentah mungkin belum lengkap.")
     ok_prep = run_prep()
+    if not ok_prep:
+        print("\n" + "!" * 50)
+        print("❌ GAGAL menghitung ulang SLA (prep_data.py error).")
+        print("   tickets_clean.json TIDAK diperbarui — datanya masih yang lama.")
+        print("   Push DIBATALKAN supaya dashboard tidak dipublikasikan dengan data basi.")
+        print("!" * 50)
+        sys.exit(1)
     after = count_tickets()
     delta = after - before
 

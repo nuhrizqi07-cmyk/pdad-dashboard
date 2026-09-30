@@ -78,9 +78,20 @@ def clean_html(text):
     return text.strip()
 
 
-def collect(max_pages=400):
+def collect():
+    """Kumpulkan semua tiket Penyelesaian dari listing.
+
+    Jumlah halaman dibaca dari API (data.totalPages), BUKAN batas mati.
+    Sebelumnya dipatok max_pages=400 padahal API punya 401 halaman, sehingga
+    halaman terakhir tidak pernah ter-tarik (tiket terlewat permanen).
+    """
     all_tickets = {}
-    for page in range(1, max_pages + 1):
+    total_pages = None
+    page = 1
+    while True:
+        if total_pages is not None and page > total_pages:
+            print(f"  Selesai — {total_pages} halaman diproses.", flush=True)
+            break
         resp, status = api_post(f"/layanan/v2/tiket/{page}", {})
         if status == 401:
             print("  TOKEN EXPIRED di listing — stop & resume nanti.", flush=True)
@@ -88,7 +99,13 @@ def collect(max_pages=400):
         if status != 200 or not resp:
             print(f"  HTTP {status} at page {page}, stop.", flush=True)
             break
-        items = resp.get("data", {}).get("items", [])
+        data = resp.get("data", {}) or {}
+        if total_pages is None:
+            total_pages = data.get("totalPages")
+            if total_pages:
+                print(f"  API: totalRows={data.get('totalRows')} totalPages={total_pages}",
+                      flush=True)
+        items = data.get("items", [])
         if not items:
             print(f"  Page {page} kosong, stop.", flush=True)
             break
@@ -97,11 +114,16 @@ def collect(max_pages=400):
                 uuid = t.get("uuidLayanan")
                 if uuid:
                     all_tickets[uuid] = t
-        if len(items) < 10:
+        if total_pages is None and len(items) < 10:
+            # hanya dipakai kalau API tidak melaporkan totalPages
             print(f"  Page {page}: {len(items)} items, stop.", flush=True)
             break
         if page % 25 == 0:
             print(f"  ...page {page}, tiket selesai terkumpul {len(all_tickets)}", flush=True)
+        page += 1
+        if page > 5000:  # batas pengaman
+            print("  Batas pengaman 5000 halaman tercapai, stop.", flush=True)
+            break
         time.sleep(0.15)
     return all_tickets
 
