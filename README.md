@@ -11,7 +11,7 @@ Rekap & Solusi Tiket CEISACare — dashboard analitik untuk Duktek PDAD KPPBC Ti
 
 ## Data
 
-- `data/tickets_clean.json` — 3.807 tiket bersih (SLA sudah dihitung)
+- `data/tickets_clean.json` — 4.296 tiket bersih (SLA sudah dihitung), rentang 08 Aug 2024 – 24 Nov 2026
 - `data/synth_results.json` — 65 panduan masalah hasil sintesis LLM
 
 Sumber data mentah: tiket CEISACare KPPBC Pasuruan (status Penyelesaian).
@@ -19,35 +19,33 @@ Sumber data mentah: tiket CEISACare KPPBC Pasuruan (status Penyelesaian).
 ## Cara jalan lokal
 
 ```bash
-# pakai venv yang sudah ada (contoh project-perbaikan)
-/run/media/noah/Data/My\ SaaS/project-perbaikan/venv/bin/streamlit run app.py
+cd /c/SaaS/My-SaaS/pdad-dashboard
+venv/Scripts/python.exe -m streamlit run app.py
 ```
 
 ## Update data
 
+**Cara untuk Mas (tanpa asisten): lihat [CARA-UPDATE.md](CARA-UPDATE.md).**
+Paling singkat: dobel-klik `update.bat` di folder ini.
+
 ```bash
-# pakai venv project-perbaikan
-VPY="/run/media/noah/Data/My SaaS/project-perbaikan/venv/bin/python"
+cd /c/SaaS/My-SaaS/pdad-dashboard
+PY=venv/Scripts/python.exe
 
-# cek status token CEISACare
-"$VPY" update_data.py --check-token
-
-# update lengkap (collect + SLA), tanpa push
-"$VPY" update_data.py
-
-# update + commit push ke GitHub
-"$VPY" update_data.py --push
-
-# update + sintesis masalah baru (LLM DeepSeek)
-"$VPY" update_data.py --push --synth
+$PY update_data.py --check-token   # cek status token CEISACare
+$PY update_data.py                 # collect + hitung SLA, tanpa push
+$PY update_data.py --push          # + commit & push ke GitHub (app online ikut update)
+$PY update_data.py --push --synth  # + sintesis panduan baru (DeepSeek, berbayar)
+$PY refresh_token.py               # paksa minta token baru (email saja, tanpa 2FA)
 ```
 
 ### Alur update
-1. **Token** — CEISACare token 24 jam. Kalau expired, login ulang dulu (minta asisten: "login CEISACare" — butuh kode 2FA).
-2. **Collect** — `collect_cica.py` ambil semua tiket Penyelesaian (paralel 5 worker + retry + resume).
+1. **Token** — berlaku 24 jam. Kalau hilang/expired, `update_data.py` minta token baru otomatis lewat `refresh_token.py` (cukup email, tanpa kode 2FA — tapi harus di jaringan kantor).
+2. **Collect** — `collect_cica.py` ambil semua tiket Penyelesaian (paralel 5 worker + retry + resume dari checkpoint).
 3. **Prep** — `prep_data.py` hitung ulang SLA → `data/tickets_clean.json`.
 4. **Synth** (opsional) — `synth_llm.py` sintesis masalah baru via DeepSeek → `data/synth_results.json`.
-5. **Push** (opsional) — commit + push ke GitHub.
+5. **Push** (wajib untuk app online) — commit + push ke GitHub → Streamlit Cloud deploy ulang sendiri.
+
 
 > Catatan: `data/ceisacare_selesai_all.json` (raw ~15MB) tidak di-commit (di .gitignore).
 > Yang di-commit: `tickets_clean.json` (2.7MB) + `synth_results.json` (96KB).

@@ -119,10 +119,20 @@ def main():
     if args.check_token:
         return
     if not ok:
-        print("\n❌ Token expired. Login ulang dulu:")
-        print("   1. Jalankan script login CEISACare (butuh kode 2FA)")
-        print("   2. Atau minta asisten: 'login CEISACare'")
-        sys.exit(1)
+        # Token bisa dimintakan ulang otomatis (email saja, tanpa 2FA).
+        print("\n[0/3] Token tidak valid — minta token baru otomatis...")
+        try:
+            import refresh_token
+            d = refresh_token.refresh()
+            print(f"  ✓ Token baru valid s/d {datetime.datetime.fromtimestamp(d['exp'])}")
+            ok, msg = check_token()
+        except Exception as e:
+            print(f"  ❌ Gagal minta token baru: {type(e).__name__}: {e}")
+            print("     Cek koneksi ke apis-gw.beacukai.go.id (harus di jaringan kantor).")
+            sys.exit(1)
+        if not ok:
+            print(f"  ❌ Token masih belum valid: {msg}")
+            sys.exit(1)
 
     before = count_tickets()
     print(f"Jumlah tiket sebelum update: {before:,}")
