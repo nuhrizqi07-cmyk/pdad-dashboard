@@ -1,5 +1,7 @@
 @echo off
 chcp 65001 >nul
+REM Python di PC ini default ke cp1252 -> file JSON/CSV ber-UTF8 gagal dibaca.
+set PYTHONUTF8=1
 cd /d "%~dp0"
 set PY=venv\Scripts\python.exe
 if not exist "%PY%" set PY=python

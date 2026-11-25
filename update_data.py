@@ -30,7 +30,7 @@ def check_token():
     """Cek status token CEISACare. Return (ok, msg)."""
     if not os.path.exists(TOKEN_FILE):
         return False, "Token file tidak ada — perlu login ulang."
-    with open(TOKEN_FILE) as f:
+    with open(TOKEN_FILE, encoding="utf-8") as f:
         tok = json.load(f)
     exp = tok.get("exp")
     if not exp:
@@ -79,7 +79,7 @@ def run_synth():
 def count_tickets():
     p = os.path.join(BASE_DIR, "data", "tickets_clean.json")
     if os.path.exists(p):
-        with open(p) as f:
+        with open(p, encoding="utf-8") as f:
             return len(json.load(f))
     return 0
 

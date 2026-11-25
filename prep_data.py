@@ -36,7 +36,7 @@ def clean(t):
     return t.strip()
 
 def main():
-    with open(SRC) as f:
+    with open(SRC, encoding="utf-8") as f:
         data = json.load(f)
 
     rows = []
@@ -83,7 +83,7 @@ def main():
 
     import os
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w") as f:
+    with open(OUT, "w", encoding="utf-8") as f:
         json.dump(rows, f, ensure_ascii=False)
 
     # statistik singkat

@@ -14,7 +14,7 @@ TOKEN_FILE = os.path.expanduser("~/.hermes/scripts/ceisacare_token.json")
 OUTPUT = os.path.join(BASE_DIR, "data", "ceisacare_selesai_all.json")
 CHECKPOINT = OUTPUT  # pakai file sama sbg checkpoint resume
 
-with open(TOKEN_FILE) as f:
+with open(TOKEN_FILE, encoding="utf-8") as f:
     TOKEN = json.load(f)["access_token"]
 
 API = "https://apis-gw.beacukai.go.id/cica-be"
@@ -176,7 +176,7 @@ def fetch_details(all_tickets, workers=5):
     # resume dari checkpoint kalau ada
     if os.path.exists(CHECKPOINT):
         try:
-            with open(CHECKPOINT) as f:
+            with open(CHECKPOINT, encoding="utf-8") as f:
                 done = json.load(f)
             done_uuids = {d.get("uuid") for d in done}
             uuids = [u for u in uuids if u not in done_uuids]
@@ -206,10 +206,10 @@ def fetch_details(all_tickets, workers=5):
                 failed.append(uuid)
             if done_count % 100 == 0:
                 print(f"  ...detail {done_count}/{total}", flush=True)
-                with open(CHECKPOINT, "w") as f:
+                with open(CHECKPOINT, "w", encoding="utf-8") as f:
                     json.dump(enriched, f, ensure_ascii=False, indent=1)
 
-    with open(CHECKPOINT, "w") as f:
+    with open(CHECKPOINT, "w", encoding="utf-8") as f:
         json.dump(enriched, f, ensure_ascii=False, indent=1)
     if failed:
         print(f"  Gagal {len(failed)} detail (akan di-retry run berikutnya via resume)", flush=True)
@@ -222,6 +222,6 @@ if __name__ == "__main__":
     print(f"Total tiket Penyelesaian: {len(tickets)}", flush=True)
     details = fetch_details(tickets)
     os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
-    with open(OUTPUT, "w") as f:
+    with open(OUTPUT, "w", encoding="utf-8") as f:
         json.dump(details, f, ensure_ascii=False, indent=1)
     print(f"DONE: {len(details)} tickets → {OUTPUT}", flush=True)

@@ -209,7 +209,7 @@ st.markdown(CSS, unsafe_allow_html=True)
 # ────────────────────────────────────────────────────────────────
 @st.cache_data(ttl=3600)
 def load_tickets():
-    with open(os.path.join(DATA_DIR, "tickets_clean.json")) as f:
+    with open(os.path.join(DATA_DIR, "tickets_clean.json"), encoding="utf-8") as f:
         rows = json.load(f)
     df = pd.DataFrame(rows)
     df["tanggal_dt"] = pd.to_datetime(df["tanggal_dt"], errors="coerce")
@@ -223,7 +223,7 @@ def load_tickets():
 
 @st.cache_data(ttl=3600)
 def load_synth():
-    with open(os.path.join(DATA_DIR, "synth_results.json")) as f:
+    with open(os.path.join(DATA_DIR, "synth_results.json"), encoding="utf-8") as f:
         return json.load(f)
 
 
