@@ -10,7 +10,7 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TOKEN_FILE = "/home/noah/.hermes/scripts/ceisacare_token.json"
+TOKEN_FILE = os.path.expanduser("~/.hermes/scripts/ceisacare_token.json")
 OUTPUT = os.path.join(BASE_DIR, "data", "ceisacare_selesai_all.json")
 CHECKPOINT = OUTPUT  # pakai file sama sbg checkpoint resume
 

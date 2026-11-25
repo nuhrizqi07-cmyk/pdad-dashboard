@@ -12,3 +12,6 @@ data/ceisacare_selesai_all.json
 
 # Test
 test_app.py
+
+# Log collector lokal
+logs/

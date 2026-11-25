@@ -19,10 +19,11 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TOKEN_FILE = "/home/noah/.hermes/scripts/ceisacare_token.json"
-VENV_PY = "/run/media/noah/Data/My-SaaS/project-perbaikan/venv/bin/python"
+TOKEN_FILE = os.path.expanduser("~/.hermes/scripts/ceisacare_token.json")
+VENV_PY = sys.executable
 
 
 def check_token():
@@ -60,13 +61,13 @@ def run_prep():
 def run_synth():
     print("\n[2.5/3] Sintesis ulang masalah baru (DeepSeek)...")
     # synth_llm.py ada di buku-saku-ceisacare; jalankan dengan venv
-    synth_script = "/run/media/noah/Data/My-SaaS/buku-saku-ceisacare/synth_llm.py"
+    synth_script = os.path.join(os.path.dirname(BASE_DIR), "buku-saku-ceisacare", "synth_llm.py")
     if not os.path.exists(synth_script):
         print("  ⚠️ synth_llm.py tidak ditemukan, skip.")
         return True
     r = subprocess.run([VENV_PY, synth_script], cwd=os.path.dirname(synth_script))
     # hasil synth_results.json harus disalin ke data/
-    src = "/tmp/synth_results.json"
+    src = os.path.join(tempfile.gettempdir(), "synth_results.json")
     if os.path.exists(src):
         dst = os.path.join(BASE_DIR, "data", "synth_results.json")
         import shutil
